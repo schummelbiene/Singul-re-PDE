@@ -1,0 +1,147 @@
+
+\section{Theorie der Zwei-Punkt Randwertprobleme}
+Für diesesn Abschnitt bezeichne
+\begin{align}\label{eq:2-1a}
+  Lu (x) \coloneqq p_{2}(x) u''(x) + p_{1}(x)u'(x) + p_{0}u(x) = f(x), \quad x \in (a, b)
+\end{align}
+und
+\begin{align}\label{2-1b}
+  u(a) = u(b) = 0
+\end{align}
+das Randwertproblem zweiter Ordnung. Hierbei sind $f$ und $p_{i}$ Funktionen aus $C[a, b]$. Insbesondere sei $p_{2}(x) \neq 0 \, \forall x \in [a, b]$. Für Anfangswertprobleme liefern die Sätze von Peano und Picard-Lindelöf die Existenz und Eindeutigkeit. Besitzen \eqref{eq:2-1a} und \eqref{eq:2-1b}  eine eindeutige Lösung? \eqref{eq:2-1a}  kann als System von Gleichungen erster Ordung beschrieben werden:
+\begin{align*}
+  u' &= w\\
+  w' & = - \frac 1 {p_{2}}\( p_{1} w + p_{0}u - f\)
+\end{align*}
+ist äquivalent zu
+\begin{align}\label{eq:2-2}
+  \begin{pmatrix}
+    u \\ w
+  \end{pmatrix}' = 
+  \begin{pmatrix}
+    0 & 1 \\ - \frac {p_{1}}{p_{2}} & - \frac{p_{0}}{p_{2}}
+  \end{pmatrix} 
+  \begin{pmatrix}
+    u \\ w
+  \end{pmatrix}
+ +   \begin{pmatrix}
+    0 \\ \frac f {p_{2}}
+  \end{pmatrix}
+\end{align}
+\begin{satz} Picard-Lindelöf für AWP
+  
+Gegeben sei das System $v' = V(v, x)$ mit $v = (v_{1}, \dots, v_{n})^{T}$ und $V = (V_{1}, \dots, V_{n})^{T}$. Dabei seinen $V_{i} \in C[\R^{n} \times [a, b]]$, sodass jedes $V_{i}$ der Lipschitz-Bedingung
+\begin{align*}
+  \norm{V_{i}(v, x) - V_{i}(v^{*}, x)} \leq K \nnorm{v - v^{*}}, \quad i = 1, \dots, n, \, x \in [a, b]
+\end{align*}
+für ein $K > 0$ unabhängig von $v, v^{*}$ und $x$ genügt. Dann beitzt das AWP
+\begin{align*}
+  v' &= V(v, x)\\
+  v(a) &= c
+\end{align*}
+für jeden Vektor $c \in \R^{n}$ eine eindeutige Lösung $v$ mit $v \in C^1[a, b]$. Das Gleiche gilt, falls $v(a) = c$ durch $v(b) = c$ (Endwertproblem) ersetzt wird. 
+\end{satz}
+\begin{folgerung}\label{fol:2-2}
+  Gegeben sei $g \in C[a, b]$. Dann besitzt das AWP
+  \begin{align*}
+    L u_{1} &= g \quad \text{auf } (a, b)\\
+    u_{1}(a &=0\\
+    u_{1}'(a) &=1
+  \end{align*}
+eine Lösung $u_{1} \in C^{2}[a, b]$. Ebenso besitzt 
+  \begin{align*}
+    L u_{2} &= g \quad \text{auf } (a, b)\\
+    u_{2}(b) &=0\\
+    u_{2}'(b) &=1
+  \end{align*}
+eine Lösung $u_{2} \in C^{2}[a, b]$
+\end{folgerung}
+\begin{beweis}
+  $V$ ist Lipschitzstetig, $w \in C^{1}$, $u' = w \in C^{1} \implies u \in C^{2}[a, b]$. 
+\end{beweis}
+\begin{satz}Lösbarkeit und Eindeutigkeit von RWP
+
+Angenommen,
+\begin{align}\label{eq:2-3}
+    L u &= 0 \quad \text{in } (a, b)\\
+    u(a) &= u(b) =0 \notag
+\end{align}
+besitzt nur die Lösung $u = 0$ (starke Annahme, Erfüllbarkeit wird später gezeigt).   
+
+Dann besitzt
+\begin{align}\label{eq:2-4}
+  L u &= f \quad \text{in } (a, b)\\
+  u(a) &= u(b) =0 \notag
+\end{align}
+für $f \in C[a, b]$ genau eine Lösung $u \in C^{2}[a, b]$. 
+\end{satz}
+\begin{beweis}
+  Eindeutigkeit: Angenommen, $u_{1}$ und $u_{2}$ sind Lösungen von \eqref{eq:2-4}. Dann löst $w = u_{1} - u_{2}$ das Problem
+  \begin{align*}
+    Lw = Lu_{1} - Lu_{2} = f-f = 0\\
+    w(a) = u_{1}(a) - u_{2}(a) =0 \\
+    w(b) = u_{1}(b) - u_{2}(b) =0. 
+  \end{align*}
+Nach Voraussetzung \eqref{eq:2-3} ist $w = 0$, also $u_{1} = u_{2}$. 
+
+Existenz: Die Lösungen $u_{1}$ und $u_{2}$ der Folgerung \ref{fol:2-2} sind linear unabhängig und lösen $Lu = 0$. Sie besitzen daher eine Wronski-Determinante
+\begin{align*}
+  W(x) = u_{1}(x) u_{2}' (x) - u_{1}' u_{2}(x) \neq 0 \quad \forall x \in [a, b]. 
+\end{align*}
+Für $(x, \xi) \in [a, b]^{2}$ sei die Greensche Funktion $G$ zum Differentialoperator $L$ mit
+\begin{align*}
+  G(x, \xi) =
+  \begin{cases}
+    \frac{u_{1}(x) u_{2}(\xi)}{p_{2}(\xi) w(\xi)} & a \leq x \leq \xi \leq b\\
+    \frac{u_{1}(\xi) u_{2}(x)}{p_{2}(\xi) w(\xi)} & a \leq \xi \leq x \leq b
+  \end{cases}
+\end{align*}
+gegeben. Dann löst
+\begin{align*}
+  u(x) = \int_{a}^{b} G(x, \xi)f(\xi) d\xi
+\end{align*}
+das System \eqref{eq:2-4}.
+Beweis dessen: 
+\begin{enumerate}
+\item Erfüllung der Randbedingungen: 
+  \begin{align*}
+    u(a) = \int_{a}^{b} G(a, \xi)f(\xi) d\xi = 0
+    u(b) = \int_{a}^{b} G(b, \xi)f(\xi) d\xi = 0
+  \end{align*}
+\item Die Darstellung erfüllt die Differentialgleichung:
+  \begin{align*}
+    u(x) &= \int_{a}^{x} G(a, \xi)f(\xi) d\xi  + \int_{x}^{b} G(x, \xi)f(\xi) d\xi = 0\\
+    u'(x) &= G(x, x) f(x) + \int_{a}^{x} G_{x}(x, \xi)f(\xi) d\xi  - G(x, x)f(x)  + \int_{x}^{b} G_{x}(x, \xi)f(\xi) d\xi \\
+    &= \int_{a}^{x} G_{x}(x, \xi)f(\xi) d\xi    + \int_{x}^{b} G_{x}(x, \xi)f(\xi) d\xi\\
+    u''(x) &= G_{x}(x, x^{-})f(x^{-}) + \int_{a}^{x} G_{xx}(x, \xi)f(\xi) d\xi - G_{x}(x, x^{+})f(x^{+}) + \int_{x}^{b} G_{xx}(x, \xi)f(\xi) d\xi\\
+    &= \int_{a}^{x} G_{xx}(x, \xi)f(\xi) d\xi + \int_{x}^{b} G_{xx}(x, \xi)f(\xi) d\xi + f(x) \frac{u_{1}(x)u_{2}'(x) - u_{1}'(x)u_{2}(x)}{p_{2}(x)W(x)}\\
+    &= \int_{a}^{x} G_{xx}(x, \xi)f(\xi) d\xi + \int_{x}^{b} G_{xx}(x, \xi)f(\xi) d\xi + f(x) \frac{1}{p_{2}(x)}\\
+\implies \qquad Lu &= p_{2}u'' + p_{1}u' + p_{0}u \\
+&= \int_{a}^{x} \(p_{2}G_{xx}(x, \xi) + p_{1}(x)G_{x}(x, \xi) + p_{0} (x) G(x, \xi)\) f(\xi) d\xi + \\
+&\int_{x}^{b} \(p_{2}G_{xx}(x, \xi) + p_{1}(x)G_{x}(x, \xi) + p_{0} (x) G(x, \xi)\) f(\xi) d\xi + f(x)\\
+&= f(x). 
+  \end{align*}
+(das Minus kommt von der unteren Grenze, $x^{-}$: Grenzwert von links, da die Integrale im letzten Schritt $0$ sind.) 
+\end{enumerate}
+\end{beweis}
+Betrachte \eqref{eq:2-1} mit $p_{2}(x) = 1$, d.h.
+\begin{align*}
+  Lu = - u'' + p_{1} u' + p_{0}u. 
+\end{align*}
+\begin{lemma}
+  Es seien $Lu < 0$ und $p_{0} \geq 0$ auf $(a, b)$ sowie $u \in C^{2}[a, b]$. Dann gilt
+  \begin{align*}
+    u(x) \leq \max \set{0, u(a), u(b)} \quad \text{auf }[a, b]. 
+  \end{align*}
+\end{lemma}
+\begin{beweis}
+  Angenommen, $u$ besitzt ein positives Maximum in $c \in (a, b)$, also $u'(c) = 0, u''(c)\leq 0$. Dann
+  \begin{align*}
+    (L u)(c) = - u''(c) + p_{1}(c)u'(c) + p_{0}(c) u(c)\geq 0. 
+  \end{align*}
+Widerspruch!
+\end{beweis}
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "vorlesung"
+%%% End: 
