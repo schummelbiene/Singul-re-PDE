@@ -1,13 +1,13 @@
 
 \section{Theorie der Zwei-Punkt Randwertprobleme}
 Für diesesn Abschnitt bezeichne
-\begin{align}\label{eq:2-1a}
-  Lu (x) \coloneqq p_{2}(x) u''(x) + p_{1}(x)u'(x) + p_{0}u(x) = f(x), \quad x \in (a, b)
+\begin{subequations}
+  \label{eq:2-1}
+\begin{align}
+  Lu (x) \coloneqq p_{2}(x) u''(x) + p_{1}(x)u'(x) + p_{0}u(x) = f(x), \quad x \in (a, b)\label{eq:2-1a}\\
+  u(a) = u(b) = 0\label{eq:2-1b}
 \end{align}
-und
-\begin{align}\label{2-1b}
-  u(a) = u(b) = 0
-\end{align}
+\end{subequations}
 das Randwertproblem zweiter Ordnung. Hierbei sind $f$ und $p_{i}$ Funktionen aus $C[a, b]$. Insbesondere sei $p_{2}(x) \neq 0 \, \forall x \in [a, b]$. Für Anfangswertprobleme liefern die Sätze von Peano und Picard-Lindelöf die Existenz und Eindeutigkeit. Besitzen \eqref{eq:2-1a} und \eqref{eq:2-1b}  eine eindeutige Lösung? \eqref{eq:2-1a}  kann als System von Gleichungen erster Ordung beschrieben werden:
 \begin{align*}
   u' &= w\\
@@ -59,7 +59,7 @@ eine Lösung $u_{2} \in C^{2}[a, b]$
 \begin{beweis}
   $V$ ist Lipschitzstetig, $w \in C^{1}$, $u' = w \in C^{1} \implies u \in C^{2}[a, b]$. 
 \end{beweis}
-\begin{satz}Lösbarkeit und Eindeutigkeit von RWP
+\begin{satz}\label{thm:2-3}Lösbarkeit und Eindeutigkeit von RWP
 
 Angenommen,
 \begin{align}\label{eq:2-3}
@@ -141,6 +141,114 @@ Betrachte \eqref{eq:2-1} mit $p_{2}(x) = 1$, d.h.
   \end{align*}
 Widerspruch!
 \end{beweis}
+
+% \datum{22. Oktober 2015}
+\begin{satz}\label{thm:2-5}(Maximumprinzip)
+
+Es seien $Lu \leq 0$ und $p_{0} \geq 0$ auf $(a, b)$ sowie $u \in C^{2}[a, b]$ und $p_{0}, p_{1}$ beschränkt auf $[a, b]$. Dann gilt
+\begin{align*}
+      u(x) \leq \max \set{0, u(a), u(b)} \quad \text{auf }[a, b]. 
+\end{align*}
+Wir sagen dann, dass $L$ ein Maximumprinzip erfüllt. 
+\end{satz}
+\begin{beweis}
+  $u$ besitzt ein positives Maximum in $c \in (a, b)$ und für $d \in (c, b)$ gelte $u(d)< u(c)$. Setze
+  \begin{align*}
+    z(x) = e^{\alpha(x - c)} - 1
+  \end{align*}
+mit geeignetem $\alpha > 0$. Dann gilt $z(x) < 0$ für $x \in [a, c)$, $z(c) = 0$, $z(x)>0$ für $x \in [c, b]$. Dann folgt
+\begin{align*}
+  Lz &= -z'' + p_{1}z' + p_{0}z\\
+  &= -\alpha^{2} e^{\alpha(x - c)} + p_{1} \alpha e^{\alpha(x - c)} + p_{0}(e^{\alpha(x - c)} - 1)\\
+  &= \(-\alpha^{2} + p_{1}(x) \alpha + p_{0}\)\cdot(e^{\alpha(x - c)} - p_{0}(x)\\
+  &\leq \(-\alpha^{2} + \bar p_{1}(x) \alpha + \bar p_{0}\)\cdot(e^{\alpha(x - c)} - p_{0}(x)
+\end{align*}
+mit $\bar p_{1} = \max p_{1}(x)$, $\bar p_{0} = \max p_{0}(x)$. Setzen wir nun
+\begin{align*}
+  \alpha \coloneqq \frac{\bar p_{1} + \sqrt{\bar p_{1}^{2} + 4\cdot(\bar p_{0} + 1)}}2, 
+\end{align*}
+so folgt $- \alpha^{2} + \bar p_{1}\alpha + \bar p_{0} = -1$ und $\alpha > 0$ ($\bar p_{0} > 0$). Weiter
+\begin{align*}
+  Lz \leq - e^{\alpha(x-c)} - p_{0}(x) 
+\end{align*}
+für $a < x\leq b$. Sei nun $\delta \in (0, \frac{u(c) - u(d)}{z(d)})$ und $w(x)\coloneqq u(x) + \delta z(x)$. Dann ist
+\begin{align*}
+Lw \coloneqq Lu + \delta Lz < 0 \In (a, b)
+\end{align*}
+($Lu \leq 0$, $\delta> 0$, $Lz<0$), und es folgt
+\begin{align*}
+  w(x) \leq \max \set{0, w(a), w(d)} 
+\end{align*}
+für $x \in [a, d]$. Aber $w(c) = u(c) + \delta z(c) = u(c) \geq  \max \set{0, u(a), u(b)} \geq  \max \set{0, u(a)}\geq  \max \set{0, w(a)}$ und $u(c) > u(d) + \delta z(d) = w(d)$. Also ist
+\begin{align*}
+  w(c) >  \max \set{0, u(a), u(d)}. 
+\end{align*}
+Das ist ein Widerspruch zu
+\begin{align*}
+   w(x) \leq \max \set{0, w(a), w(d)}, 
+\end{align*}
+also war die Annahme, dass $u(d)$ immer positiv ist, falsch. 
+\end{beweis}
+\begin{lemma}\label{lem:2-6}
+  Es seien $p_{0}(x) \geq 0$ auf $(a, b)$ und $p_{0}, p_{1}$ beschränkt auf $[a, b]$. Dann besitzt \eqref{eq:2-3} nur die triviale Lösung $u = 0$. 
+\end{lemma}
+\begin{beweis}
+  Sei $\tilde u$ eine beliebige Lösung von \eqref{eq:2-3}. mit $L \tilde u = 0$, $\tilde u (a) = 0$ und $\tilde u (b) = 0$  und Satz \ref{thm:2-5} folgt $\tilde u (x)\leq 0$ auf $(a, b)$. Mit $L(- \tilde u) = 0$, $-\tilde u(a) = 0$, $-\tilde u(b) = 0$ und Satz \ref{thm:2-5} folgt $-\tilde u(x) \leq 0$ auf $(a, b)$. 
+Also $\tilde u(x) = 0$ auf $(a, b)$. 
+\end{beweis}
+\begin{lemma}\label{lem:2-7}(Vergleichsprinzip)
+  Es seien $p_{0}(x) \geq 0$ auf $(a, b)$ und $p_{0}, p_{1}$ beschränkt auf $[a, b]$. Seien $u_{1}, u_{2} \in C^{2}[a, b]$ mit
+  \begin{enumerate}
+  \item $Lu_{1}(x) \leq Lu_{2}(x)$ für alle $x \in (a, b)$
+  \item $u_{1}(x)\leq u_{2}(x)$ für $x = a$ und $x = b$
+  \end{enumerate}
+Dann gilt $u_{1}(x)\leq u_{2}(x)$ für alle $x \in [a, b]$. 
+\end{lemma}
+\begin{beweis}
+  Satz \ref{thm:2-5} auf $u_{1} - u_{2}$ anwenden. 
+\end{beweis}
+\begin{lemma}\label{lem:2-8} (Schrankenfunktionen)
+  Seien die Voraussetzungen wie in Lemma \ref{lem:2-8}, aber mit
+  \begin{enumerate}
+  \item $\norm{Lu_{1}(x)} \leq Lu_{2}(x)$ für alle $x \in (a, b)$ 
+  \item $\norm{u_{1}(x)}\leq u_{2}(x)$ für $x = a$ und $x = b$
+  \end{enumerate}
+Dann gilt $\implies$ $\norm{u_{1}(x)\leq u_{2}(x)}$. 
+\end{lemma}
+\begin{beweis}
+  $u_{1}\leq u_{2}$ und $-u_{1} \leq u_{2}$, daraus folgt $\norm{u_{1}}\leq u_{2}$. 
+\end{beweis}
+\begin{beispiel}
+  \begin{align*}
+    Lu_{1} = -u_{1}'' + au_{1}' + b(x)u_{1} + c\\
+    u_{1}(0) = u_{1}(1) = 0
+  \end{align*}
+$a, c \geq 0$, $b(x) \geq 0$ beschränkt. 
+
+Ansatz:
+\begin{enumerate}
+\item $u_{2} = c_{1}x + c_{0}$,
+  \begin{itemize}
+  \item $Lu_{2} = c_{1} a + b(x)(c_{1}x + c_{2})\geq c$,
+
+$u_{2}(0) = c_{2} \geq 0$, $u_{2}(1) = c_{1} + c_{2} \geq 0$.
+\begin{align*}
+  0 \leq c_{2} \leq c_{1}x + c_{2}\leq c_{1} + c_{2}
+\end{align*}
+falls $c_{1}\geq 0$, setze $c_{1} = \frac ca$, $c_{2} = 0$. 
+Mit Lemma \ref{lem:2-7}: $u_{1}(x) \leq \frac c a x$ in $[0, 1]$
+\item $Lu_{2} = c_{1} a + b(x)(c_{1}x + c_{2})\leq c$, 
+$u_{2}(0) = c_{2} \leq 0$, $u_{2}(1) = c_{1} + c_{2} \leq 0$, also $c_{1} = c_{2} = 0$ und $0\leq u_{1}(x) = \frac c a x$ in $[0, a]$ mit $a \geq 0$ beliebig. 
+  \end{itemize}
+\item Blasenfunktion: $u_{2} = c_{1}x (1 - x)$, es folgt $u_{2}(1) = 0$, $u_{2}(1) = 0$, 
+wenn $c_{1} \geq 0$:
+
+$Lu_{2} = 2c_{1} + a_{c1}(1 - 2x) + b(x)(c_{1}x(1-x))\geq c_{1}(2 + a(1-2x))\geq c_{1}(2 - a)\geq c$, 
+$c_{1}$ in Abhängigkeit von $a$ bestimmen: 
+$a \in (0, 2)$: $c_{1} \geq \frac c {2-a}$. Schranke: $0 \leq u_{1}(x) \leq \frac c{2-a} x(1 - x)$, $a \in (0, 2)$. 
+\end{enumerate}
+\end{beispiel}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "vorlesung"

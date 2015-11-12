@@ -1,0 +1,226 @@
+
+\section{Asymptotische Entwicklungen}
+\label{sec:asympt-entw}
+Mit dieser Technik versuchen wir, eine gegebene Funktion mit einer Einfacheren zu approximieren. Dabei werden wir eine Art 'Potenzreihenentwicklung' in $\eps$ ausführen. Wir starten zunächst mit Problemen, die nicht singulär gestört sind.
+\begin{beispiel}\label{ex:3-1}
+  Betrachten wir die Lösung der algebraischen Gleichung
+  \begin{align}\label{eq:3-1}
+    u^{2} + \eps u -1 = 0, \quad 0 <\eps \ll 1.
+  \end{align}
+Falls $\eps = 0$, so folgt $u = 1$ als eine Lösung. Falls $\eps > 0$ erwarten wir eine Lösung nahe $1$. Wir nutzen den Ansatz
+\begin{align*}
+  u_{\eps} = 1 + \eps u_{1} + \eps^{2} u_{2} + \dots  \sum_{i = 0}^{n} \eps^{i} u_{i}, \quad u_{0} = 1
+\end{align*}
+Setzen wir diesen Ansatz in \eqref{eq:3-1} ein, so erhalten wir formal
+\begin{align*}
+  0 &= (1 + \eps u_{1} + \eps^{2} u_{2} + \dots )^{2} + \eps (1 + \eps u_{1} + \eps^{2} u_{2} + \dots ) - 1\\
+  &= 1 + 2 \eps u_{1} + \eps^{2} (2u_{2} + u_{1}^{2}) + \dots +  \eps + \eps^{2} u_{1} + \eps^{3} u_{2} + \dots - 1  
+\end{align*}
+Koeffizientenvergleich:
+\begin{align}\label{eq:3-2}
+  &\eps^{0}: \quad 1 -1 = 0\notag\\
+  &\eps^{1}: \quad 2u_{1} + 1 = 0 \implies u_{1} = -\frac 1 2\notag\\
+  &\eps^{2}: \quad 2u_{2} + u_{1}^{2} + u_{1} = 0 \implies u_{2} = \frac 1 8\notag\\
+  & \vdots \notag\\
+\implies \quad & u_{\eps} = 1 - \frac 12 \eps + \frac 1 8 \eps ^{2} \dots
+\end{align}
+Dies ist eine (formale) asymptotische Entwicklung von $u$. Das heißt nicht, dass \eqref{eq:3-2} die Gleichung \eqref{eq:3-1} löst. Dafür müssen wir noch nachweisen, dass \eqref{eq:3-2} wirklich eine Lösung ist. 
+
+Lösung und dann Taylorentwicklung zu $\eps = 0$:
+\begin{align*}
+  u &= \frac {- \eps + \sqrt{\eps^{2} + 4}} 2\\
+  &= - \frac \eps 2 + \frac 12 [2 + 0\cdot \eps + \frac 1 4 \eps^{2} \pm \dots] \\
+  &= 1 - \frac \eps 2 + \frac {\eps^{2}} 8 +\dots
+\end{align*}
+Alternative: auf anderem Weg zeigen, dass $u_{\eps} - u = 0$ (zum Beispiel: Binomische Formeln).
+\end{beispiel}
+Wir werden im Folgenden die Landau Symbole $\cO(\cdot)$ und $o(\cdot)$ verwenden, das heißt,
+\begin{align*}
+  f(\eps) = \cO(g(\eps)) \iff \norm{f(\eps)}\leq c \norm{g(\eps)} \quad \forall \norm \eps \in (0, \eps_{0})\\
+  f(\eps) = o(g(\eps)) \text{ für }\eps \to 0 \iff \lim_{\eps \to 0} \norm{\frac {f(\eps)}{g(\eps)}} = 0
+\end{align*}
+\begin{definition}\label{def:3-2}
+  Eine \markdef{asymptotische Sequenz} $\set{\phi_{n}(\eps)}_{n = 1}^{\infty}$ ist eine Folge von Funktionen in $\eps$, sodass
+  \begin{align*}
+    \phi_{n+1} (\eps) = o(\phi_{n}(\eps)) \text{ für }\eps \to 0 \quad \forall n \in \N. 
+  \end{align*}
+\end{definition}
+\begin{beispiel*}
+  \begin{enumerate}
+  \item $1, \eps, , \eps^{2}, \eps^{3}, \dots$
+  \item $\ln \eps, 1,\eps \ln \eps, \eps, \eps^{2}\ln \eps, \dots$
+  \end{enumerate}
+\end{beispiel*}
+\begin{definition}\label{def:3-3}
+  Es sei $u(x, \eps)$ für alle $x \in X$ und $\eps$ ausreichend klein definiert. Sei $\set{\phi_{n}(\eps)}$ eine asymptotische Sequenz. Dann nennen wir die Reihe
+  \begin{align*}
+    \sum_{n = 1}^{N} u_{n}(x)\phi_{n}(\eps)
+  \end{align*}
+mit $N$ (un)endlich eine \markdef{asymptotische Entwicklung} von $u$ bezüglich $\set{\phi_{n}}$ für $\eps \to 0$, falls für jedes $M \in \set{1, 2, \dots, N}$ gilt:
+\begin{align}\label{eq:3-3}
+  u(x, \eps) - \sum_{i = 1}^{M} u_{n}(x)\phi_{n}(\eps) = o(\phi_{M}) \quad \text{für } \eps \to 0. 
+\end{align}
+alternative Notation: $u(x, \eps) \sim \sum_{n =1}^{M}u_{n}(x)\phi_{n}(\eps)$. Die Entwicklung heißt \markdef{gleichmäßig}, wenn \eqref{eq:3-3} gleichmäßig in $x$ gilt. 
+
+Ist $u$ und $\set{\phi_{n}}$ gegeben, so ist die asymptotische Entwicklung eindeutig. Die Koeffizienten können (im Prinzip) wie folgt bestimmt werden:
+\begin{align*}
+  u_{1}(x) &= \lim_{\eps \to 0} \frac{u(x, \eps)}{\phi_{1}(\eps)}\\
+  u_{m}(x) &= \lim_{\eps \to 0} \frac{u(x, \eps) - \sum_{n = 1}^{m-1} u_{n}(x) \phi_{n}(\eps)}{\phi_{m}(\eps)}, \quad m > 1.
+\end{align*}
+Allerdings ist eine gute Wahl von $\set{\phi_{n}}$ nicht immer klar. 
+\end{definition}
+\begin{beispiel}\label{ex:3-4}
+  Betrachte das Anfangswertproblem
+  \begin{align*}
+    \frac{dy}{dz} + y = \frac 1 \eps, \quad - \infty < z <0\\
+    y(- \infty) = 0. 
+  \end{align*}
+Gesucht ist die asymptotische Entwicklung für $\norm z \gg 1$, $z <0$, also $\eps = \frac 1 z$. Genutzt wir die asymptotische Sequenz $\set{\phi_{n}}$ mit $\phi_{1} = 1$, $\phi_{2} = \frac 1 z$, $\phi_{3} \frac 1 {z^{2}}$. 
+%\datum{23. Oktober 2015}
+
+Nutzen wir die asymptotische Sequenz $\phi_{n}$ mit
+\begin{align*}
+  \phi_{1} &= 1\\
+  \phi_{2} &= \frac 1z\\
+  \phi_{3} &= \frac 1{z^{2}}\ \dots\\
+\implies \quad y(z) &= \sum_{m = 0}^{\infty} u_{m} z^{-m}\\
+0 &= y(- \infty) = u_{0}
+\end{align*}
+Ableiten nach $z$: 
+\begin{align*}
+  -\sum_{m = 0}^{\infty} m\cdot u_{m} z^{-m+1} +\sum_{m = 1}^{\infty} u_{m} z^{-m} = z^{-1}\\
+\end{align*}
+Koeffizientenvergleich bezüglich $\phi_{n}$:
+\begin{align*}
+%  z^{-1}&:\, u_{1}  = 1\\
+%  z^{-2}&:\, -u_{1} + u_{2} = 0 \implies u_{2} = u_{1} = 1\\
+%  z^{-3}&:\, -2\cdot u_{2} + u_{3} = 0 \implies u_{3} = 2\cdot u_{2} = 2 \dots\\
+& u_{m} = (m-1)!\quad m\geq 1, u_{0} = 0\\
+\implies \quad y(z) &= \sum_{m = 1}^{\infty} \frac{(m-1)!}{z^{m}}
+\end{align*}
+ist die formale Lösung. Die Richtigkeit muss noch gezeigt werden! Lösen wir das Anfangswertproblem direkt: 
+
+Homogene Gleichung:
+\begin{align*}
+  y' + y = 0\implies y_{h}(z) = c\cdot e^{-z}
+\end{align*}
+Partielle Lösung (Variation der Konstanten):
+\begin{align*}
+  y_{p}(z) &= c(z)e^{-z}\\
+  y_{p}'(z) &= c(z)'e^{-z} - c(z)e^{-z}\\
+  y_{p}'(z) + y_{p}(z) &= c(z)'e^{-z}  = z^{-1}\\
+\implies \quad c(z) &= \int \frac {e^{z}} z dz\\
+\implies \quad y(z) &= c e^{-z} + e^{-z} \int_{- \infty}^{z} \frac{e^{t}}{t}dt\\
+ y(-\infty)&= 0 \implies c = 0\\
+\implies \quad y(z) &= e^{-z} \int_{- \infty}^{z} \frac{e^{t}}{t}dt, 
+\end{align*}
+das Integral konvergiert für alle $z < 0$. Geschickte Umformung per partieller Integration führt auf die formale Darstellung:
+\begin{align*}
+  y(z) &= z^{-1} + e^{-z} \int_{-\infty}^{z} t^{-2} e^{t}dt\\
+&= z^{-1} + z^{-2} + 2e^{-z} \int_{-\infty}^{z} t^{-3} e^{t}dt = \dots 
+\end{align*}
+Für jedes $M> 0$ bekommen wir
+\begin{align}\label{eq:3-4}
+  y(z) - \sum_{m = 1}^{M}(m-1)! z^{-m} = M! \cdot e^{-z} \int_{-\infty}^{z}t^{-(M+1)}e^{t}dt
+\end{align}
+Für $z <0$ folgt:
+\begin{align}\label{eq:3-5}
+  \norm {M! \cdot e^{-z} \int_{- \infty}^{z} t^{-(M+1)} e^{t}dt}&\leq M!\cdot \norm z^{-(M+1)}\underbrace{e^{-z}\cdot\int_{-\infty}^{z}e^{t}dt}_{= 1}\\
+&= o(z^{-M})\notag
+\end{align}
+für $z \to -\infty$. Also gilt $y(z) \sim \sum_{m = 1}^{\infty} \frac{(m-1)!}{z^{m}}$ für $z \to -\infty$.
+\end{beispiel}
+Es bleibt zu beachten, dass die asymptotischen Entwicklungen und Taylor-Reihen nich viel gemeinsam haben. Es lässt sich leicht zeigen, dass die obige Reihe
+\begin{align*}
+  \sum_{ m = 1}^{\infty} \frac{(m-1)!}{z^{m}}
+\end{align*}
+für jedes $z < 0$ divergiert! Das stört nicht; trotzdem ist die Entwicklung nützlich, da wir nie bis $\infty$ summieren. Dafür ist diese Reihendarstellung sehr nützlich. Üblicherweise werden nur eine Hand voll Terme genutzt. Setzen wir im Beispiel $z  = - 10$ ein. Dann folgt aus \eqref{eq:3-4} und \eqref{eq:3-5}
+\begin{align*}
+  \norm{y(z) - \sum_{m = 1}^{2}\frac{(m-1)!} {z^{-m}}} \leq 2! \cdot 10^{-3}, 
+\end{align*}
+also eine sehr gute Approximation von $y(-10)$ mit $2$ Termen. Typischerweise verhalten sich die Terme wie 
+
+SKIZZE NUM\_SING 1. 
+
+\paragraph{Rechenregeln}
+\label{sec:rechenregeln}
+\begin{enumerate}
+\item 
+Mit $o(\cdot)$ kann auch gerechnet werden. Gilt 
+\begin{align*}
+  &f(\eps) \sim \sum_{n =1}^{\infty}a_{n}(x)\phi_{n}(\eps) \quad \eps \to \infty\\
+  &g(\eps) \sim \sum_{n =1}^{\infty}b_{n}(x)\phi_{n}(\eps) \quad \eps \to \infty
+\end{align*}
+so folgt
+\begin{align*}
+    (f\pm g)(\eps) \sim \sum_{n =1}^{\infty}(a_{n}\pm b_{n})(x)\phi_{n}(\eps) \quad \eps \to \infty. 
+\end{align*}
+\item Produkte sich auch möglich, insofern in den entstehenden Reihen ungeordnet werden kann (absolut konvergente Reihen). Asymptotische Entwicklungen ineinander einzusetzen ist gefährlich. 
+\item Es darf termweise integriert werden. 
+\item Termweises Differenzieren ist im Allgemeinen nicht erlaubt. 
+\end{enumerate}
+\begin{beispiel}\label{ex:3-5}
+  Betrachten wir das Randwertproblem
+  \begin{align}\label{eq:3-6}
+    Lu = - u''(x) + (k^{2} + \eps w(x)) u(x) = f(x)&\In (0, 1)\\
+    u(0) = u(1) = 0 &\notag
+  \end{align}
+  mit festem $k> 0$ und $w, f \in C[0, 1]$, außerdem sei sei $0< \eps \ll 1$. Dann gilt nach Satz \ref{thm:2-3} und Lemma \ref{lem:2-6}, dass \eqref{eq:3-6} eine eindeutige Lösung $u(x, \eps)$ besitzt. Für diese wollen wir eine (kurze) asymptotische Entwicklung herleiten, das heißt
+\begin{align*}
+  u(x, \eps) = u_{0}(x) + \eps u_{1}(x) + \cO(\eps^{2}). 
+\end{align*}
+Eingesetzt in \eqref{eq:3-6} und Vergleich der $\eps$-Potenzen liefert:
+\begin{align}\label{eq:3-7}
+  \eps^{0}:& - u_{0}'' + k^{2} u_{0} = f\\
+  &u_{0}(0) = u_{0}(1) = 0 \notag 
+\end{align}
+\begin{align}\label{eq:3-8}
+  \eps^{1}:& - u_{1}'' + k^{2} u_{1} = -w(x) u_{0}(x)\\
+  &u_{1}(0) = u_{1}(1) = 0 \notag. 
+\end{align}
+\eqref{eq:3-7} besitzt eine eindeutige Lösung $u_{0}$, welche in \eqref{eq:3-8} eingesetzt werden kann. Also besitzt \eqref{eq:3-8} eine eindeutige Lösung $u_{1}$. 
+
+Beispiel im Beispiel: $k = 1$, $f(x) = 2\cdot(x-1) \sin(x) - 2\cdot \cos (x)$ und $w = 1$. Es folgt
+\begin{align*}
+  u_{0}(x) &= (x-1) \sin(x)\\
+  \implies \quad u_{1}(x) &= \dots
+\end{align*}
+(ein bisschen aufwändig, aber berechenbar).
+
+\vspace{5mm}
+
+Wie zeigen wir, dass $u(x) = u_{0}(x) + \eps u_{1}(x) + \cO(\eps^{2})$? Das ist äquivalent zu
+\begin{align*}
+  w(x) = u(x) - (u_{0}(x) + \eps u_{1}(x)) = \cO(\eps^{2}). 
+\end{align*}
+Die Randdaten $w(0)$, $w(1)$ mit dem Residuum $(Lw)(x)$ liefern uns mit Schrankenfunktionen eine Abschätzung $\norm q \leq \dots$
+
+\vspace{5mm}
+
+Wir wollen das Maximumprinzip für $L$ nutzen, also muss $\eps$ klein genug sein, damit $k^{2} + \eps w(x) \geq 0$. Nach Definition:
+\begin{align*}
+  (Lw)(x) &= (Lu)(x) - ((Lu_{0})(x) + \eps(Lu_{1})(x))\\
+  &= f(x) - ((f + \eps w(x) u_{0}(x)) + \eps(-w(x)u_{0}(x) + \eps w(x)u_{1}(x)))\\
+  &= \eps^{2} w(x) u_{1}(x)\\
+\implies \quad \norm{(Lw)(x)}&\leq \eps^{2}\nnorm w_{L_{\infty}} \nnorm {u_{1}}_{L_{\infty}} \leq C \eps ^{2}
+\end{align*}
+mit $C \geq \nnorm w_{L_{\infty}} \nnorm {u_{1}}_{L_{\infty}}$. Randbedingung: 
+\begin{align*}
+  w(0) = (u- (u_{0} + \eps u_{1}))(0) = 0=   (u- (u_{0} + \eps u_{1}))(1) = w(1). 
+\end{align*}
+Sei nun $\eps$ so klein, dass $k^{2} + \eps w(x) \geq \frac {k^{2}}2$ und die Schrankenfunktion $b(x) \frac{2C}{k^{2}}\eps^{2}$. Dann ist $b$ konstant und
+\begin{align*}
+  (Lb)(x) &= - b'' + (k^{2} + \eps w(x))b(x) \geq \frac {k^{2}} 2 \frac{2C}{k^{2}} \eps^{2} \geq \norm{(Lw)(x)}\\
+  b(0) = b(1) &= \frac{2C}{k^{2}} \eps^{2} \geq 0 = w(0) = w(1)\\
+\implies \norm{w(x)} &\leq \frac{2C}{k^{2}}\eps^{2}\\
+\implies u(x) &= u_{0} + \eps u_{1} + \cO(\eps^{2})
+\end{align*}
+für $\eps \to 0$. Diese asymptotische Entwicklung ist gleichmäßig in $x \in (0, 1)$. 
+\end{beispiel}
+Maximumprinzip: Aus der Kleinheit der Daten folgt die Kleinheit der Lösung. 
+
+Mit dieser Technik können auch höhere Entwicklungen durchgeführt werden, es werden nur mehr Terme benötigt. Also hat man regulär gestörte Probleme im Griff *check*!
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "vorlesung"
+%%% End: 

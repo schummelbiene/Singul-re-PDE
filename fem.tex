@@ -1,0 +1,242 @@
+%\datum{06. November 2015}
+
+ T. Linß Layer-adapted meshes for reaction-convection--diffusion problems
+Roos, Stynes, Tobiska: Robust numerical methods for singulary perturbed differential equations (NS!!)
+
+\section{Finite Elemente Methoden}
+\label{sec:finite-elem-meth}
+
+Anstelle der klassischen Formulierung
+\begin{subequations}
+  \label{eq:6-1}
+\begin{align}
+  Lu = - \epsilon u'' - b u' + cu = f &\In (0, 1) = \Omega \label{eq:6-1a}\\
+u(0) = u(1) = 0 & \label{eq:6-1b}
+\end{align}
+\end{subequations}
+nutzen wir eine \markdef{schwache Formulierung}. Diese erhalten wir durch Nutzung des $L_{2}$-Skalarproduktes in Zusammenhang mit geeigneten Testfunktionen und geeigneten Testfunktionen und geeigneten Umformulierungen mithilfe der partiellen Integration. Es sei mit $(\cdot, \cdot)$ das $L_{2}$- Skalarprodukt über $(0, 1)$ gemeint. 
+\begin{align*}
+  - \int_{0}^{1} \epsilon u'' v - \int_{0}^{1} b u' v + \int_{0}^{1} cuv = \int_{0}^{1} fv\\
+\iff \quad - \epsilon (u'', v) - (bu', v) + (cu, v) = (f, v) \\
+- \epsilon (u'', v) = \epsilon (u', v') - \epsilon u'v|_{0}^{1}. 
+\end{align*}
+Einbindung der Randbedingungen \eqref{eq:6-1b}:
+\begin{align*}
+  u \in H_{0}^{1}(\Omega) = \set{u \in L_{2}(\Omega): \, u'\in L_{2}(\Omega), \, u|_{\pd \Omega} = 0},  
+\end{align*}
+$H_{0}^{1}$ ist ein Sobolevraum.
+
+\paragraph{Exkurs}
+Aus dem Sobolev-Einbettungssatz folgt: 
+
+Für $k-j-\beta > \frac n2$ und $\Omega \subset \R^{n}$ gilt
+\begin{align*}
+  H^{k}(\Omega) \emb C^{j, \beta}(\bar \Omega)
+\end{align*}
+(Raum der Funktionen der Funktionen, deren $k$-te Ableitungen in $L_{2}$ liegen ist einbettbar in den Raum der Hölderstetigen Funktionen mit $\beta$). $k =1$, $n = 1$, $\beta = 0$, $j = 1$, also $1 - 0- 0 = 1 > \frac 12$. 
+Also: Funktionen aus dem $H_{0}^{1}$ sind stetig. 
+
+Exkurs Ende. 
+
+Norm in $H_{0}^{1}(\Omega)$:
+\begin{align*}
+  \nnorm u_{1}^{2} \coloneqq   \nnorm {u'}_{0}^{2} +   \nnorm u_{0}^{2}
+\end{align*}
+mit der $H_{1}$-Seminorm $  \nnorm {u'}_{0}^{2}$ (ist schon eine Norm in $H_{0}^{1}$). 
+
+Damit  $- \epsilon u' v |_{0}^{1}$ verschwindet, wählen wir $v \in H_{0}^{1}(\Omega)$. 
+
+\paragraph{Schwache Formulierung} Gesucht: $u \in H_{0}^{1}(\Omega)$ mit
+\begin{align}\label{eq:6-2}
+  a(u, v)\coloneqq \epsilon(u', v') - (bu', v) + (cu, v) = (f, v) \quad \forall v \in H_{0}^{1}(\Omega). 
+\end{align}
+Beachte: \eqref{eq:6-1} $\implies$ \eqref{eq:6-2} $\stackrel {u \in C^{2}} \implies$ \eqref{eq:6-1}. Nicht jede Lösung von \eqref{eq:6-2} löst auch \eqref{eq:6-1}! Lösung für \eqref{eq:6-2} reicht uns allerdings\dots
+
+Von nun an: $\nnorm \cdot _{0} = \nnorm \cdot_{L_{2}}$. 
+
+\paragraph{Eigenschaften von $a(\cdot, \cdot)$}
+\begin{enumerate}
+\item $a(\cdot, v)$ und $a(u, \cdot)$ sind Funktionale, daher wird $a(\cdot, \cdot)$ \markdef{Bilinearform} genannt. 
+\item Koerzitivität / $v$-Elliptizität:
+  \begin{align*}
+    a(u, u) &=\epsilon (u', u') - (bu', u) + (cu, u)\\
+    - (bu', u) &= (u, (bu')) - \underbrace{ubu|_{0}^{1}}_{= 0} = (b'u, u) + (u, bu')\\
+\implies \quad - (bu', u) &= \(\frac 12 b'u, u\)
+  \end{align*}
+Für $c + \frac 12 b' \geq \gamma > 0$ folgt
+\begin{align*}
+  a(u, u) =& \epsilon (u', u') + ((c + \frac 12 b')u, u)\\
+&\geq \epsilon \nnorm{u'}_{L_{2}}^{2} + \gamma \nnorm{u}_{L_{2}}^{2} \eqqcolon \nnnorm u_{\epsilon}^{2}, 
+\end{align*}
+die \markdef{Energie-Norm}, $\epsilon$-gewichtete $H^{1}$-Norm. 
+\item Stetigkeit
+  \begin{align*}
+    \norm{a(u, v)} &\leq \epsilon \nnorm {u'}_{L^{2}} \cdot \nnorm {v'}_{L^{2}} + \nnorm b_{L_{\infty}} \cdot \nnorm {u'}_{L^{2}} \cdot \nnorm {v}_{L^{2}} + \nnorm c_{L_{\infty}} \cdot\nnorm {u}_{L^{2}} \cdot \nnorm {v}_{L^{2}}\\
+&\leq \nnnorm u_{\epsilon} \cdot \nnnorm v_{\epsilon} + \gamma^{- \frac 12}\nnorm b_{L_{\infty}} \epsilon^{-\frac 12} \nnnorm u_{\epsilon} \nnnorm v_{\epsilon} + \frac 1 \gamma \nnorm c_{L_{\infty}} \cdot \nnnorm u_{\epsilon} \cdot \nnnorm v _{\epsilon}\\
+&\leq C(1 + \epsilon^{-\frac 12})\cdot\nnnorm u_{\epsilon}\cdot\nnnorm v_{\epsilon}
+  \end{align*}
+Also ist $a(\cdot, \cdot)$ eine koerzitive, stetige Bilinearform, aber keine gleichmäßig stetige (das ist an mancher Stelle schlimm!). 
+\end{enumerate}
+\begin{bemerkung*}
+  \begin{enumerate}
+  \item   Es kann immer erreicht werden, dass
+  \begin{align*}
+    c + \frac 12 b' \geq \gamma > 0
+  \end{align*}
+  erfüllt ist, mittels einer Koordinatentransformation $u(x) = e^{\kappa \cdot x} v(x)$ mit geeignetem $\kappa$. 
+\item Ist die Norm $\nnnorm \cdot_{\epsilon}$ sinnvoll? In  $\nnnorm \cdot_{\epsilon}$ ist \eqref{eq:6-1} singulär gestört, da
+  \begin{align*}
+     \nnnorm {e^{- \beta \frac x \epsilon}}_{\epsilon} &\geq\epsilon^{\frac 12}\cdot \nnorm{e^{-1} e^{- \beta \frac x \epsilon}}_{L_{2}} = \cO(1)
+  \end{align*}
+(bezüglich $\epsilon$ konstant!!) Es folgt, dass
+\begin{align*}
+   \lim_{\epsilon \to 0}    \nnnorm {e^{- \beta \frac x \epsilon}}_{\epsilon}  > 0
+\end{align*}
+und damit ist das Problem auch bezüglich $\nnnorm \cdot _{\epsilon}$ singulär gestört. 
+  \end{enumerate}
+\end{bemerkung*}
+\begin{lemma}\label{lem:6-1} Lax-Milgram
+  Die Variationsgleichung \eqref{eq:6-2} besitzt für jedes $f \in L_{2}(\Omega)$ (sogar $(H_{0}^{1}(\Omega))' = H^{-1}$) eine eindeutige Lösung $u \in H_{0}^{1}(\Omega)$. 
+\end{lemma}
+\begin{beweis}
+  Banach'scher Fixpunktsatz und so weiter\dots
+\end{beweis}
+\begin{bemerkung*}
+  Mit der Koerzitivität und der Stetigkeit folgt
+\begin{align*}
+  \nnnorm u_{\epsilon}^{2} &\leq a(u, u) = (f, u) \leq \nnorm f_{L_{2}} \cdot \nnorm u_{L_{2}} \leq \frac {\nnorm f_{L_{2}}}{\gamma^{\frac 1 2}} \nnnorm u_{\epsilon}\\
+\implies \quad \nnnorm u_{\epsilon} &\leq \gamma^{-\frac 1 2} \nnorm f_{L_{2}}
+\end{align*}
+(Lösung ist in der Energienorm beschränkt). Aber es ist eine \emph{schlechte} Schranke! 
+\end{bemerkung*}
+
+\paragraph{Diskretisierung}
+Wählen wir $U_{h}\subset H_{0}^{1}(\Omega)$ und $V_{h}\subset H_{0}^{1}(\Omega)$ endlichdimensional, so erhalten wir für $U_{h} \neq V_{h}$ die \markdef{Petrov-Galerkin-Methoden}: 
+\begin{center}
+Gesucht: $u_{h}\in U_{h}$ mit $ a(u_{h}, v_{h}) = (f, v_{h})$ für alle $v_{h} \in V_{h}$ 
+\end{center}
+und für $U_{h} = V_{h}$ die \markdef{Galerkin-Methoden} (hier im Wesentlichen betrachtet)
+\begin{center}
+Gesucht: $u_{h}\in V_{h}$ mit $ a(u_{h}, v_{h}) = (f, v_{h})$ für alle $v_{h} \in V_{h}$. 
+\end{center}
+Mit einer Basis $\set{\phi_{i}}_{i = 1}^{M}$ von $ V_{h} = U_{h}$ folgt für die Galerkin-Methode
+\begin{align*}
+  u_{h} = \sum_{i = 1}^{M} u_{i} \phi_{i}
+\end{align*}
+und aus $a(u_{h}, v_{h}) = (f, v_{h})$ wird
+\begin{align*}
+  \sum_{i = 1}^{M} u_{i} a(\phi_{i}, \phi_{j}) &= (f, \phi_{j}) \quad j = 1, \dots, M\\
+\iff \qquad A U &= F
+\end{align*}
+mit $A = (a_{ij})$ mit $a_{ij} = a(\phi_{j}, \phi_{i})$, $F = \((f, \phi_{j})\)_{j = 1}^{M}$. Das ist ein Lineares Gleichungssystem. Das Lösungsverhalten des numerischen Lösers hängt von der Basis $\set{\phi_{i}}$ ab. Optimale Basis: $a(\phi_{i}, \phi_{j}) = \delta_{ij}$, aber dies ist im Allgemeinen nicht praktikabel, da die $\set{\phi_{i}}$ Lösungen des Originalproblems sein müssten. Daher wählt man eine Basis, in der nicht jede Funktion mit jeder interagiert. Also ist $A$ dünn besetzt. 
+
+\paragraph{Gitter}
+Sei dazu ein Gitter $\omega$ mit $0 = x_{0} \leq \dots \leq x_{N} = 1$ gegeben. Wir erzeugen uns eine Funktionsfolge aus $C^{0}$-Polynomsplines. 
+
+\paragraph{Lineare Elemente} ($C^{0}$-$P_{1}$-Spline, $S^{1} = S_{0}^{1}$ (Splines), Hütchenfunktionen, \dots) $\phi_{i}$ ist stückweise linear und $\phi_{i}(x_{j}) = \delta_{ij}$, also
+\begin{align*}
+  \phi_{i}(x) =
+  \begin{cases}
+\frac{x - x_{i-1}}{x_{i} - x_{i-1}}, & x \in[x_{i - 1}, x_{i}]\\
+\frac{x_{i+1} - x}{x_{i+1} - x_{i}}, & x \in[x_{i}, x_{i+1}]\\
+0, & \text{sonst}. 
+  \end{cases}
+\end{align*}
+Also $a (\phi_{i}, \phi_{j}) = 0$ für $\norm{i-j} > 1$, also ist $A$ tridiagonal. Lösen von $AU = F$ kostet $\cO(N)$ mit dem Thomas-Algorithmus. 
+
+\paragraph{Elemente höherer Ordnung}
+Lokale Sichtweise (für ein Intervall $[x_{i-1}, x_{i}]$): Wir definieren einen geeigneten lokalen Polynomraum.
+\begin{enumerate}
+\item Hierarchische Basis, linear: lokal $\Pi_{1}$; linear mit quadratischer Blasenfunktion: lokal $\Pi_{2}$; zusätzlich kubisch: lokal $\Pi_{3}$ und so weiter. 
+
+Lineare Funktionen müssen stetig verknüpft werden, damit $V_{h} \subset H_{0}^{1}(\Omega)$ und der Rest sind stetige Blasenfunktionen. Weiterhin haben wir eine Matrix mit Bandstruktur. Dann ist ($P$ ist maximaler Polynomgrad)
+\begin{align*}
+  u_{h} =  \sum_{i = 1}^{N-1} u^{1}_{i} \underbrace{\phi_{i}^{1}}_{\text{lin. Hütchenfkt.}} + \sum_{i = 1}^{N} \sum_{j = 2}^{P} u_{i}^{j} \underbrace{\phi_{i}^{j}}_{\text{lokale Blase, Grad }j}
+\end{align*}
+
+\item Standard-Lagrange-Basis
+\end{enumerate}
+%\datum{12. November 2015}
+
+\begin{beispiel}\label{ex:6-2}
+  Galerkin-FEM mit linearen Ansatzfunktionen über einem äquidistanten Gitter
+  \begin{align*}
+    h_{i} &= \frac 1N \eqqcolon h\\
+    \phi_{i} &=
+    \begin{cases}
+      \frac{x - x_{i-1}} h, & x \in(x_{i-1}, x_{i})\\
+      \frac{x_{i+1} - x} h, & x \in(x_{i}, x_{i+1})\\
+      0, & \text{sonst}
+    \end{cases}
+  \end{align*}
+Integrale in $(a(u_{h}, \phi_{j})) = (f, \phi_{j})$ werden üblicherweise mittels einer Quadraturformel berechnet. Sei diese die Mittelpunktregel, das heißt
+\begin{align*}
+  \int_{x_{i-1}}^{x_{i}} f(x) dx\approx h\cdot f\(x_{i - \frac 12}\). 
+\end{align*}
+Dann erhalten wir ein lineares Gleichungssystem der Form
+\begin{align*}
+  - \epsilon [D^{2}u]_{i} + \frac 12 \(b_{i-\frac 12} [D^{-}u]_{i}  + b_{i+ \frac 12}[D^{+}u]_{i}\) + \frac 12 \( c_{i- \frac 12} + c_{i+ \frac 12}\)u_{i} \\
+&= \frac 12 \( f_{i- \frac 12} + f_{i+ \frac 12}\)
+\end{align*}
+mit
+\begin{align*}
+  [D^{+}u]_{i} &\coloneqq \frac{u_{i+1} - u_{i}} h\\
+  [D^{-}u]_{i} &\coloneqq \frac{u_{i} - u_{i-1}} h\\
+  [D^{2}u]_{i} &\coloneqq [D^{+} D^{-} u]_{i}
+\end{align*}
+Dies ist ein Differenzenverfahren und für $b, c, f$ konstant ist dies das klassische zentrale Differenzenverfahren:
+\begin{align*}
+    - \epsilon \frac{u_{i+1} - 2 u_{i} + u_{i-1}}{h^{2}} + b \frac{u_{i+1}-u_{i-1}}{2\cdot h} + c\cdot u_{i} = f_{i}
+\end{align*}
+=(. 
+\end{beispiel}
+
+\paragraph{Klassische Fehleranalysis}
+Sei dazu $P: H_{0}^{1}(0, 1) \to V_{h}$ eine Projektion, zum Beispiel Interpolation. Dann gilt
+\begin{enumerate}
+\item \label{num:i} die Galerkin-Orthogonalität
+  \begin{align*}
+    a(u - u_{h}, \phi_{j}) = 0 \quad \forall \phi_{j}\in V_{n};
+  \end{align*}
+\item \label{num:ii}mithilfe der Koerzitivität:
+  \begin{align*}
+     \nnnorm{u-u_{h}}_{\epsilon}^{2} &\leq a(u-u_{h}, u- u_{h})\\
+     &= a(u-u_{h}, u-u_{h}+ \underbrace{u_{h} - Pu}_{= 0, \, \in V_{h}})\\
+     &= a(u-u_{h}, u- Pu)\\
+     &\leq C\cdot \nnnorm{u-u_{h}}_{\epsilon} \cdot\nnnorm{u-Pu}_{\epsilon} + C\cdot \epsilon^{-\frac 12} \nnnorm{u-u_{h}}_{\epsilon}\cdot\nnnorm{u-Pu}_{\epsilon}
+  \end{align*}
+mit Stetigkeit und \ref{num:i}. Wir erhalten
+\begin{align*}
+   \nnnorm{u-u_{h}}_{\epsilon} &\leq  C\cdot \epsilon^{-\frac 12} \cdot \nnnorm{u-Pu}_{\epsilon}
+\end{align*}
+(Version des Lemmas von Cea, Quasi-Optimalität bezüglich der $\nnnorm\cdot_{\epsilon}$). 
+\end{enumerate}
+Angenommen, $P$ ist eine nodale Interpolierende, das heißt, $Pu(x_{i}) = u(x_{i})$, $i = 0, \dots, N$, dann
+\begin{align*}
+  \nnnorm{u-Pu}_{\epsilon} \leq \epsilon^{\frac 12}\nnorm{(u-u^{I})'}_{L_{2}} + \gamma \nnorm{u-u^{I}}_{L_{2}}. 
+\end{align*}
+Mit $u \in H^{2}(0, 1) = \set{u \in L_{2}: \,  u', u'' \in L_{2}}$ folgt
+\begin{align*}
+  \nnnorm{u - Pu}_{\epsilon} &\leq \epsilon^{\frac 12} C H\norm u_{2} + CH^{2} \nnorm u_{2}\\
+  &\leq C(\epsilon^{\frac 12} + H) H\norm u_{2} \\
+\norm{u''(x)}\leq C(1 + \epsilon^{-2}e^{- \beta \frac x \epsilon}) \implies \norm u_{2} \leq C\cdot\epsilon^{- \frac 32}\\
+\implies \nnnorm{u-u_{h}}_{\epsilon} \leq C \cdot \epsilon^{- \frac 12}(\epsilon^{\frac 12} + H)\cdot H\cdot \epsilon^{- \frac 32}\\
+\leq C \cdot H\cdot \epsilon^{- \frac 32}(1 + \epsilon^{-\frac 12} + H)
+\end{align*}
+($\norm \cdot_{2}$ ist die Norm in $H^2$, $\norm v_{2} = \nnorm {v''}_{L_{2}}$). 
+Das ist keine gleichmäßige Konvergenz! Auswege:
+\begin{enumerate}
+\item verbesserte Analysis (immer notwendig!)
+\item angepasste Funktionenräume (entweder \dots)
+\item angepasste Gitter (\dots oder)
+\item Stabilisierungsmethoden (optional, in Kombination)
+\end{enumerate}
+
+\subsection{Angepasste Funktionenräume}
+\label{sec:angep-funkt}
+
+Mit Hilfe der Greenschen Funktion $G$, die 
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "vorlesung"
+%%% End: 
