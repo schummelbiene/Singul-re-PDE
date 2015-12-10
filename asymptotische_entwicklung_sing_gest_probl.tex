@@ -180,9 +180,69 @@ Die vorherigen Beispiele zeigen, dass die Standart-Ansätze modifiziert werden m
     \implies \quad u(x) &= u_{0}(x) + v(x)\\
     w(x) &= u(x) - (u_{0}(x) + v(x))
   \end{align*}
-
 \end{beispiel*}
 
+
+%datum{30. Oktober 2015}
+Schauen wir uns die Differenz
+\begin{align*}
+  w(x) = u(x) - \( \sum_{n = 0}^{M} a_{n}(x) \epsilon^{n} - e^{- \frac x \epsilon} \sum_{n = 0}^{M} a_{n}(0) \epsilon^{n}\)
+\end{align*}
+an; Randbedingungen:
+\begin{align*}
+  \norm{w(0)} &= \norm{0 - \(\sum_{n = 0}^{M}a_{n}(0) \epsilon^{n} - 1\cdot\sum_{n = 0}^{M} a_{n}(0) \epsilon^{n}\) } = 0,\\
+  \norm{w(1)} &= \norm{0 - \(\sum_{n = 0}^{M} 0  - e^{- \frac 1 \epsilon}\cdot\sum_{n = 0}^{M} a_{n}(0) \epsilon^{n}\) } \leq C_{1} \epsilon^{M}.
+\end{align*}
+Behandlung von $e^{- \frac 1 \epsilon}$:
+\begin{align*}
+  e^{- \frac 1 \epsilon} &= e^{M+1} \epsilon^{- (M+1)} e^{- \frac 1 \epsilon}\\
+&\leq \epsilon^{M+1} \( \frac{M+1} e\)^{m+1}. 
+\end{align*}
+Das ist eine sehr grobe Schranke, sie reicht aber. Besser:
+\begin{align*}
+  \epsilon &\leq \epsilon_{0} \ll 1\\
+  e^{- \frac 1 \epsilon} &\leq \epsilon^{M+1} \epsilon_{0}^{-(M+1)} \epsilon_{0}^{- \frac 1 {\epsilon_{0}}}. 
+\end{align*}
+Behandlung des Residuums (beachte $a_{n}(x) = (-1)^{n}[F^{(n)}(1) - F^{(n)}(x)]$):
+\begin{align*}
+  (Lw)(x) &= f(x) - \sum_{n = 0}^{M} (La_{n})(x) \epsilon^{n} - \underbrace{(Le^{- \frac x \epsilon})}_{= 0} \sum_{n = 0}^{M} a_{n}(0) \epsilon^{n}\\
+  &= f(x) - \sum_{n = 0}^{M} \( \epsilon F^{(n+2)}(x) + F^{(N+1)}(x) \) \epsilon^{n}\cdot (-1)^{n}\\
+  &= f(x) - \( (\epsilon f'(x) + f(x)) - \epsilon(\epsilon f''(x) + f'(x)) + \epsilon^{2}(\epsilon f'''(x) + f''(x)) - \dots + (-1)^{M+1} \epsilon^{M}(\epsilon f^{(M+1)}(x) + f^{(M)}(x)) \) \\
+  &= (-1)^{M+1} \epsilon^{M+1}f^{(M+1)}(x)\\
+\implies \quad \norm{(Lw)(x)} &\leq C_{2} \epsilon^{M+1}. 
+\end{align*}
+Hierfür muss folgende Glattheitsbedingung gelten: $f \in C^{M+1}[0, 1]$. Es werden noch Schrankenfunktionen benötigt; mit $C = \max\set{C_{1}, C_{2}}$ sei
+\begin{align*}
+  S(x) = C\cdot \epsilon^{M+1}(2 - x). 
+\end{align*}
+Probe auf Korrektheit:
+\begin{align*}
+  S(0) &= 2\cdot C\cdot\epsilon^{M+1} \geq 0 = \norm{w(0)}\\
+  S(1) &= C\cdot\epsilon^{M+1} \geq C_{1}\cdot \epsilon^{M+1} \geq \norm{w(1)}\\
+(Ls)(x) & = C\cdot \epsilon^{M+1} \geq C_{2}\cdot \epsilon^{M+1} \geq (Lw)(x). 
+\end{align*}
+Also ist $S(x)$ Schrankenfunktion von $w(x)$. Also
+\begin{align*}
+  \nnorm{u(x)}\leq S(x) \leq 2\cdot C \cdot \epsilon^{M+1} \leq C\cdot \epsilon^{M+1}. 
+\end{align*}
+Dieser Ausdruck hängt nicht von $x$ ab! Daher ist es eine gleichmäßige asymptotische Entwicklung für $u$ und $\epsilon \to 0$. 
+
+\begin{beispiel}\label{ex:4-4}
+  Gesucht ist die asymptotische Entwicklung von
+  \begin{align*}
+    - \epsilon^{2}u'' + u &= x^{2}\\
+u(0) = u(1) &= 0. 
+  \end{align*}
+Es gibt zwei Grenzschichten, das motiviert die Verwendung von zwei zusätzlichen Funktionen $v(\xi)$ für die erste und $w(\eta)$ für die zweite Grenzschicht. Wir erhalten mit den Transformationen $\xi = \frac x \xi$, $\eta = \frac {1 - x} \epsilon$
+\begin{align*}
+  u(x) = \underbrace{x^{2} + 2\cdot \epsilon^{2}}_{\text{glatter Anteil}} - \underbrace{2\cdot e^{- \frac x \epsilon}\cdot \epsilon^{2}}_{\text{Grenzschicht links}} - \underbrace{e^{- \frac {1-x} \epsilon}(1 + 2\cdot \epsilon^{2})}_{\text{Grenzschicht rechts}}. 
+\end{align*}
+Das ist auch die exakte Lösung! Eine asymptotische Näherung zweiter Ordnung (meint $\cO(\epsilon^{2})$ Fehler) ist
+\begin{align*}
+  u(x) \approx x^{2} - e^{- \frac {1-x} \epsilon}.
+\end{align*}
+Für $\epsilon = 0$ ist es ein algebraisches Problem $u = x^{2}$, das keine Randprobleme erfüllen kann!
+\end{beispiel}
 % !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 \paragraph{Asymptotische Entwicklung für Konvektions-Diffusions-Problem}

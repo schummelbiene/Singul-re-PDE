@@ -1,0 +1,312 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{german}
+\usepackage{enumerate}
+\input{../commands.tex}
+\input{../layout.tex}
+
+\setlength{\headheight}{53pt}
+\setlength{\voffset}{-1cm}
+\setlength{\hoffset}{-1cm}
+\setlength{\textwidth}{18cm}
+\setlength{\textheight}{23cm}
+\allowdisplaybreaks[1] % allow page breaks in some displayed equation
+
+\usepackage{pgfpages}
+\usepackage{hyperref}
+\usepackage{ifthen}
+\usepackage{fancyhdr} %%% Note use of \pagestyle{fancy} below
+\fancyhf{} % Clear all fields. Remove this if you like ``fancy'' headers
+\fancyhead[L]{
+   \small
+ Technische Universität Dresden\\
+ Institut für Numerische Mathematik\\
+ PD Dr. S. Franz (WIL C312, HA 35073)\\
+}
+\fancyhead[R]{
+      \includegraphics[height=1.25cm]{../nm-logo}\\[-0.2cm]
+}
+\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
+
+\usepackage{tcolorbox}
+
+\renewcommand{\theequation}{\arabic{equation}}
+\begin{document}
+   \begin{center}
+      \Large\textbf{
+       Asymptotische Entwicklung für Konvektions-Diffusions-Problem}
+   \end{center}
+   \begin{tcolorbox}
+      \begin{align*}
+          (Lu)(x)=-\eps u''(x)-b(x) u'(x)+c(x)u(x)&=f(x)\quad\mbox{in }(0,1),\\
+          u(0)=u(1)&=0.
+      \end{align*}
+   \end{tcolorbox}
+
+   Ansatz mit $M>0$ Termen
+   \[
+       u(x)=\sum_{n=0}^Mu_n(x)\eps^n+\sum_{n=0}^M\tilde v_n(\xi)\eps^n+R(x)
+   \]
+   mit Rest $R$. Hierbei soll gelten
+   \begin{align*}
+       (Lu)(x)= \underbrace{\sum_{n=0}^M(Lu_n)(x)\eps^n}_{=f(x)+\ord{\eps^{M+1}}}
+               +\underbrace{\sum_{n=0}^M(\tilde L\tilde v_n)(\xi)\eps^n}_{=0+\ord{\eps^{M}}}+(LR)(x)&=f(x).
+   \end{align*}
+   \subsection*{äußere Entwicklung}
+   \[
+    \sum_{n=0}^M(Lu_n)(x)\eps^n
+     = \sum_{n=0}^M(-\eps^{n+1} u''_n(x)+\eps^n(-b(x)u'_n(x)+c(x)u_n(x)))\stackrel{!}{=}f(x)+\ord{\eps^{M+1}}
+   \]
+   \[
+      \left.
+      \begin{aligned}
+        \eps^0:\quad -b(x)u'_0(x)+c(x)u_0(x) &= f(x),\\
+                                      u_0(1) &= 0
+      \end{aligned}\quad
+      \right\}\quad\Rightarrow
+      u_0(x),
+   \]
+   \[
+      \left.
+      \begin{aligned}
+        \eps^1:\quad -b(x)u'_1(x)+c(x)u_1(x) &= u''_0(x),\\
+                                      u_1(1) &= 0
+      \end{aligned}\quad
+      \right\}\quad\Rightarrow
+      u_1(x)
+   \]
+   allgemein mit $L_0u=-b(x)u'(x)+c(x)u(x)$
+   \begin{tcolorbox}
+      \begin{equation}
+         \left.
+         \begin{aligned}
+          (L_0 u_n)(x)&=\begin{cases}
+                        f(x),&n=0,\\
+                        u''_{n-1}(x),&n\geq 1,
+                       \end{cases}\\
+               u_n(1)&=0
+         \end{aligned}
+         \quad
+         \right\}
+         \quad\Rightarrow
+         u_n(x)\label{eq:un}
+      \end{equation}
+   \end{tcolorbox}
+  \subsection*{innere Entwicklung}
+  Skalierung $\xi=\frac{x}{\eps}$ und damit $(\tilde L\tilde v)(\xi)=-\eps^{-1}(\tilde v''(\xi)+\tilde b(\xi)\tilde v'(\xi))+\tilde c(\xi)\tilde v(\xi)$.
+  Da $\tilde b(\xi)=b(x)=b(\eps\xi)$ von $\eps$ abhängt, wird eine \textsc{Taylor}-Entwicklung von $b(\eps\xi)$ und
+  $c(\eps\xi)$ um $\xi=0$ genutzt:
+  \begin{align*}
+      \tilde b(\xi)
+         &%=b(0)+b'(0)\eps\xi+\dots
+          =\sum_{k=0}^{M+1}b_k(\eps\xi)^k,\quad
+       b_k=\frac{b^{(k)}(0)}{k!},\,k=0,\dots,M,\quad
+       b_{M+1}=\frac{b^{(M+1)}(t(\xi))}{(M+1)!},\\
+      \tilde c(\xi)
+         &%=c(0)+c'(0)\eps\xi+\dots
+          =\sum_{k=0}^{M}c_k(\eps\xi)^k,\quad
+       c_k=\frac{c^{(k)}(0)}{k!},\,k=0,\dots,M-1,\quad
+       c_M=\frac{c^{(M)}(s(\xi))}{M!}.
+  \end{align*}
+  Es folgt
+  \begin{align*}
+      \sum_{n=0}^M(\tilde L\tilde v_n)(\xi)\eps^n
+         &= -\sum_{n=0}^M\eps^{n-1}\tilde v_n''(\xi)
+            -\sum_{n=0}^M\eps^{n-1}\tilde v_n'(\xi)\sum_{k=0}^{M+1}b_k(\eps\xi)^k
+            +\sum_{n=0}^M\eps^{n}\tilde v_n(\xi)\sum_{k=0}^{M}c_k(\eps\xi)^k\\
+         &= \sum_{n=0}^M\eps^{n-1}(-\tilde v_n''(\xi)-b_0\tilde v_n'(\xi))
+            +\sum_{n=0}^M\sum_{k=0}^{M}\eps^{n+k}(\tilde v_n(\xi)c_k\xi^k-\tilde v_n'(\xi)b_{k+1}\xi^{k+1})\\
+         &= \sum_{n=0}^M\eps^{n-1}(-\tilde v_n''(\xi)-b_0\tilde v_n'(\xi))
+            +\sum_{\ell=0}^{2M}\eps^\ell\sum_{k=\max\{\ell-M,0\}}^{\min\{\ell,M\}}(c_{\ell-k}\tilde v_k(\xi)\xi^{\ell-k}-b_{\ell-k+1}\tilde v_k'(\xi)\xi^{\ell+1-k})\\
+         &\stackrel{!}{=}0+\ord{\eps^M}
+  \end{align*}
+  Koeffizientenvergleich bzgl. $\eps$ liefert dann:
+  \begin{align*}
+   &\left.
+     \begin{aligned}
+      \eps^{-1}:\quad-\tilde v''_0(\xi)-b_0\tilde v'_0(\xi) &= 0,\\
+                                          \tilde v_0(0)&=-u_0(0),\\
+                                          \tilde v_0 \mbox{ exp.}&\mbox{ fallend in $\xi$}
+     \end{aligned}\quad
+    \right\}&\quad\Rightarrow \tilde v_0(\xi)&=-u_0(0)\e^{-b_0\xi},\\
+   &\left.
+     \begin{aligned}
+      \eps^{0}:\quad-\tilde v''_1(\xi)-b_0\tilde v'_1(\xi) &= -c_0\tilde v_0(\xi)+b_1\tilde v_0'(\xi)\xi,\\
+                                          \tilde v_1(0)&=-u_1(0),\\
+                                          \tilde v_1 \mbox{ exp.}&\mbox{ fallend in $\xi$}
+     \end{aligned}\quad
+    \right\}&\quad\Rightarrow \tilde v_1(\xi)&=q_2(\xi)\e^{-b_0\xi},\,q_2\in\Pi_2.
+  \end{align*}
+  Allgemein gilt
+  \begin{tcolorbox}
+   \begin{equation}\label{eq:vn}
+      \left.
+      \begin{aligned}
+      -\tilde v''_{n}(\xi)-b_0\tilde v'_{n}
+        &=-\sum\limits_{k=0}^{n-1}\left( c_{n-1-k}\tilde v_k(\xi)\xi^{n-1-k}-b_{n-k}\tilde v_k'(\xi)\xi^{n-k}\right) ,\\
+            \tilde v_{n}(0)&=-u_{n}(0),\\
+            \tilde v_{n} \mbox{ exp.}&\mbox{ fallend in $\xi$}
+      \end{aligned}\,
+      \right\}
+      \quad\Rightarrow
+      \begin{aligned}
+      \tilde v_{n}(\xi) &= q_{2n}(\xi)\e^{-b_0\xi},\\
+      q_{2n}&\in\Pi_{2n}.
+      \end{aligned}
+   \end{equation}
+  \end{tcolorbox}
+  Damit sind alle Terme der asymptotischen Entwicklung definiert. Bleibt abzuschätzen, wie groß der Fehler $R$ ist.
+  \subsection*{Fehlerabschätzung}
+  Hierfür nutzen wir neben Schrankenfunktionen einen kleinen Trick, um eine Ordnung mehr zu erhalten. Sei dazu
+  \[
+      R^*(x)
+         =u(x)-\left( \sum_{n=0}^Mu_n(x)\eps^n+\sum_{n=0}^{M+1}\tilde v_n(\xi)\eps^n\right) 
+         = R(x)-\tilde v_{M+1}(\xi)\eps^{M+1},
+  \] 
+  wobei
+  \begin{align}
+      -\tilde v''_{M+1}(\xi)-b_0\tilde v'_{M+1}
+        &=-\sum\limits_{k=0}^{M}\left( c_{M-k}\tilde v_k(\xi)\xi^{M-k}-b_{M+1-k}\tilde v_k'(\xi)\xi^{M+1-k}\right) ,\label{eq:vm1}\\
+            \tilde v_{M+1}(0)&=0,\notag\\
+            \tilde v_{M+1} \mbox{ exp.}&\mbox{ fallend in $\xi$}\notag
+  \end{align}
+  gilt. Dann folgt für $R^*$
+  \begin{align*}
+%       |R(0)| &= \left|
+%                   \underbrace{u(0)}_{=0}
+%                   -\left( \sum_{n=0}^Mu_n(0)\eps^n
+%                          +\sum_{n=0}^M\underbrace{\tilde v_n(0)}_{=-u_0(0)}\eps^n
+%                    \right)
+%                 \right|=0,\\
+      |R^*(0)| &= \left|
+                  \underbrace{u(0)}_{=0}
+                  -\left( \sum_{n=0}^Mu_n(0)\eps^n
+                         +\sum_{n=0}^M\underbrace{\tilde v_n(0)}_{=-u_0(0)}\eps^n
+                         +\underbrace{\tilde v_{M+1}(0)}_{=0}\eps^{M+1}
+                   \right)
+                \right|=0,\\
+%       |R(1)| &= \left|
+%                   \underbrace{u(1)}_{=0}
+%                   -\left( \sum_{n=0}^M\underbrace{u(1)}_{=0}\eps^n
+%                          +\sum_{n=0}^M\tilde v_n(1/\eps)\eps^n
+%                    \right)
+%                 \right|
+%               =\left|
+%                     \sum_{n=0}^M\underbrace{q_{2n}(1/\eps)}_{\leq C\eps^{-2n}}\eps^n\underbrace{\e^{-\frac{b_0}{\eps}}}_{\leq C\eps^{M+n}}
+%                 \right|
+%               \leq C_1\eps^M,\\
+      |R^*(1)| &= \left|
+                  \underbrace{u(1)}_{=0}
+                  -\left( \sum_{n=0}^M\underbrace{u_n(1)}_{=0}\eps^n
+                         +\sum_{n=0}^{M+1}\tilde v_n(1/\eps)\eps^n
+                   \right)
+                \right|
+               =\left|
+                    \sum_{n=0}^{M+1}\underbrace{q_{2n}(1/\eps)}_{\leq C\eps^{-2n}}\eps^n\underbrace{\e^{-\frac{b_0}{\eps}}}_{\leq C\eps^{M+1+n}}
+                \right|
+              \leq C_1\eps^{M+1},\\
+%       |(LR)(x)| &= \left|
+%                      \underbrace{(Lu)(x)}_{=f(x)}
+%                      -\left( \sum_{n=0}^M(Lu_n)(x)\eps^n
+%                             +\sum_{n=0}^M(\tilde L\tilde v_n)(\xi)\eps^n
+%                       \right)
+%                    \right|.
+      |(LR^*)(x)| &= \left|
+                     \underbrace{(Lu)(x)}_{=f(x)}
+                     -\left( \sum_{n=0}^M(Lu_n)(x)\eps^n
+                            +\sum_{n=0}^{M+1}(\tilde L\tilde v_n)(\xi)\eps^n
+                      \right)
+                   \right|.
+  \end{align*}
+  Mit \eqref{eq:un} folgt
+  \begin{align*}
+      \sum_{n=0}^M(Lu_n)(x)\eps^n
+         &= -\eps u_0''(x)+f(x)-\eps^2u_1''(x)+\eps u_0''(x)-\eps^3 u_2''(x)+\eps^2 u_1''(x) \mp\dots-\eps^{M+1}u''_M(x)+\eps^M u_{M-1}''(x)\\
+         &= f(x)-\eps^{M+1}u_M''(x).
+  \end{align*}
+  Mit \eqref{eq:vn} und \eqref{eq:vm1} folgt
+  \begin{align*}
+      \sum_{n=0}^{M+1}(\tilde L\tilde v_n)(\xi)\eps^n
+%          &= \sum_{\ell=M}^{2M}\eps^\ell
+%                \sum_{k=\ell-M}^{M}
+%                      \left(
+%                         c_{\ell-k}\tilde v_k(\xi)\xi^{\ell-k}-b_{\ell-k+1}\tilde v_k'(\xi)\xi^{\ell+1-k}
+%                      \right) \\
+%          &= \sum_{\ell=M}^{2M}\eps^\ell
+%                \sum_{k=\ell-M}^{M}
+%                      \left(
+%                         c_{\ell-k}q_{2k}(\xi)\e^{-b_0\xi}\xi^{\ell-k}-b_{\ell-k+1}p_{2k}(\xi)\e^{-b_0\xi}\xi^{\ell+1-k}
+%                      \right),
+         &= \sum_{\ell=M+1}^{2M}\eps^\ell
+               \sum_{k=\ell-M}^{M}
+                     \left(
+                        c_{\ell-k}\tilde v_k(\xi)\xi^{\ell-k}-b_{\ell-k+1}\tilde v_k'(\xi)\xi^{\ell+1-k}
+                     \right) \\
+         &= \sum_{\ell=M+1}^{2M}\eps^\ell
+               \sum_{k=\ell-M}^{M}
+                     \left(
+                        c_{\ell-k}q_{2k}(\xi)\e^{-b_0\xi}\xi^{\ell-k}-b_{\ell-k+1}p_{2k}(\xi)\e^{-b_0\xi}\xi^{\ell+1-k}
+                     \right),
+  \end{align*}
+  wobei $p_{2k},\,q_{2k}\in\Pi_{2k}$ sind. Damit gilt aber
+  \begin{align*}
+      |q_{2k}(\xi)\xi^{\ell-k}\e^{-b_0\xi}|
+      &\leq C\max\{1,\xi^{2k}\}\xi^{\ell-k}\e^{-b_0\xi}
+       =    C\max\left\{\xi^{\ell-k}\e^{-b_0\xi},\xi^{\ell+k}\e^{-b_0\xi}\right\}\\
+      &\leq C\max\left\{
+                     \left(\frac{\ell-k}{b_0}\right)^{\ell-k}\e^{-(\ell-k)},
+                     \left(\frac{\ell+k}{b_0}\right)^{\ell+k}\e^{-(\ell+k)}
+                 \right\}
+       \leq C(M)
+  \intertext{und analog}
+      |p_{2k}(\xi)\xi^{\ell+1-k}\e^{-b_0\xi}|
+      &\leq C\max\left\{
+                     \left(\frac{\ell+1-k}{b_0}\right)^{\ell+1-k}\e^{-(\ell+1-k)},
+                     \left(\frac{\ell+1+k}{b_0}\right)^{\ell+1+k}\e^{-(\ell+1+k)}
+                 \right\}
+       \leq C(M).
+  \end{align*}
+  Also ist
+  \begin{align*}
+      \left|\sum_{n=0}^{M+1}(\tilde L\tilde v_n)(\xi)\eps^n\right|
+         &\leq  \sum_{\ell=M+1}^{2M}\eps^\ell (\norm{c}{C^M}+\norm{b}{C^{M+1}})C(M)(M+1)
+          \leq C\eps^{M+1}
+  \end{align*}
+  und wir erhalten insgesamt
+  \begin{align*}
+      |(LR^*)(x)| &= \left|
+                     f(x)
+                     -\left( f(x)-\eps^{M+1}u_M''(x)
+                            +\ord{\eps^{M+1}}
+                      \right)
+                   \right|\leq C_2\eps^{M+1}.
+  \end{align*}
+  Wählen wir als Schrankenfunktion $s(x)=(\beta+1-x)\frac{C^*}{\beta}\eps^{M+1}$, wobei $b(x)\geq\beta>0$ und $C^*\geq\max\{C_1,C_2\}$
+  (eine konstante Schrankenfunktion $s$ geht aufgrund von $c(x)\geq 0$ nicht),
+  so folgt
+  \begin{align*}
+      (Ls)(x) &= \underbrace{b(x)}_{\geq\beta}\frac{C^*}{\beta}\eps^{M+1}+\underbrace{(\beta+1-x)}_{\geq\beta}\frac{C^*}{\beta}\underbrace{c(x)}_{\geq 0}\eps^{M+1}
+               \geq C^*\eps^M
+               \geq C_2\eps^{M+1}
+               \geq |(LR^*)(x)|,\\
+         s(0) &= \frac{\beta+1}{\beta}C^*\eps^{M+1}
+               \geq 0=|R^*(0)|,\\
+         s(1) &= C^*\eps^{M+1}
+               \geq C_1\eps^{M+1}
+               \geq |R^*(1)|.
+  \end{align*}
+  Also ist
+  \[
+      |R^*(x)|\leq s(x)\leq \frac{\beta+1}{\beta}C^*\eps^{M+1}=\ord{\eps^{M+1}}.
+  \]
+  Mit 
+  \[
+      |R(x)-R^*(x)|=|\tilde v_{M+1}(\xi)|\eps^{M+1}\leq C\eps^{M+1}
+  \]
+  folgt
+  \[    
+      |R(x)|=\ord{\eps^{M+1}}.
+  \]
+%--------------------------------------------------------------------------------------------
+\end{document}

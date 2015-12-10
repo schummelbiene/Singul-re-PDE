@@ -25,11 +25,11 @@ p = p(x, t) \qquad &\text{Druck},
   \end{align}
   \end{subequations}
   \begin{subequations}
-\label{eq:ns}
-  \begin{align}
-u|_{\partial \Omega} = u_{d} \quad &\text{in } [0, T]\label{eq:ns_rb}\\
-u(\cdot, 0)= u_{0} \quad &\text{in } \Omega \label{eq:ns_ab}
-  \end{align}
+    \label{eq:ns}
+    \begin{align}
+      u|_{\partial \Omega} = u_{d} \quad &\text{in } [0, T]\label{eq:ns_rb}\\
+      u(\cdot, 0)= u_{0} \quad &\text{in } \Omega \label{eq:ns_ab}
+    \end{align}
   \end{subequations}
 
 mit der Reynoldszahl $R >> 1$ (bei uns, das entspricht einer turbulenten Strömung). 
@@ -83,6 +83,119 @@ Eindimensionales Modell ($L \ll 1$, $v$ zeitlich konstant):
   c = c(x) \, (\to c_{t} = 0), &\\
 0 = - Dc'' + vc' + r(c)& \In (0, L). 
 \end{align*}
+Einführung dimensionsloser Größen:
+\begin{align*}
+  J &= \frac x L, \quad u = \frac c c_{0} \in [0, \infty) \\
+\implies \quad \frac{c(x)}{c_{0}} &= \frac{J\cdot L}{c_{0}} = u(J)\\
+\implies \quad \frac{dc}{dx} &= \frac{du }{d\xi} \frac{d\xi}{dx}\cdot c_{0} = u'(\xi) \frac{c_{0}}{L}\\
+\frac{d^{2}c}{dx^{2}} &= u''(\xi) \frac{c_{0}}{L^{2}}\\
+\implies \quad 0 &= - \frac{Dc_{0}}{L^{2}} + \frac{V c_{0}}{L} u' + \underbrace{r (u c_{0})}_{R(u)}\\
+\iff \quad 0 &= - \frac{D}{V\cdot L}u'' + u' + R(u). 
+\end{align*}
+Die Peclét-Zahl $Pe= \frac{V\cdot L} D$ misst das Verhältnis zwischen Konvektion und Diffusion. Mit $\epsilon = \frac 1 {Pe}$ und $L \ll1$ folgt $0< \epsilon \gg1$ und
+\begin{align*}
+  - \epsilon u'' + u' + R(u) = 0 & \In (0, 1)\\
++ \text{Randbedingungen} &
+\end{align*}
+\item Mathematisches Beispiel
+  \begin{subequations}
+\label{eq:3}
+  \begin{align*}
+    - \epsilon u'' + u' = 1 & \In (0, 1)\\
+u(0) = u(1) = 0. 
+  \end{align*}
+  \end{subequations}
+Sei (wie meistens) $0< \epsilon \ll 1$. Dann ist \eqref{eq:3} eine lineare Differentialgleichung zweiter Ordnung, inhomogen, ein Randwertproblem und hat konstante Koeffizienten. Lösungsansatz über die charakteristische Lösung:
+\begin{itemize}
+\item Homogene Gleichung:
+  \begin{align*}
+    u &= e^{\lambda x}\\
+    - \epsilon \lambda^{2} - \lambda &= 0\\
+u_{hom} &= c_{1} + c_{2} \cdot e^{- \frac 1 \epsilon x}.  
+  \end{align*}
+\item Variation der Konstanten:
+  \begin{align*}
+    u_{p} = A\cdot x = - x
+  \end{align*}
+\item Allgemeine Lösung:
+  \begin{align*}
+    u = c_{1} + c_{2} \cdot e^{- \frac x \epsilon} - x. 
+  \end{align*}
+\item Randbedingungen nutzen:
+  \begin{align*}
+    u(x) = \frac{1 - e^{- \frac x \epsilon}}{1 - e^{- \frac 1 \epsilon}} - x
+  \end{align*}
+löst \eqref{eq:3}. 
+
+Skizzen 1 , 2, 3
+\end{itemize}
+Nun wählen wir 
+\begin{itemize}
+\item $x_{0} \in (0, 1]$:
+\begin{align*}\left. 
+  \begin{aligned}
+    \lim_{x \to x_{0}} \lim_{\epsilon \to 0} u(x) &= \lim_{x \to x_{0}} (1 - x) = 1 - x_{0}\\
+    \lim_{\epsilon \to 0} \lim_{x \to x_{0}} u(x) &= \lim_{ \epsilon \to 0} \(\frac {1 - e^{- \frac {x_{0}} \epsilon}}{1 - e^{- \frac 1\epsilon}} - x_{0}\) = 1 - x_{0}
+  \end{aligned} \right\}\text{Grenzschichten dürfen vertauscht werden}
+\end{align*}
+
+\item $x_{0} = 0$:
+\begin{align*}\left. 
+  \begin{aligned}
+    \lim_{x \to x_{0}} \lim_{\epsilon \to 0} u(x) &= \lim_{x \to 0} (1 - x) = 1\\
+    \lim_{\epsilon \to 0} \lim_{x \to x_{0}} u(x) &= \lim_{ \epsilon \to 0}  0 = 0
+  \end{aligned} \right\}\text{Grenzprozesse dürfen nicht vertauscht werden}. 
+\end{align*}
+\end{itemize}
+\item Zentrales Differenzenverfahren mit $u_{i} \approx u(x_{i}), \quad x_{i} = i\cdot h, \quad h = \frac 1 N$
+  \begin{align*}
+    - \frac \epsilon {h^{2}} (u_{i-1} - 2u_{i} + u_{i+1})- \frac {u_{i+1} - u_{i-1}} {2\cdot h} &= 1, \quad i = 1, \dots, N-1,\\
+u_{0} = u_{N} &= 0. 
+  \end{align*}
+Differenzengleichung ist 'diskretisiert', linear, zweiter Ordnung und homogen. Ansatz für homogenes Problem: $u_{i} = \lambda^{i}$, löse partikuläres Problem nach rechter Seite $u_{i} = a \cdot i$. Lösungen:
+\begin{align*}
+  \lambda_{1} &= 1\\
+   \lambda_{2} &= \frac{2 \epsilon - h}{2 \epsilon + h} \eqqcolon \lambda\\
+   u_{i} &= \frac{1 - \lambda^{i}}{1 - \lambda^{N}} - i\cdot h, 
+\end{align*}
+aber $\lambda < 0$ fpr $h > 2 \epsilon$, was meistens erfüllt ist. Also oszilliert $\lambda^{i}$ und die diskrete Lösung, aber die stetige Lösung ist glatt. 
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[scale=0.4]{1_oscillating.png}
+%  \begin{tikzpicture}
+%    \draw ‎[‎smooth,‎samples=100‎,domain=0:‎‎1‎‎] ‎plot
+%    \draw[‎smooth,‎samples=100‎,domain=0:‎‎1‎‎] ‎plot({\x},‎‎‎‎‎‎‎‎{\x});
+%     \def\eps {0.005};
+%     \def\n{30};
+%     \def\l{(2*\eps - 1/\n)/(2*\eps + 1/\n)};
+%     \def\e{2.71828};
+
+%     \draw[->] (0,0) -- (2,0) node[right] {$x$};
+%     \draw[->] (0,0) -- (0,2) node[above] {$y$};
+%     \draw[domain=0:1, samples= \n, variable=\x, blue] plot ({\x}, {1 - \l^(\x)/(1 - \l^(\n))});
+
+%     \draw[domain=0:1, smooth, variable=\x, red] plot ({\x}, {(1 - e^(- \x/\eps))/(1 - e^(- 1/\eps)) - \x}) ;
+%     \def\eps{0.2};
+%     \draw[domain=0:1, smooth, variable=\x, red] plot ({\x}, {(1 - e^(- \x/\eps))/(1 - e^(- 1/\eps)) - \x}) ;
+%     \def\eps{0.4};
+%     \draw[domain=0:1, smooth, variable=\x, red] plot ({\x}, {(1 - e^(- \x/\eps))/(1 - e^(- 1/\eps)) - \x}) ;
+
+% %    \draw[domain=0:1, smooth, variable=\x] plot ({\x}, {1 - \l^(\n)});
+%   \end{tikzpicture}
+  \caption{Veranschaulichung der diskreten und stetigen Lösung}
+  \label{fig:oscillations}
+\end{figure}
+
+Betrachte $x_{1} = h$ für $h = \epsilon$, $u_{1} = \frac {1 - \lambda}{1 - \lambda^{N}} - h$, $\lambda = \frac 13$. Dann
+\begin{align}
+  u_{1} = \frac {\frac 23}{1 - \lambda^{N}} - \frac 1N \to \frac 23 \quad (N \to \infty, \, h \to 0,\,  \epsilon \to 0). 
+\end{align}
+Exakt:
+\begin{align*}
+  u(x_{1}) = \frac {1 - e^{ - \frac h \epsilon}}{1 - e^{- \frac 1 \epsilon}} - \frac 1 N \to 1 - \frac 1 e \quad (N \to \infty, \, h \to 0,\,  \epsilon \to 0). 
+\end{align*}
+
 
 \end{enumerate}
 
