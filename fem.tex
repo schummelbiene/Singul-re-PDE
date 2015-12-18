@@ -931,12 +931,14 @@ die monoton fallend ist.
     \theta_{i} &= \int_{x_{i-1}}^{x_{i}} \(1 + \epsilon^{-1} e^{ - \frac{\beta x}{2 \epsilon}}\) dx\\
     & \leq h_{i} + \epsilon^{-1} h_{i} e^{- \frac{\beta x_{i-1}}{ 2 \epsilon}}\\
     & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x}{ \sigma\epsilon}} e^{- \frac{\beta x_{i-1}}{ 2 \epsilon}}\\
-    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta}{\epsilon} (x_{i}) \sigma - \frac {x_{i-1}} 2}\\
-    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta h_{i}}{\sigma\epsilon} } e^{\frac{\beta x_{i-1}}{\epsilon} (\frac 1 \sigma - \frac 12)}\\
-    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{\epsilon} (\frac {2 -  \sigma} {2 \sigma})}\\
+    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{ \sigma\epsilon}}e^{\frac{\beta s\cdot h_{i}}{ \sigma\epsilon}}e^{- \frac{\beta x_{i-1}}{ 2 \epsilon}}\\
+    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{ \epsilon} \cdot\(\frac 1 \sigma - \frac 1 2\)}e^{\frac{\beta \cdot s\cdot C}{ \sigma}}\\
+%    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta}{\epsilon} \(\frac {x_{i}} \sigma - \frac {x_{i-1}} 2\)}\\
+%    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta h_{i}}{\sigma\epsilon} } e^{\frac{\beta x_{i-1}}{\epsilon} (\frac 1 \sigma - \frac 12)}\\
+%    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{\epsilon} (\frac {2 -  \sigma} {2 \sigma})}\\
     & \leq h + C N^{-1}\max \norm{\psi'}. 
   \end{align*}
-  EVENTUELL FALSCH
+mit $s \in (0, 1)$, da $\sigma\geq 2$.
 \end{beweis}
 \paragraph{S-Typ Gitter aus der Literatur}
 \label{sec:s-typ-gitter}
@@ -956,9 +958,8 @@ die monoton fallend ist.
     \implies \quad  \psi(t) &= 1 -(1 - N^{-1})\frac t q\\
     \implies \max \norm {\psi'} &= \frac 1 q (1 - N^{-1}) \leq \frac 1q\\
     \max \norm{\tilde \phi'(t)}&\leq \frac 1 q N \implies h \leq \frac{\sigma\epsilon}\beta \frac{N^{-1} N} q \leq C \epsilon\\
-    \implies h + \max \norm{\psi'} &\leq C (\epsilon + N^{-1})
+    \implies h +  N^{-1}\max \norm{\psi'} &\leq C (\epsilon + N^{-1})
   \end{align*}
-  EVENTUELL FALSCH
   ist optimal für $\epsilon \leq CN^{-1}$. 
 \item Polynomiales Gitter
   \begin{align*}
@@ -1043,13 +1044,12 @@ Für die Fehleranalysis bei FEM benötigen wir Interpolationsfehlerschranken in 
   Auf $[0, \tau]$ nutzen wir die Kleinheit des Gebietes beim Übergang von $L_{1}$ nach $L_{2}$. Auf $[\tau, 1]$ hingegen benötigen wir eine inverse Ungleichung
   \begin{align*}
     \nnorm{\chi'}_{L_{2}( \tau, 1)} &\leq C H^{-1} \nnorm{\chi}_{L_{2}( \tau, 1)} \leq C N \nnorm{\chi}_{L_{2}( 0, 1)}\\
-    \implies \nnnorm{\chi}^{2}_{\epsilon} &\leq C \nnnorm{\eta}_{\epsilon} \nnnorm{\chi}_{\epsilon}+ C\cdot\(\nnorm{\eta}_{L_{\infty}(0, \tau)} (\epsilon \ln N)^{\frac 12}\nnorm{\chi'}_{L_{2}(0, 1)} + \nnorm{\eta}_{L_{2}(\tau, 1)}N\nnorm{\chi}_{L_{2}(0, 1)} \) \\
+    \implies \nnnorm{\chi}^{2}_{\epsilon} &\leq C \nnnorm{\eta}_{\epsilon} \nnnorm{\chi}_{\epsilon}+ C\cdot\(\nnorm{\eta}_{L_{\infty}(0, \tau)} (\epsilon \ln N)^{\frac 12}\nnorm{\chi'}_{L_{2}(0, \tau)} + \nnorm{\eta}_{L_{2}(\tau, 1)}N\nnorm{\chi}_{L_{2}(\tau, 1)} \) \\
     &\leq C \( h + N^{-1} \max \norm{\psi'} + (h + N^{-1} \max \norm{\psi'})^{2} (\ln N)^{\frac 12} + \frac{N^{-2}}{N}\) \nnnorm{\chi}_{\epsilon}. 
   \end{align*}
-  EVENTUELL FALSCH
   Zeige nun: das ist beschränkt! Nutze $h\cdot \epsilon (\ln N)^{\frac 12} \leq C \epsilon^{ \frac 12} \leq C$ und die Voraussetzung der Beschränktheit an die Funktion $\psi$. Also
   \begin{align*}
-    \nnnorm{\chi}_{\epsilon} \leq C (h + N^{-1} \max {\psi'}). 
+    \nnnorm{\chi}_{\epsilon} \leq C (h + N^{-1} \max \norm{\psi'}). 
   \end{align*}
 \end{beweis}
 Die Galerkin FEM ist somit gleichmäßig konvergent mit Ordnung fast $1$ (wegen $\max \norm {\psi'}$), wie der Interpolationsfehler
@@ -1430,57 +1430,215 @@ wenn $\delta$ klein genut ist gilt Koerzivität
   \begin{align*}
     a_{stab}(\eta, \chi) = \delta \int_{\tau}^{1}(-\epsilon u'' + b \eta' + c \eta)b \chi'. 
   \end{align*}
-Mit partieller Integration und konstantem $b$ sowie linearem $\chi$ folgt
-\begin{align*}
-  \int_{\tau}^{1} \eta' \chi' &=0.  
-\end{align*}
-Außerdem gilt
-\begin{align*}
-  \norm{\delta \int_{\tau}^{1} c \eta b \chi'} &\leq C \delta^{\frac 12} \nnorm{\eta}_{L_{2}(\tau, 1)} \nnorm{\delta^{\frac 12} b \chi'}_{L_{2}(\tau, 1)}\\
-& \leq C \delta^{ \frac 12} N^{-2} \nnnorm \chi_{SD}. 
-\end{align*}
-Bleibt nur noch $\int_{\tau}^{1} b u'' \chi'$. Mithilfe des Satzes \ref{thm:5-2} folgt $u = S + E$ und wir erhalten für den glatten Anteil
-\begin{align*}
-  \int_{0}^{1} S'' \chi' &= - \int_{0}^{1} S''' \chi \\
-\implies \quad \int_{\tau}^{1} S'' \chi' &= - \int_{0}^{\tau} S'' \chi' - \int_{0}^{1} S'''\chi \\
-\implies \quad \norm{\int_{\tau}^{1} S'' \chi'} &\leq \nnorm{S''}_{L_{\infty}(0, \tau)} \nnorm{\chi'}_{L_{1}(0, \tau)} + \nnorm{S'''}_{L_{2}} \nnorm {\chi}_{L_{2}}\\
-&\leq C(\epsilon \ln N)^{\frac 12} \nnorm{S''}_{L_{\infty}(0, \tau)} \nnorm{\chi'}_{L_{2}(0, \tau)} + \nnorm{S'''}_{L_{2}} \nnorm {\chi}_{L_{2}}\\
-&\leq C(\epsilon \ln N)^{\frac 12} \nnnorm{\chi}_{\epsilon}\\
-\implies \quad  \delta\epsilon \norm{\int_{\tau}^{1} S'' \chi'} & \leq C \delta \epsilon(1 + (\ln N)^{\frac 12}) \nnnorm \chi_{\epsilon}. 
-\end{align*}
-Für den Grenzschichtterm folgt
-\begin{align*}
-  \epsilon\delta \norm{\int_{\tau}^{1} b E'' \chi'} &\leq \epsilon \delta^{\frac 12} \nnorm{E_{1}''}_{L_{1}(\tau, 1)} \nnorm{\delta^{\frac 12} b \chi'}_{L_{\infty}(\tau, 1)}\\
-&\leq C \epsilon \delta^{\frac 12} \epsilon^{-1} N^{-\sigma} N^{\frac 12} \nnorm{\delta^{\frac 12} b \chi'}_{L_{2}(\tau, 1)}\\
-&\leq C \delta^{\frac 12}  N^{-(\sigma-\frac 12)} \nnnorm{\chi}_{SD}. 
-\end{align*}
-Mit $\sigma \geq \frac 52$ folgt
-\begin{align*}
-  \epsilon \delta \norm{\int_{\tau}^{1} b u'' \chi'} &\leq C \( \delta^{\frac 12} N^{-2} + \epsilon\delta(\ln N)^{\frac 12} \) \nnnorm \chi_{SD}\\
-  &\leq C N^{-2} (\ln N)^{\frac 12} \nnnorm \chi_{SD}. 
-\end{align*}
-Wir wollen $\epsilon\delta \leq N^{-2}$, daher
-\begin{align*}
-  \delta &\leq
-  \begin{cases}
-    N^{-1}, & \epsilon \leq N^{-1}\\
-    \frac{N^{-2}} \epsilon, & \text{sonst}. 
-  \end{cases}\\
-\implies \quad
-\delta &=
-  \begin{cases}
-    \kappa_{0}H, & \frac{bH}{2\epsilon}> 1,\\
-    \kappa_{1} \frac{H^{2}}\epsilon, & \frac{bH}{2\epsilon}< 1,
-  \end{cases}
-\end{align*}
-$\frac{bH}{2\epsilon}$ wird \markdef{Peclét-Zahl} genannt (für praktische Anwendungen wichtig). Zusammengefasst folgt die erste Aussage 
-\smallskip
+  Mit partieller Integration und konstantem $b$ sowie linearem $\chi$ folgt
+  \begin{align*}
+    \int_{\tau}^{1} \eta' \chi' &=0.  
+  \end{align*}
+  Außerdem gilt
+  \begin{align*}
+    \norm{\delta \int_{\tau}^{1} c \eta b \chi'} &\leq C \delta^{\frac 12} \nnorm{\eta}_{L_{2}(\tau, 1)} \nnorm{\delta^{\frac 12} b \chi'}_{L_{2}(\tau, 1)}\\
+    & \leq C \delta^{ \frac 12} N^{-2} \nnnorm \chi_{SD}. 
+  \end{align*}
+  Bleibt nur noch $\int_{\tau}^{1} b u'' \chi'$. Mithilfe des Satzes \ref{thm:5-2} folgt $u = S + E$ und wir erhalten für den glatten Anteil
+  \begin{align*}
+    \int_{0}^{1} S'' \chi' &= - \int_{0}^{1} S''' \chi \\
+    \implies \quad \int_{\tau}^{1} S'' \chi' &= - \int_{0}^{\tau} S'' \chi' - \int_{0}^{1} S'''\chi \\
+    \implies \quad \norm{\int_{\tau}^{1} S'' \chi'} &\leq \nnorm{S''}_{L_{\infty}(0, \tau)} \nnorm{\chi'}_{L_{1}(0, \tau)} + \nnorm{S'''}_{L_{2}} \nnorm {\chi}_{L_{2}}\\
+    &\leq C(\epsilon \ln N)^{\frac 12} \nnorm{S''}_{L_{\infty}(0, \tau)} \nnorm{\chi'}_{L_{2}(0, \tau)} + \nnorm{S'''}_{L_{2}} \nnorm {\chi}_{L_{2}}\\
+    &\leq C(\epsilon \ln N)^{\frac 12} \nnnorm{\chi}_{\epsilon}\\
+    \implies \quad  \delta\epsilon \norm{\int_{\tau}^{1} S'' \chi'} & \leq C \delta \epsilon(1 + (\ln N)^{\frac 12}) \nnnorm \chi_{\epsilon}. 
+  \end{align*}
+  Für den Grenzschichtterm folgt
+  \begin{align*}
+    \epsilon\delta \norm{\int_{\tau}^{1} b E'' \chi'} &\leq \epsilon \delta^{\frac 12} \nnorm{E_{1}''}_{L_{1}(\tau, 1)} \nnorm{\delta^{\frac 12} b \chi'}_{L_{\infty}(\tau, 1)}\\
+    &\leq C \epsilon \delta^{\frac 12} \epsilon^{-1} N^{-\sigma} N^{\frac 12} \nnorm{\delta^{\frac 12} b \chi'}_{L_{2}(\tau, 1)}\\
+    &\leq C \delta^{\frac 12}  N^{-(\sigma-\frac 12)} \nnnorm{\chi}_{SD}. 
+  \end{align*}
+  Mit $\sigma \geq \frac 52$ folgt
+  \begin{align*}
+    \epsilon \delta \norm{\int_{\tau}^{1} b u'' \chi'} &\leq C \( \delta^{\frac 12} N^{-2} + \epsilon\delta(\ln N)^{\frac 12} \) \nnnorm \chi_{SD}\\
+    &\leq C N^{-2} (\ln N)^{\frac 12} \nnnorm \chi_{SD}. 
+  \end{align*}
+  Wir wollen $\epsilon\delta \leq N^{-2}$, daher
+  \begin{align*}
+    \delta &\leq
+    \begin{cases}
+      N^{-1}, & \epsilon \leq N^{-1}\\
+      \frac{N^{-2}} \epsilon, & \text{sonst}. 
+    \end{cases}\\
+    \implies \quad
+    \delta &=
+    \begin{cases}
+      \kappa_{0}H, & \frac{bH}{2\epsilon}> 1,\\
+      \kappa_{1} \frac{H^{2}}\epsilon, & \frac{bH}{2\epsilon}< 1,
+    \end{cases}
+  \end{align*}
+  $\frac{bH}{2\epsilon}$ wird \markdef{Peclét-Zahl} genannt (für praktische Anwendungen wichtig). Zusammengefasst folgt die erste Aussage 
+  \smallskip
 
-Mit dem Interpolationsfehler folgt die zweite. 
+  Mit dem Interpolationsfehler folgt die zweite. 
 \end{beweis}
 \begin{bemerkung*}
   Für $\epsilon < C \frac{N^{-1}}{(\ln N)^{\frac 12}}$ folgt $\epsilon \delta (\ln N)^{\frac 12} \leq C N^{ -2}$ und damit $\nnnorm \chi_{SD} \leq C (N^{-1}\max \norm{\psi'})^{2}$.
 \end{bemerkung*}
+% \datum{17. Dezember 2015}
+
+\paragraph{Interpolationsfehlerabschätzung in $\nnnorm{\cdot}_{SD}$:}
+\label{sec:interp-nnnormcd}
+
+Für die Standardwahl von $\delta$ lässt sich $\nnorm{\delta^{\frac 12} b (E - E^{I})}_{L_{2}(\tau, \tau + H)}$ nicht gleichmäßig abschätzen. Daher folgen wir Zhang, Liu (2016) und setzen ($\delta$ variabel!)
+\begin{align*}
+  \delta(x)|_{(x_{k-1}, x_{k})} =
+  \begin{cases}
+    0, & x_{k} \leq \tau \\
+    \frac{x - \tau} H \delta, & x_{k-1} = \tau\\
+    \delta, & x_{k-1} > \tau
+  \end{cases}
+\end{align*}
+
+SKIZZE VARDELTA
+
+Zusätzlich fordern wir $\epsilon \norm{\ln \epsilon} \leq 2 \beta H$. 
+\begin{satz}\label{thm:6-22}
+  Für obiges $\delta = \delta(x)$ und $\sigma \geq 2$ gilt auf einem S-Typ-Gitter mit $p\geq 1$
+  \begin{align*}
+    \nnnorm{u - u^{I}}_{SD} \leq C(N^{-1} \max\norm{ \psi'} + h)
+  \end{align*}
+  und somit
+  \begin{align*}
+    \nnnorm{u - u_{h}}_{SD} \leq C(N^{-1}  \max\norm{ \psi'} + h). 
+  \end{align*}
+\end{satz}
+\begin{beweis}
+  \begin{align*}
+    \nnnorm{u - u^{I}}^{2}_{SD} & = \nnnorm{u- u^{I}}_{\epsilon}^{2} + \sum_{k} \cdot \nnorm{\delta^{\frac 12}(x) b (u - u^{I})'}^{2}_{L_{2}(k)}\\
+    & \leq C(N^{-1} \max \norm{\psi'} + h)^{2}, 
+  \end{align*}
+  $\sigma \geq 2$. Mit der Zerlegung $u = S + E$ erhalten wir
+  \begin{align*}
+    \sum_{k} \nnorm{\delta^{\frac 12}(x) b (S - S^{I})'}^{2}_{L_{2}(k)} &\leq C \cdot \nnorm b_{L_{\infty}(\tau, 1)}^{2} \delta \nnorm{(S - S^{I})'}^{2}_{L_{2}(\tau, 1)}\\
+    &\leq C \delta N^{-2} \nnorm{S''}^{2}_{L_{2}(\tau, 1)}\\
+    &\leq C \delta N^{-2}. 
+  \end{align*}
+  Für den Grenzschichtanteil betrachten wir $x \geq \tau + H$. Mit $\epsilon \norm{\ln \epsilon} \leq 2 \beta H$ folgt $e^{-\frac{2 \beta H} \epsilon}\leq \epsilon$
+  \begin{align*}
+    \sum_{k = qN + 2}^{N}\nnorm{\delta^{\frac 12}(x) b (E - E^{I})'}^{2}_{L_{2}(x_{k-1}, x_{k})} &\leq C \cdot \delta \cdot \nnorm b_{L_{\infty}(\tau + H, 1)}^{2} \(\nnorm{E'}^{2}_{L_{2}(\tau+H, 1)} + \nnorm{(E^{I})'}^{2}_{L_{2}(\tau+H, 1)}\)\\
+    \nnorm{E'}^{2}_{L_{2}(\tau+H, 1)} & \leq  C \cdot \epsilon^{-1} e ^{- \frac{2 \beta (\tau + H)} \epsilon} = C \epsilon^{-1} e^{- \frac{2\beta\tau}{\epsilon}}e^{- \frac{2\beta H}{\epsilon}}\\
+    & C N^{-2\sigma}\\
+    \nnorm{(E^{I})'}^{2}_{L_{2}(\tau+H, 1)} & \leq  C \cdot N^{2} \cdot e ^{- \frac{2 \beta (\tau + H)} \epsilon} \\
+    & \leq C N^{2} \epsilon N^{-2 \sigma}\\
+    \implies \quad 
+    \sum_{k = qN + 2}^{N}\nnorm{\delta^{\frac 12}(x) b (E - E^{I})'}^{2}_{L_{2}(x_{k-1}, x_{k})} &\leq C( \delta N^{-2 \sigma} + \delta \epsilon N^{2} N^{-2 \sigma})\\
+    & \leq C N^{-2\sigma}. 
+  \end{align*}  
+  In der ersten Zelle folgt mit der speziellen Wahl von $\delta(x)$:
+  \begin{align*}
+    \nnorm{\delta^{\frac 12}(x) b (E - E^{I})'}^{2}_{L_{2}(\tau, \tau + H)} & \leq 2\frac \delta H \nnorm{b}^{2}_{L_{\infty}(\tau, \tau + H)} \int_{\tau}^{\tau + H}(x - \tau) (E'(x)^{2} + (E^{I}(x))'^{2})\\
+    & \leq C\frac \delta H \( \epsilon^{-2} \int_{\tau}^{\tau + H}(x - \tau) e^{-2 \frac {\beta x}\epsilon} dx + N^{2} N^{- 2 \sigma}\int_{\tau}^{\tau + H}(x - \tau)dx\)\\
+    \norm{\int_{\tau}^{\tau + H}(x - \tau) e^{-2 \frac {\beta x}\epsilon} dx} & = \norm{- \frac \epsilon {2 \beta}(x - \tau e^{- \frac{2 \beta x} \epsilon})|_{\tau}^{\tau + H} + \frac \epsilon {2\beta} \int_{\tau}^{\tau + H} e^{ - \frac{2 \beta x}\epsilon} dx}\\
+    & \leq \frac{\epsilon H} {2 \beta} e^{- \frac{2 \beta} \epsilon ( \tau + H)} + \frac{\epsilon^{2}} {2 \beta^{2}} e^{- \frac{2 \beta \tau} \epsilon}\\
+    & \leq C \epsilon^{2} N^{-2 \sigma}\\
+    \implies \quad   \nnorm{\delta^{\frac 12}(x) b (E - E^{I})'}^{2}_{L_{2}(\tau, \tau + H)} & \leq C \frac \delta H N^{- 2 \sigma} \leq C N^{-2 \sigma}. 
+  \end{align*}
+\end{beweis}
+\subsection{Sonstiges: Bessere Stabilität des Galerkin-Verfahrens}
+\label{sec:sonst-bess-stab+}
+Im Beispiel 2.3 des SIREV-Papers ist erwähnt, dass die Galerkin-FEM eine höhere Stabilität besitzt, als die Koerzivität hergibt. 
+Wir folgen dazu Knobloch/Tobiska IMA Journal Num. Analysis 2011(31), 147-164. 
+
+Gegeben seien:
+\begin{itemize}
+\item $V_{h} = \set{v \in H_{0}^{1}(0, 1): \, v \text{ stückweise } \Pi_{p}}$, 
+\item $a(u, v) = \epsilon(u', v') + (bu', v) + (cu, v)$, 
+\item $\nnnorm v_{\epsilon}^{2} = \epsilon \nnorm {v'}_{\epsilon}^{2} + \gamma \nnorm v _{L_{2}}^{2}$, zur Erinnerung
+  \begin{align}\label{eq:1}
+    a(v, v) = \epsilon \nnorm{v'}_{L_{2}}^{2} + \underbrace{(( c + \frac 12 b')v, v)}_{\geq \gamma \nnorm v_{L_{2}}^{2}} \geq \nnnorm v _{\epsilon}^{2}
+  \end{align}, 
+\item $\Pi_{k}: L_{2}(k) - B(k)$ mit $k = (x_{k-1}, x_{k})$,
+  \begin{align*}
+    B(k) \subset H_{0}^{1} \cap V_{h}(k)
+  \end{align*}
+  (zum Beispiel polynomiale Blasenfunktionen für $p \geq 2$ oder Hütchenfunktionen),
+  \begin{align}\label{eq:2}
+    (\Pi_{k} v - v, w) = 0 \quad \forall w \in B(k)
+  \end{align}
+  ($L_{2}$ Projektion auf $B(k)$), 
+\item $0 \leq \delta_{k} \leq c_{1} \frac{h_{k}^{2}} {\max \set{\epsilon, h_{k}\nnorm{b}_{L_{\infty}(k)}}}$, daher
+  \begin{align}
+    \delta_{k} \nnorm b_{L_{\infty}(k)} &\leq C_{1} h_{k}^{2} \label{eq:3}\\
+    \epsilon\delta_{k} &\leq C_{1} h_{k}^{2} \label{eq:4}\\
+  \end{align}
+\item
+  \begin{align}\label{eq:5}
+    \nnnorm v ^{2} = \nnnorm v_{\epsilon}^{2} + \sum_{k} \delta_{k} \nnorm{\Pi_{k} (bv')}^{2}_{L_{2}(k)}, 
+  \end{align}
+\item 
+  \begin{align}\label{eq:6}
+    \nnorm {v'}_{L_{2}(k)}  \leq C_{2} h_{k}^{-1} \nnorm {v_{h}}_{L_{2}(k)}. 
+  \end{align}
+\end{itemize}
+\begin{satz}\label{thm:6-23}
+  Es exisitiert eine Konstante $\beta > 0$, die unabhängig von $\epsilon$ und $h$ ist, sodass
+  \begin{align*}
+    \sup_{v_{h} \in V_{h}} \frac{a(u_{h}, v_{h})}{\nnnorm {v_{h}}} \geq \beta \nnnorm {u_{h}}, \quad \forall u_{h} \in V_{h}
+  \end{align*}
+  (\markdef{Inf-Sup-Bedingung}). 
+\end{satz}
+\begin{bemerkung*}
+  \begin{enumerate}
+  \item Damit ist der Teilraum der Polynome des Grades $p-1$ für $p \geq 2$ durch die stärkere Norm bereits kontrolliert und eine Stabilisierung der Art
+    \begin{align*}
+      \sum_{k} \delta_{k} (\kappa_{k}(b u_{h}'), \kappa_{k}(b v_{h}'))_{k}
+    \end{align*}
+    mit $\kappa_{k} = \id - \Pi_{k}$, $\Pi_{k}$ als $L_{2}$-Projektion auf unstetige, stückweise $\Pi_{p-2}$-Polynome reicht als minimale Stabilisierung aus. Dies führt zu LPS FEM. 
+  \item Die Inf-Sup-Bedingung kann wie die Koerzitivität genutzt werden. Analog zu Lemma \ref{lem:6-18} kann für eine Interpolierende $Iu$, die stückweise polynomial vom Grad $p \geq 1$ auf einem S-Typ-Gitter mit $\sigma \geq p + 1$ und $\epsilon < C N^{-1}$
+    \begin{align*}
+      \nnnorm{u - Iu}_{\epsilon} \leq C (N^{-1} \max \norm{\psi'})^{p}
+    \end{align*}
+    gezeigt werden und damit wie in Satz \ref{thm:6-16} für $\sigma \geq p+ \frac 32 $ und $\epsilon \leq C N^{-1}$
+    \begin{align*}
+      \nnnorm{u - u_{h}}_{\epsilon} \leq C (N^{-1} \max \norm{\psi'})^{p}
+    \end{align*}
+    für die Galerkin-Lösung $u_{h}$ des Grades $p$ bewiesen werden. 
+Damit folgt aber auch
+\begin{align*}
+  \beta \nnnorm{Iu - u_{h}} &\leq  \sup_{v_{h} \in V_{h}} \frac{a(Iu - u_{h}, v_{h})} {\nnnorm {v_{h}}}\\
+  & \leq C \sup_{v_{h} \in V_{h}} \frac{(N^{-1} \max \norm{\psi'})^{p} \nnnorm{v_{h}}_{\epsilon}} {\nnnorm {v_{h}}}\\
+  & \leq C (N^{-1} \max \norm{\psi'})^{p}, 
+\end{align*}
+also (diskrete) Konvergenz in der stärkeren Norm. 
+\item Es sei $x_{i} = \frac i N$ für $i = 0, \dots, N$ und für $k \geq 1$ sei $\tilde x_{j} = x_{k \cdot j}$, $k = 0, 1, \dots, \ceil{\frac Nk - 1}$, $\tilde x_{J} = 1 = x_{n}$, $J = \ceil{\frac N k}$ sowie $V_{h}$ stückweise linear über $\set{x_{i}}$. Weiterhin sei $v^{k} \in V_{h}$ mit
+  \begin{itemize}
+  \item stückweise linear über $\set{\tilde x_{j}}$, \\
+  \item $v^{k}(0) = v^{k}(1) = 0$, $v^{k}(\tilde x_{j}) = (-1)^{j}$, $j = 1, \dots, J-1$. 
+  \end{itemize}
+SKIZZE VK
+  \end{enumerate}
+FÜr die Galerkin-Lösung $u_{h}$ gilt
+\begin{align*}
+  \nnnorm{u_{h}}^{2}_{\epsilon} \leq a(u_{h}, u_{h}) = (f, u_{h}) \psi \nnorm f _{L_{2}} \nnnorm {u_{h}}_{\epsilon}, 
+\end{align*}
+alsi ist $ \nnnorm {u_{h}}_{\epsilon}$ beschränkt. Kann $v^{k}$ Bestandteil von $u_{h}$ sein? Mit einer direkten Rechnung kann man zeigen, dass
+\begin{align*}
+  \nnnorm{v_{k}}_{\epsilon}^{2} \leq C \( \frac \epsilon {h^{2}} + 1\), 
+\end{align*}
+was für kleines $\epsilon$ beschränkt ist. Also: Aus der Stabilität bezüglich der Energienorm kann eine solche Funktion $v^{k}$ nicht ausgeschlossen werden. 
+
+Aber: Mit $B(k) = \set{v \in V_{h}: \, v(\tilde x_{j}) = 0, \, j = 0, 1, \dots, J}$ als polynomialen Blasenraum und $\Pi_{k}$ als stückweise $L_{2}$-Projektion auf diesem Blasenraum folgt
+\begin{align*}
+  \nnorm{\Pi_{k}1}_{0, h}^{2} = \alpha \cdot h
+\end{align*}
+mit von $k$ und $h$ unabhängigen $\alpha$. Sei nun $\delta = \delta_{k}$ konstant. Dann folgt
+\begin{align*}
+  \sum_{k} \delta \nnorm{\Pi_{k} v^{k'}}_{L_{2}(k)}^{2} \geq \alpha \delta \nnorm {v_{h}'}_{L_{2}(\tilde x_{1}, \tilde x_{J-1})} = \frac{4 \alpha \delta}{k^{2} h^{2}} (\tilde x_{J-1} - \tilde x_{1}) \geq C h^{-1}, 
+\end{align*}
+($\delta = h$). Somit können die $v^{k}$ für $k \geq 2$ nicht Bestandteil von $u_{h}$ sein 
+%($k = 1$: uninteressant, Funktionen, die stückweise linear und in den Gitterpunkten $0$ sind\dots)
+. Nur die hochfrequenten Funktionen $v^{1}$ können Bestandteil sein. 
+\end{bemerkung*}
+
+
+
 %%% local Variables: 
 %%% mode: latex
 %%% TeX-master: "vorlesung"
