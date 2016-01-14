@@ -18,14 +18,14 @@
 p = p(x, t) \qquad &\text{Druck}, 
   \end{align*}
   \begin{subequations}
-\label{eq:ns}
+\label{eq:ns1}
   \begin{align}
-    u_{t} + (u\cdot \nabla)u - \frac 1 R \Delta u + \nabla p = 0\quad &\text{in } \Omega_{T} = \Omega \times [0, T] \label{eq:ns1}\\
-\nabla\cdot u = 0 \quad &\text{in } \Omega_{T} \label{eq:ns2}
+    u_{t} + (u\cdot \nabla)u - \frac 1 R \Delta u + \nabla p = 0\quad &\text{in } \Omega_{T} = \Omega \times [0, T] \label{eq:ns11}\\
+\nabla\cdot u = 0 \quad &\text{in } \Omega_{T} \label{eq:ns12}
   \end{align}
   \end{subequations}
   \begin{subequations}
-    \label{eq:ns}
+    \label{eq:ns2}
     \begin{align}
       u|_{\partial \Omega} = u_{d} \quad &\text{in } [0, T]\label{eq:ns_rb}\\
       u(\cdot, 0)= u_{0} \quad &\text{in } \Omega \label{eq:ns_ab}
@@ -36,14 +36,14 @@ mit der Reynoldszahl $R >> 1$ (bei uns, das entspricht einer turbulenten Strömu
 
 Es sind $u\cdot \nabla = u_{1}\partial_{x} + u_{2} \partial_{y}$ und $\Delta = \partial_{x}^{2} + \partial_{y}^{2} $ Operatoren. 
 
-Zu \eqref{eq:ns1} Momentenerhaltung:
+Zu \eqref{eq:ns11} Momentenerhaltung:
 \begin{align*}
   \partial_{t}u_{1} + u_{1}\partial_{x}u_{1} + u_{2}\partial_{y}u_{1} -\frac 1 R \Delta u_{1} + \partial_{x} p = 0\\ 
   \partial_{t}u_{2} + u_{1}\partial_{x}u_{2} + u_{2}\partial_{y}u_{2} -\frac 1 R \Delta u_{2} + \partial_{y} p = 0
 \end{align*}
 stammt von $\partial_{t} u + \underbrace{\nabla\cdot(uu)}_{\text{Moment}} + \underbrace{\nabla p}_{\text{Druckänderung}}-\frac 1 R  \underbrace{\Delta u}_{\text{Diffusion}}  = 0$
 
-Zu \eqref{eq:ns2} Masse-/Volumenerhaltung
+Zu \eqref{eq:ns12} Masse-/Volumenerhaltung
 \begin{align*}
   \partial_{x} u_{1} +   \partial_{y} u_{2} = 0 \iff \text{ Annahme: Inkompressibilität und konstante Dichte}
 \end{align*}
@@ -99,13 +99,13 @@ Die Peclét-Zahl $Pe= \frac{V\cdot L} D$ misst das Verhältnis zwischen Konvekti
 \end{align*}
 \item Mathematisches Beispiel
   \begin{subequations}
-\label{eq:3}
-  \begin{align*}
-    - \epsilon u'' + u' = 1 & \In (0, 1)\\
-u(0) = u(1) = 0. 
-  \end{align*}
+\label{eq:1-3}
+    \begin{align}    
+      - \epsilon u'' + u' = 1 & \In (0, 1)\label{eq:1-3a}\\
+      u(0) = u(1) = 0. \label{eq:1-3b}
+    \end{align}
   \end{subequations}
-Sei (wie meistens) $0< \epsilon \ll 1$. Dann ist \eqref{eq:3} eine lineare Differentialgleichung zweiter Ordnung, inhomogen, ein Randwertproblem und hat konstante Koeffizienten. Lösungsansatz über die charakteristische Lösung:
+Sei (wie meistens) $0< \epsilon \ll 1$. Dann ist \eqref{eq:1-3} eine lineare Differentialgleichung zweiter Ordnung, inhomogen, ein Randwertproblem und hat konstante Koeffizienten. Lösungsansatz über die charakteristische Lösung:
 \begin{itemize}
 \item Homogene Gleichung:
   \begin{align*}
@@ -125,9 +125,16 @@ u_{hom} &= c_{1} + c_{2} \cdot e^{- \frac 1 \epsilon x}.
   \begin{align*}
     u(x) = \frac{1 - e^{- \frac x \epsilon}}{1 - e^{- \frac 1 \epsilon}} - x
   \end{align*}
-löst \eqref{eq:3}. 
+löst \eqref{eq:1-3}. 
 
-Skizzen 1 , 2, 3
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[scale = 0.5]{eps_1.png}
+  \includegraphics[scale = 0.5]{eps_2.png}
+  \includegraphics[scale = 0.5]{eps_3.png}
+  \caption{Skizzen für $\eps = 1$, $\eps = 0.4$ und $\eps = 0.005$}
+  \label{fig:eps}
+\end{figure}
 \end{itemize}
 Nun wählen wir 
 \begin{itemize}
@@ -158,31 +165,11 @@ Differenzengleichung ist 'diskretisiert', linear, zweiter Ordnung und homogen. A
    \lambda_{2} &= \frac{2 \epsilon - h}{2 \epsilon + h} \eqqcolon \lambda\\
    u_{i} &= \frac{1 - \lambda^{i}}{1 - \lambda^{N}} - i\cdot h, 
 \end{align*}
-aber $\lambda < 0$ fpr $h > 2 \epsilon$, was meistens erfüllt ist. Also oszilliert $\lambda^{i}$ und die diskrete Lösung, aber die stetige Lösung ist glatt. 
+aber $\lambda < 0$ für $h > 2 \epsilon$, was meistens erfüllt ist. Also oszilliert $\lambda^{i}$ und die diskrete Lösung, aber die stetige Lösung ist glatt. 
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[scale=0.4]{1_oscillating.png}
-%  \begin{tikzpicture}
-%    \draw ‎[‎smooth,‎samples=100‎,domain=0:‎‎1‎‎] ‎plot
-%    \draw[‎smooth,‎samples=100‎,domain=0:‎‎1‎‎] ‎plot({\x},‎‎‎‎‎‎‎‎{\x});
-%     \def\eps {0.005};
-%     \def\n{30};
-%     \def\l{(2*\eps - 1/\n)/(2*\eps + 1/\n)};
-%     \def\e{2.71828};
-
-%     \draw[->] (0,0) -- (2,0) node[right] {$x$};
-%     \draw[->] (0,0) -- (0,2) node[above] {$y$};
-%     \draw[domain=0:1, samples= \n, variable=\x, blue] plot ({\x}, {1 - \l^(\x)/(1 - \l^(\n))});
-
-%     \draw[domain=0:1, smooth, variable=\x, red] plot ({\x}, {(1 - e^(- \x/\eps))/(1 - e^(- 1/\eps)) - \x}) ;
-%     \def\eps{0.2};
-%     \draw[domain=0:1, smooth, variable=\x, red] plot ({\x}, {(1 - e^(- \x/\eps))/(1 - e^(- 1/\eps)) - \x}) ;
-%     \def\eps{0.4};
-%     \draw[domain=0:1, smooth, variable=\x, red] plot ({\x}, {(1 - e^(- \x/\eps))/(1 - e^(- 1/\eps)) - \x}) ;
-
-% %    \draw[domain=0:1, smooth, variable=\x] plot ({\x}, {1 - \l^(\n)});
-%   \end{tikzpicture}
+  \includegraphics[scale=0.6]{1_oscillating.png}
   \caption{Veranschaulichung der diskreten und stetigen Lösung}
   \label{fig:oscillations}
 \end{figure}
@@ -195,7 +182,6 @@ Exakt:
 \begin{align*}
   u(x_{1}) = \frac {1 - e^{ - \frac h \epsilon}}{1 - e^{- \frac 1 \epsilon}} - \frac 1 N \to 1 - \frac 1 e \quad (N \to \infty, \, h \to 0,\,  \epsilon \to 0). 
 \end{align*}
-
 
 \end{enumerate}
 
@@ -228,7 +214,7 @@ Ansonsten heißt \eqref{eq:4} \markdef{regulär gestört}.
 Es können nicht nur Differentialgleichungen gestört sein, sonder auch algebraische Gleichungen etc.
 
 \begin{bemerkung}
-  Die Definition \ref{def:1-2} ist normabhängig. \eqref{eq:3} ist regulär gestört in $\nnorm \cdot_{L_{1}}$, da
+  Die Definition \ref{def:1-2} ist normabhängig. \eqref{eq:1-3} ist regulär gestört in $\nnorm \cdot_{L_{1}}$, da
   \begin{align*}
     \nnorm{u_{\epsilon}}_{L_{1}} = \int_{0}^{1}\( \frac{1 - e^{- \frac x \epsilon}}{1 - e^{- \frac 1 \epsilon}} - x \) = \frac {1 + \epsilon \(e^{- \frac 1 \epsilon} -1 \)}{1 - e^{- \frac 1 \epsilon}} - \frac 12 \to \frac 12 \neq 0 \quad(\epsilon \to 0). 
   \end{align*}
@@ -237,11 +223,11 @@ Aus $-u' = 1$ und $u(1) = 0$ folgt $\phi_{0} = 1- x$.
       \nnorm{u_{\epsilon}-\phi_{0}}_{L_{1}} = \int_{0}^{1}\( \frac{1 - e^{- \frac x \epsilon}}{1 - e^{- \frac 1 \epsilon}} - 1 \) = \frac {e^{-\frac{1}{\epsilon}} + \epsilon \(e^{- \frac 1 \epsilon} -1 \)}{1 - e^{- \frac 1 \epsilon}}  \to \frac 12 \neq 0 \quad(\epsilon \to 0). 
 \end{align*}
 
-\eqref{eq:3} ist singulär gestört bezüglich $\nnorm \cdot_{L_{\infty}}$, da $\nnorm {u_{\epsilon}}_{L_{\infty}} > 0$ ($u_{\epsilon}$ ist immer positiv in $(0, 1)$) und
+\eqref{eq:1-3} ist singulär gestört bezüglich $\nnorm \cdot_{L_{\infty}}$, da $\nnorm {u_{\epsilon}}_{L_{\infty}} > 0$ ($u_{\epsilon}$ ist immer positiv in $(0, 1)$) und
 \begin{align*}
       \nnorm{u_{\epsilon}}_{L_{\infty}} = \nnorm{ \frac{e^{- \frac 1 \epsilon} - e^{- \frac x \epsilon}}{1 - e^{- \frac 1 \epsilon}}}_{L_{\infty}} \geq \norm{ \frac{e^{- \frac 1 \epsilon} - e^{- \frac 0 \epsilon}}{1 - e^{- \frac 1 \epsilon}}}_{L_{\infty}} = 1. 
 \end{align*}
-\eqref{eq:3} ist regulär gestört bezüglich $\nnorm \cdot_{L_{2}}$, aber singulär gestört bezüglich $\norm \cdot_{H^{1}} = \nnorm{\nabla\cdot}_{L_{2}}$. 
+\eqref{eq:1-3} ist regulär gestört bezüglich $\nnorm \cdot_{L_{2}}$, aber singulär gestört bezüglich $\norm \cdot_{H^{1}} = \nnorm{\nabla\cdot}_{L_{2}}$. 
 \end{bemerkung}
 
 Der uns interessierende Fall wird sein, dass $\cL_{p}$ ein Differentialoperator höherer Ordnung und $\cL_{0}$ ein Differentialoperator niedrigerer Ordnung ist. 

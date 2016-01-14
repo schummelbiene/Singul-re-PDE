@@ -1,0 +1,361 @@
+% \datum{07. Januar 2016}
+
+\section{Konvektions-Diffusions-Probleme in 2D}
+\label{sec:konv-diff-probl}
+
+Wir betrachten im Folgenden das elliptische Randwertproblem
+\begin{align*}
+  Lu \coloneqq - \epsilon \Delta u + b \cdot \nabla u + cu = & f \In \Omega \subseteq \R^{2},\\
+u =& g \quad \text{auf } \Gamma \coloneqq \partial \Omega. 
+\end{align*}
+Abhängig vom Konvektionskoeffizienten $b$ und der äußeren Normalen $n$ kann der Rand $\Gamma$ in drei offene Teilmengen unterteilt werden:
+\begin{enumerate}
+\item Einströmrand $\Gamma_{-} \coloneqq \set{x \in \Gamma: \, b(x) \cdot n(x) < 0}$, 
+\item Ausströmrand $\Gamma_{+} \coloneqq \set{x \in \Gamma: \, b(x) \cdot n(x) > 0}$, 
+\item charakteristischer Rand $\Gamma_{0} \coloneqq \set{x \in \Gamma: \, b(x) \cdot n(x) = 0}$, Fluss parallel zum Rand, 
+\item und $\overline{\Gamma_{-} \cup \Gamma_{+} \cup \Gamma_{0}} = \Gamma$. 
+\end{enumerate}
+Das reduzierte Problem zu $Lu = f$ ist
+\begin{align*}
+  b \cdot \nabla u_{0} + c u_{0}  = f \In \Omega. 
+\end{align*}
+Diese PDGL ist von erster Ordnung, kann also pro Charakteristik $b(x), x \in \Gamma$ nur einen Randwert erfüllen:
+\begin{align*}
+  u_{0} = g \quad \text{auf } \Gamma_{-}. 
+\end{align*}
+Hierbei nehmen wir an, dass die Charakteristiken $\Omega$ durch $\Gamma_{-}$ betreten und durch $\Gamma_{+}$ verlassen (schneiden dürfen sie sich auch nicht). 
+
+Damit erfüllt $u_{0}$ auf $\Gamma\setminus\Gamma_{-}$ im Allgemeinen nicht die Randbedingungen und muss durch die Grenzschichtkorrekturen ergänzt werden:
+\begin{enumerate}
+\item an $\Gamma_{+}$ mit regulären/exponentiellen Grenzschichten, 
+\item an $\Gamma_{0}$ mit charakteristischen/parabolischen Grenzschichten. 
+\end{enumerate}
+Einheitskreis 'absolut langweilig', deshalb Einheitsquadrat.
+\subsection{Analytische Eigenschaften der Lösung}
+\label{sec:analyt-eigensch-der}
+
+Für einen genauere Untersuchung der Lösung beschränken wir uns auf $\Omega = (0, 1)^{2}$, welches auf der einen Seite geometrisch einfach ist, auf der anderen Seite allerdings keinen glatten Rand besitzt aufgrund der Ecken. Für konstante $b = (b_{1}, b_{2})^{T}$ gilt dann mit
+\begin{align*}
+  - \epsilon \Delta u - b \cdot \nabla u + cu = & f 
+\end{align*}
+\begin{enumerate}
+\item $b_{1} > 0, b_{2} > 0$: $\Gamma_{+} = (\set 0 \times [0, 1]) \cup([0, 1] \times\set 0)$, $\Gamma_{0} = \emptyset$, also existieren zwei exponentielle Grenzschichten.
+\item $b_{1} > 0, b_{2} = 0$: $\Gamma_{+} = (\set 0 \times [0, 1])$, $\Gamma_{0} =  [0, 1] \times \set{0, 1}$, also existieren eine exponentielle und zwei charakteristische Grenzschichten.
+\end{enumerate}
+Dies sind unsere beiden Modellprobleme.
+
+\paragraph{(a) Reguläre Grenzschichten}
+\label{sec:a-regul-grenzsch}
+
+Allgemein: Für die Korrekturen, die wir auf $\Gamma_{+}$ brauchen, betrachten wir die lokalen Koordinaten $(\rho, \phi)$ mit
+\begin{align*}
+  \phi \cdot n = 0, \quad \rho = -n. 
+\end{align*}
+Das Differentialgleichunsproblem entlang von Geraden durch einen Punkt $\bar x \in \Gamma_{+}$ parallel zu $n$ lautet dann
+\begin{align*}
+  - \epsilon v_{\rho\rho} - b(\bar x)\cdot n(\bar x) v_{\rho} + c(\bar x) v &= 0, \\
+v (\rho = 0) &= (g - u_{0})(\bar x). 
+\end{align*}
+Diesen Problem haben wir schon betrachtet, es hat die Lösung
+\begin{align*}
+  v(x) = (g - u_{0})(\bar x) \exp\(- \frac 1 \epsilon  b(\bar x) \cdot n(\bar x) \rho\). 
+\end{align*}
+Mit Hilfe einer asymptotischen Entwicklung, vergleiche Kapitel \ref{sec:asympt-entw-fur}, und einer Restgliedabschätzung erhalten wir eine Lösungszerlegung. Im Gegensatz zum 1d Fall benötigen wir aufgrund der Ecken \markdef{Kompatibilitätsbedingungen} bezüglich $f$. In Linß, Stynes: J.Math.Anal.Appl. 261, 604 - 632, 2001 finden wir
+\begin{align*}
+  f(0, 0) =   f(1, 0) =   f(0, 1) =   f(1, 1) = 0,\\
+  \partial_{y} \( \frac f {b_{1}}\) (1, 1) =   \partial_{x} \( \frac f {b_{2}}\) (1, 1),\\
+  \partial_{y} \( \partial_{x} \(\frac f {b_{1}}\) - D_{0} \( \frac f {b_{1}}\)\) (1, 1) =   \partial^{2}_{x} \( \frac f {b_{2}}\) (1, 1),\\
+  \partial_{y} \( \partial^{2}_{x} \(\frac f {b_{1}}\) - D_{0} \( \partial_{x} \(\frac f {b_{1}} \) - D_{0} \(\frac f {b_{1}} \)\) - 2 D_{1}\(\frac f {b_{1}} \)\) (1, 1) =   \partial^{3}_{x} \( \frac f {b_{2}}\) (1, 1),\\
+(b_{2} \partial_{x}^{2} \(\frac f {b_{1}} \))(1, 1) = (b_{2} \partial_{x}^{2} \(\frac f {b_{1}} \))(1, 1), 
+\end{align*}
+wobei
+\begin{align*}
+  D_{0}v &\coloneqq - \partial_{y} v \cdot \frac{b_{2}}{b_{1}},\\
+  D_{1}v &\coloneqq - \partial_{y} v \partial_{x} \(\frac {b_{2}}{b_{1}}\) - v \partial_{x} \(\frac {c}{b_{1}}\). 
+\end{align*}
+Die zweite Bedingung bezieht sich auf die Ecke 'aus der Information in das Gebiet getragen wird'. Ist diese Information gestört/schlecht, dann wird das auch in das gesamte $\Omega$ getragen. 
+\begin{satz}\label{thm:7-1}
+  Es seien $f \in C^{4, \alpha}(\bar \Omega)$ mit $\alpha \in (0, 1)$, $n \geq 2$ und $f$ erfülle die obigen Kompatibilitätsbedingungen. Sollte $n \geq 4$ gelten, so sei zusätzlich
+  \begin{align*}
+    \partial_{x} b_{2}(0, 0) =    \partial_{y} b_{1}(0, 0). 
+  \end{align*}
+Dann besitzt das Randwertproblem
+\begin{align*}
+  - \epsilon \Delta u - b \cdot \nabla u + cu &= f \In \Omega = (0, 1)^{2}\\
+  u &= 0 \quad \text{auf } \Gamma = \partial \Omega
+\end{align*}
+eine Lösung $u \in C^{3, \alpha}(\bar \Omega)$ mit der Zerlegung $u = v + w_{1} + w_{2} + w_{12}$ und $b = (b_{1}, b_{2}) \geq (\beta_{1}, \beta_{2}) > 0$ mit
+\begin{align*}
+  \nnorm v _{C^{2}(\bar \Omega)} + \epsilon^{\alpha} \nnorm v_{C^{2, \alpha}(\bar \Omega)} \leq C
+\end{align*}
+und für $x, y \in [0, 1]$
+\begin{align*}
+  \norm{\partial_{x}^{j} \partial_{y}^{i} w_{1}(x, y)} &\leq C \cdot \epsilon^{-i} e^{- \frac {\beta_{1} x}{\epsilon}}, \quad 0 \leq i \leq n, 0 \leq j\leq 2, \\
+  \norm{\partial_{x}^{i} \partial_{y}^{j} w_{2}(x, y)} &\leq C \cdot \epsilon^{-j} e^{- \frac {\beta_{2} y}{\epsilon}}, \quad 0 \leq i \leq 2, 0 \leq j\leq n, \\
+  \norm{\partial_{x}^{i} \partial_{y}^{j} w_{12}(x, y)} &\leq C \cdot \epsilon^{-(i+j)} e^{- \frac {\beta_{1} x}{\epsilon}}e^{- \frac {\beta_{2} y}{\epsilon}}, \quad 0 \leq i \leq n, 0 \leq j\leq n. 
+\end{align*}
+Für höhere Ableitungen werden mehr Glätte von $f$ und weitere Komatibilitätsbedingungen benötigt.
+\end{satz}
+\paragraph{(b) Charakteristische Grenzschichten}
+\label{sec:b-char-grenzsch}
+Hier führt die lokale Transformation auf eine parabolische partielle DIfferentialgleichung: 
+\begin{align*}
+  - \epsilon v_{\rho\rho} + v_{\rho} = 0
+\implies \quad v \approx \exp\(- \frac \rho {\sqrt \epsilon}\) \approx \exp\(- \frac {\rho^{2}} \epsilon\). 
+\end{align*}
+Der Korrekturterm ist
+\begin{align*}
+  v = (g - u_{0})(\bar x) \exp\(- \frac \rho {\sqrt \epsilon}\).  
+\end{align*}
+Die Analysis für eine Lösungszerlegung ist hier deutlich schwieriger, als im Fall der exponentiellen Grenzschichten. In Kellog/Stynes J.Diff.Eq. 213, 81-120 (2005) und Appl. Math. Letter 20, 539-544 (2007)
+finden wit folgende Aussage:
+\begin{satz}\label{thm:7-2}
+  Angenommen, $b_{1} > 0$ und $c > 0$ sind konstant. Es sei $f \in C^{8}(\bar \Omega)$ mit der Kompatibilitätsbedingung
+  \begin{align*}
+  f(0, 0) =   f(1, 0) =   f(0, 1) =   f(1, 1) = 0.
+  \end{align*}
+Dann kann die Lösung $u$ von 
+\begin{align*}
+  - \epsilon \Delta u - b_{1} u_{x} + cu &= f \In \Omega = (0, 1)^{2},\\
+  u &= 0 \quad \text{auf } \Gamma = \partial \Omega
+\end{align*}
+zerlegt werden in $u = v + w_{1}+ w_{2} + w_{12}$, wobei für alle $x, y \in [0, 1]$ und $0 \leq i + j \leq 2$ die punktweisen Abschätzungen
+\begin{align*}
+  \norm{\partial_{x}^{i}\partial_{y}^{j}v(x, y)} &\leq C,\\
+  \norm{\partial_{x}^{i}\partial_{y}^{j}w_{1}(x, y)} &\leq C \epsilon^{-i} e^{ - \frac {b_{1}x}{\epsilon}},\\
+  \norm{\partial_{x}^{i}\partial_{y}^{j}w_{2}(x, y)} &\leq C \epsilon^{-\frac j2} \(e^{ - \frac y {\sqrt \epsilon}} + e^{ - \frac {(1 - y)}{\sqrt\epsilon}} \),\\
+  \norm{\partial_{x}^{i}\partial_{y}^{j}w_{12}(x, y)} &\leq C \epsilon^{-\frac {(i+j)}2} e^{ -\frac {b_{1}x}{\epsilon}} \(e^{ - \frac y {\sqrt \epsilon}} + e^{ - \frac {(1 - y)}{\sqrt\epsilon}} \)
+\end{align*}
+sowie für $0 \leq i + j \leq 3$ die $L_{2}$-Abschätzungen
+\begin{align*}
+  \nnorm{\partial_{x}^{i}\partial_{y}^{j} v}_{L_{2}} &\leq C,\\
+  \nnorm{\partial_{x}^{i}\partial_{y}^{j} w_{1}}_{L_{2}} &\leq C \epsilon^{ -i + \frac 12},\\
+  \nnorm{\partial_{x}^{i}\partial_{y}^{j} w_{2}}_{L_{2}} &\leq C \epsilon^{ -\frac j2 + \frac 14} \qquad \text{ außer }   \nnorm{\partial_{x}^{2}\partial_{y} w_{2}}_{L_{2}} \leq C \epsilon^{ -\frac 12},\\
+  \nnorm{\partial_{x}^{i}\partial_{y}^{j} w_{12}}_{L_{2}} &\leq C \epsilon^{ -i -\frac j2 + \frac 34}.
+\end{align*}
+Diese Lösungszerlegung wird auch für variable Koeffizienten sowie unter weiteren Kompatibilitätsbedingungen und Glattheitsvoraussetzungen für höhere Ableitungen angenommen. 
+\end{satz}
+
+% \datum{08. Januar 2016}
+
+\subsection{FEM-Analysis auf angepassten Gittern}
+\label{sec:fem-analysis-auf}
+
+\paragraph{Plan}
+\label{sec:plan}
+Wir beschäftigen uns mit Lösungszerlegungen, die wir für angepasste Gitter brauchen und beides verwenden wir dann für Interpolationsfehlerabschätzungen. Die angepassten Gitter führen uns auch zu Galerkin-FEM mit Stabilisierungen, das wiederung führt zu G-Orthogonalität (evtl. schwach) und Koerzitivität (evtl. inf-sup). Das, und die Interpolationsfehlerabschätzungen liefern uns Fehlerabschätzungen. 
+\smallskip
+
+Betrachten wir dazu das Modellproblem mit regulären Grenzschichten, das heißt
+\begin{align*}
+  - \epsilon \Delta u - b \cdot \nabla u + c u = f &\In (0, 1)^{2}\\
+  u = 0 &\Auf \Gamma
+\end{align*}
+mit $b = (b_{1}, b_{2})^{T}\geq (\beta_{1}, b_{2})^{T}> 0$ und $c + \frac 12 \div b \geq \gamma > 0$. 
+Nach \ref{thm:7-1} besitzt $u$ drei verschiedene Grenzschichten
+\begin{enumerate}
+\item $w_{1}$ mit $\norm{w_{1}(x, y)}\leq C \exp \(- \beta_{1} \frac x \epsilon\)$ (Randgrenzschicht), 
+\item $w_{2}$ mit $\norm{w_{2}(x, y)}\leq C \exp \(- \beta_{2} \frac y \epsilon\)$ (Randgrenzschicht), 
+\item $w_{12}$ mit $\norm{w_{12}(x, y)}\leq C \exp \(- \beta_{1} \frac x \epsilon\)\exp \(- \beta_{2} \frac y \epsilon\)$ (Eckgrenzschicht).
+\end{enumerate}
+S-Typ-Gitter hängen von dem Übergangspunkten ab, in denen die Grenzschicht abgeklungen sind. Wir verlangen:
+\begin{align*}
+  \norm{w_{1}(\lambda_{x}, y)}&\leq C \exp \(- \beta_{1} \frac {\lambda_{x}} \epsilon\) \stackrel ! \leq C N^{-\sigma}\\
+  \norm{w_{2}(x, \lambda_{y})}&\leq C \exp \(- \beta_{2} \frac {\lambda_{y}} \epsilon\) \stackrel ! \leq C N^{-\sigma}\\
+\implies \quad \lambda_{x} &= \frac{\sigma\epsilon}{\beta_{1}} \ln N, \quad\lambda_{y} = \frac{\sigma\epsilon}{\beta_{2}} \ln N. 
+\end{align*}
+Wir definieren:
+\begin{align*}
+  \lambda_{x} \coloneqq\min \set{ \frac{\sigma\epsilon}{\beta_{1}} \ln N, \frac 12}, \quad \lambda_{y} \coloneqq \min\set{\frac{\sigma\epsilon}{\beta_{2}} \ln N, \frac 12}. 
+\end{align*}
+Dabei ist $\frac 12$ eine sinnvolle, aber willkürliche Grenze. Annahme:
+\begin{align*}
+  \epsilon \ln N \leq \frac 12 \sigma^{-1} \min\set{\beta_{1}, \beta_{2}} \,\iff\, \epsilon \ln N \leq C.
+\end{align*}
+Damit sind die Übergangspunkte festgelegt.
+\begin{definition}\label{def:7-3}
+  Ein \markdef{S-Typ-Gitter} für Probleme mit regulären Grenzschichten ist ein Tensorprodukt-Gitter zweier 1D-S-Typ-Gitter, das heißt
+  \begin{align*}
+    x_{i} &=
+    \begin{cases}
+      \frac{\sigma\epsilon}{\beta_{1}} \phi(i \cdot N^{-1}), & i = 0, \dots, \frac N2, \\
+      \lambda_{x} + (2i\cdot N^{-1} - 1)(1 - \lambda_{x}), & i = N\cdot2^{-1}, \dots, N, 
+    \end{cases}\\
+    y_{j} &=
+    \begin{cases}
+      \frac{\sigma\epsilon}{\beta_{2}} \phi(j \cdot N^{-1}), & j = 0, \dots, \frac N2, \\
+      \lambda_{y} + (2j\cdot N^{-1} - 1)(1 - \lambda_{y}), & y = N\cdot2^{-1}, \dots, N, 
+    \end{cases}
+  \end{align*}
+und Gitterzellen
+\begin{align*}
+  \psi_{ij} = (x_{i-1}, x_{i}) \times (y_{j-1}, y_{j}), \quad i, j = 1, \dots, N. 
+\end{align*}
+SKIZZE 2D Gitter
+\begin{enumerate}
+\item in $\Omega_{11}$: isotrope Zellen, das heißt
+  \begin{align*}
+    \max\set{ \frac{x_{i}, x_{i-1}}{y_{j}, y_{j-1}}, \frac{y_{j}, y_{j-1}}{x_{i}, x_{i-1}}}\leq C
+  \end{align*}
+unabhängig von $\epsilon$. 'Das Verhältnis der Seiten ist beschränkt.'
+\item in $\Omega_{12} \cup \Omega_{21}$: anisotrope Zellen, das heißt
+  \begin{align*}
+    \max\set{ \frac{x_{i}, x_{i-1}}{y_{j}, y_{j-1}}, \frac{y_{j}, y_{j-1}}{x_{i}, x_{i-1}}}\sim C \epsilon^{-1},
+  \end{align*}
+Stichwort \markdef{'aspect ratio'}. 
+\end{enumerate}
+\end{definition}
+\begin{bemerkung*}
+  Sei der diskrete Raum gegeben durch stückweise bilineare Elemente $Q_{1}$. Standard-Abschätzung des Interpolationsfehlers mit Lemma von Bramble-Hilbert liefert zum Beispiel
+  \begin{align*}
+    \nnorm{(u - u^{I} x}_{L_{2}(\psi_{ij})}&\leq C\(h_{x} + \frac{h_{y}^{2}}{h_{x}}\)\cdot \norm u_{H^{2}(\psi_{ij})}
+  \end{align*}
+Auf anisotropen Gittern ist $\frac{h_{y}^{2}}{h_{x}}$ problematisch, da ausufernd. Außerdem liefert die Multiplikation, dass die Kleinheit der Zelle in eine Richtung Ableitungen in diese Richtung nicht auffangen kann. 
+Das ist schlecht. Wir benötigen also eine genauere Fehleranalysis. 
+\end{bemerkung*}
+Wir folgen dazu der Theorie von Apel, Advanced Numerical Mathematics, Teubner-Verlag, 1999. Wir nutzen trotz der Ausführungen oben eine Version von Bramble-Hilbert, die funktioniert:
+\begin{lemma}\label{lem:7-4} Bramble/Hilbert, Numer. Math. 16, 362-369, 1971
+  
+Es sei $R$ ein Rechteck, $l \geq 1$, $p \in [1, \infty)$ und $u \in W^{l}_{p}(R)$. Außerdem sei $K$ eine Menge von Multiindizes, sodass die Menge geschachtelt werden kann:
+\begin{align*}
+  \set{(l, 0), (0, l)} \subset K \subset \set{ \alpha: \, \norm \alpha = l}
+\end{align*}
+gilt. Bezeichne $\cP_{K}$ die Menge der Polynome $w$ mit der Eigenschaft, dass sie unter allen Ableitungen $\alpha \in K$ verschwinden, also
+\begin{align*}
+  D^{\alpha}w = 0. 
+\end{align*}
+Dann existieren $C_{1}, C_{2} > 0$ mit
+\begin{align*}
+  C_{1} \sum_{\alpha \in K} \nnorm{D^{\alpha} u}_{L_{p}(R)}& \leq \inf_{w \in \cP_{K}} \nnorm{u - w}_{W_{p}^{l}(R)} \leq  C_{2} \sum_{\alpha \in K} \nnorm{D^{\alpha} u}_{L_{p}(R)}
+\end{align*}
+('so etwas wie eine Semi-Norm, ist aber keine'). 
+\end{lemma}
+\begin{lemma}\label{lem:7-5}
+  Es sei $R$ ein Rechteck und $\gamma$ ein Multiindex mit der Ordnung $m = \norm \gamma$. Weiterhin sei $u \in L_{1}(R)$ (betragsmäßig integrierbar) mit
+  \begin{align*}
+    D^{\gamma}(u) \in W_{p}^{l-m}(R)
+  \end{align*}
+mit $0 \leq m\leq l$ und $p \in [1, \infty)$ für ein geeignetes $l$. Dann exisitert ein Polynom $w \in  Q_{l-1}(R)$ mit
+\begin{align*}
+  \nnorm{D^{\gamma} (u-w)}_{W_{p}^{l-m}(R)} \leq C [D^{\gamma}u]_{W_{p}^{l-m}(R)} = C \( \nnorm{\partial_{x}^{\,l-m} D^{\gamma} u}_{L_{p}(R)} + \nnorm{\partial_{y}^{\,l-m} D^{\gamma} u}_{L_{p}(R)} \).
+\end{align*}
+\end{lemma}
+\begin{beweis}Fallunterscheidung:
+  \begin{enumerate}
+  \item $m = 0 \iff \gamma =(0, 0)$: Es sei $K = \set{\alpha = l\cdot \beta, \norm \beta = 1} =   \set{(l, 0), (0, l)} $. Mit Lemma \ref{lem:7-4} folgt die Aussage. 
+\item $m \geq 1$: Es sei $v = D^{\gamma} u$. Dann liefert Lemma \ref{lem:7-5} für $\gamma = (0, 0)$, $l \coloneqq l-m$ die Existenz von $w_{0} \in Q_{l-m-1}(R)$ mit
+\begin{align*}
+  \nnorm{v - w_{0}}_{W_{p}^{l-m}(R)} \leq C [v]_{W_{p}^{l-m}(R)}. 
+\end{align*}
+Mit $w \in Q_{l-1}(R)$ mit $D^{\gamma}w = w_{0}$ folgt dann
+\begin{align*}
+  \nnorm{D^{\gamma}(u - w)}_{W_{p}^{l-m}(R)} \leq C [D^{\gamma}_{u}]_{W_{p}^{l-m}(R)}. 
+\end{align*}
+\end{enumerate}
+\end{beweis}
+
+\begin{lemma}\label{lem:7-6}
+  Es sei $R$ ein Rechteck und $I:C(R) \to Q_{k}(R)$ ein linearer (Interpolations-)Operator. Mit den festen Zahlen $m \in \N$, $p\in [1, \infty)$ und $q \in [1, \infty]$, die die Bedingungen 
+  \begin{align*}
+    &0 \leq m < k+1, \\
+    &W_{p}^{k+1-m}(R) \emb L_{q}(R), 
+  \end{align*}
+erfüllen, betrachten wir einen Multiindex $\gamma$ mit $\norm\gamma = m$ und definieren $j = \dim D^{\gamma} Q_{k}(R)$. Angenommen, es existieren $j$ lineare Funktionale $F_{i}$ mit den drei Eigenschaften
+\begin{enumerate}
+\item $F_{i} \in (W_{p}^{k+1-m} (R))$ (stetiges, lineares Funktional), 'einfach', 
+\item $F_{i}(D^{\gamma}(u- Iu)) = 0$, $i = 1, \dots, j$, Konsistenz, 'schwieriger', 
+\item $w \in Q_{k}(R), \, F^{i}(D^{\gamma}w) = 0, \, i = 1, \dots, j \, \implies\, D^{\gamma}w = 0$, Unisolvenz auf $D^{\gamma}Q_{k}(R)$, 
+\end{enumerate}
+dann gilt für alle $u \in C(R)$ mit $D^{\gamma}u \in W_{p}^{k+1-m}(R)$
+\begin{align*}
+  \nnorm{D^{\gamma}(u-Iu)}_{ L_{q}(R)}\leq C [D^{\gamma}u]_{W_{p}^{k+1-m}}(R). 
+\end{align*}
+\end{lemma}
+
+\begin{beweis}
+  Es sei $v \in Q_{k}(R)$. Dann gilt mit der Dreiecksungleichung
+  \begin{align*}
+    \nnorm{D^{\gamma}(u-Iu)}_{ L_{q}(R)}&\leq \nnorm{D^{\gamma}(u-v)}_{ L_{q}(R)} + \nnorm{D^{\gamma}(v-Iu)}_{ L_{q}(R)}. 
+  \end{align*}
+Mit $v - Iu \in Q_{k}(R)$ ist $D^{\gamma}(v - Iu)\in D^{\gamma}Q_{k}(R)$. In endlichdimensionalen Vektorräumen wie $Q_{k}(R)$ sind alle Normen äquivalent. Also gilt, auch wegen \ref{num:iii} und dann \ref{num:ii} und dann \ref{num:i},
+\begin{align*}
+  \nnorm{D^{\gamma}(v-Iu)}_{ L_{q}(R)} &\leq C_{1} \sum_{i = 1}^{j} \norm{F_{j}(v - Iu)}\\
+&= C_{1} \sum_{i = 1}^{j} \norm{F_{i}(v - u)}\\
+&\leq C_{1} C_{2} \nnorm{D^{\gamma}(v - u)}_{W_{p}^{k+1-m}(R)}. 
+\end{align*}
+Somit folgt mit der Einbettung und im zweiten Schritt mit Lemma \ref{lem:7-5}
+\begin{align*}
+    \nnorm{D^{\gamma}(u-Iu)}_{ L_{q}(R)}&\leq C \nnorm{D^{\gamma}(v-u)}_{W_{p}^{k+1-m}(R)}\\
+    &\leq C [D^{\gamma}u]_{W_{p}^{k+1-m}(R)}. 
+\end{align*}
+\end{beweis}
+Nun erhalten wir eine anisotrope Fehlerabschätzung:
+\begin{satz}\label{thm:7-7}
+  Angenommen, $\tau$ ist ein Rechteck mit den Seiten parallel zu den Achsen und Seitenlängen $h = (h_{x}, h_{y})$. Sei $\gamma$ ein Multiindex mit der Ordnung $m = \norm \gamma$ und $u \in C(\tau)$ mit $D^{\gamma} u \in W_{p}^{k+1-m}(\tau)$ und $m \in \N_{0}$, $p \in [1, \infty]$, sowie $0 \leq m < k+1$. Existieren dann Funktionale $F_{i}$ gemäß Lemma \ref{lem:7-6}, so gilt die \markdef{anisotrope Interpolationsfehlerabschätzung}
+  \begin{align*}
+    \nnorm{D^{\gamma}(u - Iu)}_{L_{p}(\tau)} \leq C \sum_{\norm \alpha = 1} h^{k+1-m} \nnorm{D^{\gamma + (k+1-m)\alpha}u}_{L_{p}(\tau)}. 
+  \end{align*}
+\end{satz}
+
+\begin{beweis}
+Falluntescheidung:
+\begin{enumerate}
+\item $p < \infty$: Lemma \ref{lem:7-6} mit Transformation auf $R$. 
+\item $p = \infty$: Der Beweis kann in $m = k$ ($[\cdot]_{W_{p}^{1}} = \norm \cdot _{W^{1}_{p}}$, Beweis genauso)
+und $m \leq k-1$ ($p' < \infty$, Lemma \ref{lem:7-6}, $p' \to \infty$) geteilt werden.
+\end{enumerate}
+\end{beweis}
+% \datum{14. Januar 2016}
+
+Für die bilinearen Elemente und $u^{I}$ als Langrangeinterpolierende in den Eckpunkten des Rechtecks gilt dann im Speziellen:
+\begin{itemize}
+\item $\gamma = (0, 0)$:
+  \begin{align*}
+    \nnorm{u- u^{I}}_{L_{p}(\tau_{ij})} \leq C \( h_{i}^{2} \nnorm{u_{xx}}_{L_{p}(\tau_{ij})} + k_{j}^{2} \nnorm{u_{yy}}_{L_{p}(\tau_{ij})} \) 
+  \end{align*}
+\item $\gamma = (1, 0)$:
+  \begin{align*}
+    \nnorm{(u- u^{I})_{x}}_{L_{p}(\tau_{ij})} \leq C \( h_{i} \nnorm{u_{xx}}_{L_{p}(\tau_{ij})} + k_{j} \nnorm{u_{xy}}_{L_{p}(\tau_{ij})} \) 
+  \end{align*}
+\end{itemize}
+Wir benötigen meist nur $p = 2$ bzw. $p = \infty$. Offen ist noch die Existenz der Funktionale für Lemma \ref{lem:7-6}. Sei dazu $R = (0, 1)^{2}$.
+
+Sei $\gamma = (0, 0)$: $k = 1$, $m = 0$, dann ist $j = 4$, vier Funktionale (Punktauswertungen), die die drei Eigenschaften erfüllen:
+\begin{align*}
+  F_{1}(v) &= v(0, 0),\\
+  F_{2}(v) &= v(1, 0),\\
+  F_{3}(v) &= v(0, 1),\\
+  F_{4}(v) &= v(1, 1).
+\end{align*}
+Sei $\gamma = (1, 0)$, $j = 2$, $m = 1$,  zwei Funktionale (die wieder die drei Eigenschaften erfüllen):
+\begin{align*}
+  \hat F_{1}(v) &= \int_{0}^{1} v(x, 0) dx\\
+  \hat F_{2}(v) &= \int_{0}^{1} v(x, 1) dx
+\end{align*}
+Zur dritten Eigenschaft: $x \in Q_{1}$: $\partial_{x} w = a + by$:
+\begin{align*}
+  F_{1}(\partial_{x} w) &= a = 0\\
+  F_{2}(\partial_{x} w) &= a + b = 0\\
+\implies \quad a = 0, b &= 0, \\
+\implies \quad \partial_{x} w &= 0.
+\end{align*}
+Bevor wir den Interpolationsfehler auf S-Typ-Gittern abschätzen, benötigen wir noch ein Hilfsresultat, Stabilitätsabschätzungen der Interpolation.
+\begin{lemma} \label{lem:7-8}
+  Für die bilineare Interpolierende gilt auf einem Rechteck $\tau$
+  \begin{align*}
+    \nnorm{u^{I}}_{L_{\infty}(\tau)} &\leq \nnorm u_{L_{\infty}(\tau)}, \\
+    \nnorm{(u^{I})_{x}}_{L_{\infty}(\tau)} &\leq \nnorm {u_{x}}_{L_{\infty}(\tau)}. 
+  \end{align*}
+\end{lemma}
+\begin{beweis}
+  Es reicht aus, $\tau = (0, 1)^{2}$ zu betrachten. Mit den Basisfunktionen $\phi_{0}(x) =1 - x$ und $\phi_{1}(x) = x$ gilt
+  \begin{align*}
+    u^{I}(x, y) &= \(u_{00} \phi_{0}(x) + u_{10}\phi_{1}(x)\)\phi_{0}(y) + \(u_{01} \phi_{0}(x) + u_{11}\phi_{1}(x)\)\phi_{1}(y),\\
+    u^{I}_{x}(x, y) &= \(u_{10}  - u_{00}\)\phi_{0}(x) + \(u_{11} - u_{01}\)\phi_{1}(x).
+  \end{align*}
+
+\end{beweis}
+%%% local Variables: 
+%%% mode: latex
+%%% TeX-master: "vorlesung"
+%%% End: 
