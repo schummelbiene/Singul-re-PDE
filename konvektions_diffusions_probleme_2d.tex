@@ -353,8 +353,126 @@ Bevor wir den Interpolationsfehler auf S-Typ-Gittern abschätzen, benötigen wir
     u^{I}(x, y) &= \(u_{00} \phi_{0}(x) + u_{10}\phi_{1}(x)\)\phi_{0}(y) + \(u_{01} \phi_{0}(x) + u_{11}\phi_{1}(x)\)\phi_{1}(y),\\
     u^{I}_{x}(x, y) &= \(u_{10}  - u_{00}\)\phi_{0}(x) + \(u_{11} - u_{01}\)\phi_{1}(x).
   \end{align*}
-
+Da $\phi_{0}$ und $\phi_{1} \geq0$ in $\tau$ gilt
+\begin{align*}
+      \nnorm{u^{I}(x, y)}_{L_{\infty}(\tau)} &\leq \nnorm{\(\( \phi_{0}(x) + \phi_{1}(x)\) \phi_{0}(y) +  \( \phi_{0}(x) + \phi_{1}(x)\) \phi_{1}(y)\)\nnorm u_{L_{\infty}(\tau)} }_{L_{\infty}(\tau)}, \\
+ &= \nnorm u_{L_{\infty}(\tau)}, \\
+      \nnorm{u_{x}^{I}(x, y)}_{L_{\infty}(\tau)} &= \nnorm{ \int_{0}^{1}u_{x}(t, 0) dt \phi_{0}(y) + \int_{0}^{1} u_{x}(t, 1) dt \phi_{1}(y) }_{L_{\infty}(\tau)}\\
+ &\leq \nnorm { (\phi_{0}(y) + \phi_{1}(y)) \nnorm{u_{x}}_{L_{\infty}(\tau)}}L_{\infty}(\tau)\\
+& = \nnorm{u_{x}}_{L_{\infty}(\tau)}. 
+\end{align*}
 \end{beweis}
+\begin{bemerkung*}
+  \begin{enumerate}
+  \item 
+  Die Aussagen des Lemmas \ref{lem:7-8} gelten nicht, falls $L_{\infty}$ durch $L_{2}$ ersetzt wird:
+  \begin{align*}
+    u = \max \set{ 1 - \frac x \epsilon, 0}, \epsilon \in (0, 1) \implies \nnorm{u^{I}}^{2}_{L_{2}(\tau)} &= \int_{0}^{1}\int_{0}^{1} (1 - x)^{2} dxdy = \frac 13\\
+\implies \nnorm{u}^{2}_{L_{2}(\tau)} &= \int_{0}^{1}\int_{0}^{\epsilon} (1 - \frac x \epsilon)^{2} dxdy = \frac \epsilon 3
+  \end{align*}
+Also gilt nicht gleichmäßig:
+\begin{align*}
+  \nnorm{u^{I}} _{L_{2}(\tau)} \leq \frac 1 {\sqrt \epsilon}   \nnorm{u} _{L_{2}(\tau)}. 
+\end{align*}
+Analog für $u_{x} = \max \set{1 - \frac x \epsilon, 0}$
+\item Analoge Abschätzungen gelten für Elemente höherer Ordnung, dann mit
+  \begin{align*}
+    \nnorm{Iu}_{L_{\infty}(\tau)} \leq C \nnorm u _{L_{\infty}(\tau)}, \quad     \nnorm{(Iu)_{x}}_{L_{\infty}(\tau)} \leq C \nnorm {u_{x}} _{L_{\infty}(\tau)}. 
+  \end{align*}
+  \end{enumerate}
+\end{bemerkung*}
+Kommen wir nun zur Abschätzung auf S-Typ-Gittern:
+\begin{satz} \label{thm:7-9}
+  Auf einem S-Typ-Gitter mit $\sigma > 2$ gilt für $\epsilon \leq CN^{-1}$ ($\iff \leq CN^{-1}$)
+  \begin{align*}
+    \nnorm{u - u^{I}}_{L_{2}(\Omega_{11})} \leq CN^{-2},\\
+    \nnorm{u - u^{I}}_{L_{2}(\Omega\setminus\Omega_{11})} \leq C(N^{-1} \max \norm{\psi'})^{2},\\
+  \end{align*}
+und
+\begin{align*}
+  \epsilon^{\frac 12} \nnorm{\nabla(u - u^{I})}_{L_{2}(\Omega_{11})} &\leq C N^{-1},\\ 
+  \epsilon^{\frac 12} \nnorm{\nabla(u - u^{I})}_{L_{2}(\Omega\setminus\Omega_{11})} &\leq C (N^{-1} \max \norm{\psi'}), 
+\end{align*}
+also insgesamt
+\begin{align*}
+  \nnnorm{u-u^{I}}_{\epsilon} \leq C N^{-1} \max \norm{\psi'}. 
+\end{align*}
+\end{satz}
+\begin{beweis}
+  Der Beweis ist nicht schwierig, aber langwierig, da
+  \begin{enumerate}
+  \item drei Normen sind beteiligt ($\nnorm \cdot$, $\nnorm {(\cdot)_{x}}$,$\nnorm {(\cdot)_{y}}$)
+  \item vier Lösungsbestandteile
+  \item vier Teilgebiete von $\Omega$
+  \item zwei Abschätzungstechniken (lokale anisotrope Abschätzungen (wenn die Ableitungen nichts kosten oder von den Gitterweiten aufgefangen werden) und Stabilitätsaussagen nutzen (wenn Lösungsbestandteil abgeklungen ist, eventuell inverse Ungleichung nutzen))
+  \end{enumerate}
+Hier nur $\nnorm{(\cdot)_{x}}$, da $\nnorm{(\cdot)_{y}}$ aufgrund der Symmetrie des Problems analog folgt und $\nnorm \cdot$ ähnlich funktioniert. Starten wir mit $\Omega_{11}$:
+\begin{align*}
+  \epsilon\nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\Omega_{11})}& = \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} \nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\tau_{ij})} \\
+  & \leq C \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\tau_{ij})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
+  & = C \epsilon N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{11})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{11})}\)\\
+  &\leq C \epsilon N^{-2}
+\end{align*}
+die erste Ungleichung folgt mit lokaler anisotroper, die zweite mit Satz \ref{thm:7-1}.
+Betrachte
+\begin{align*}
+  \epsilon \nnorm{((w_{1} + w_{12}) - (w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
+&\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
+&\leq C\epsilon^{-1} \int_{\Omega_{11}} e^{-2 \beta_{1} \frac x \epsilon} (1 + \underbrace{e^{-2 \beta_{2} \frac y \epsilon}}_{\leq1}) dxy + C \epsilon N^{2} \nnorm{(w_{1} + w_{12})^{I}}^{2}_{L_{2}(\Omega_{11})}\\
+&\leq C N^{ - 2 \sigma} + C \epsilon N^{2} \( N^{-1} + \epsilon\) N^{-2\sigma}\\
+&\leq C ( 1 + \epsilon N)^{2}  N^{- 2\sigma}. \\
+%%%%%%%%%%%
+  \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})} &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})}\\
+&\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{11})}\\
+&\leq C \epsilon^{\frac 12} N^{-\sigma}
+\end{align*}
+mit Stabilität. 
+
+Grenzschichtbereich $\Omega_{12} = [0, \lambda_{x}] \times [\lambda_{y}, 1]$: 
+\begin{align*}
+    \epsilon \nnorm{((v + w_{1}) - (v + w_{1})^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} \( h_{i}^{2} \nnorm{(v + w_{1})_{xx}}^{2}_{L_{2}(\tau_{ij})}  + k_{j}^{2} \nnorm{(v + w_{1})_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
+&\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
+& \leq C\( \epsilon N^{-2}  + (N^{-1} \max \set{\psi'})^{2} +  N^{-2}\)\\
+& \leq C\( N^{-1} \max \set{\psi'}\)^{2}\\
+%%%%
+  \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{12})} &\leq C \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{12})} \\
+& \leq C \epsilon^{\frac 12} N^{- \sigma}. \\
+%%%%%
+  \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} h_{i}^{2}  \nnorm{(w_{12})_{xx}}^{2}_{L_{2}(\tau_{ij})} + k_{j}^{2}\nnorm{(w_{12})_{xy}}^{2}_{L_{2}(\tau_{ij})} \\
+ &\leq C\( \epsilon^{-1} (N^{-1} \max \set{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy \)\\
+& \leq C \( \epsilon (N^{-1} \max \set{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
+\end{align*}
+Das $\epsilon^{-1}$ macht es uns kaputt.. Zweiter Weg:
+\begin{align*}
+  \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} \) \\
+&\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \meas (\Omega_{12}) \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{\infty}(\Omega_{12})} \) \\
+&\leq C \(\epsilon N^{-2\sigma} + \epsilon^{2} \ln N \epsilon^{-2} N^{-2\sigma}\) \\
+&\leq C  \ln N N^{-2 \sigma}
+\end{align*}
+Mit den gleichen Techniken kann auf $\Omega_{21}$ und $\Omega_{22}$ abgeschätzt werden. 
+\end{beweis}
+% \datum{15. Januar 2016}
+\begin{lemma}\label{lem:7-10}
+  Unter den Voraussetzungen von Satz \ref{thm:7-9} gilt zusätzlich
+  \begin{align*}
+    \nnorm{u - u^{I}}_{L_{\infty}(\Omega_{11})} \leq C N^{-2}
+  \end{align*}
+und
+\begin{align*}
+    \nnorm{u - u^{I}}_{L_{\infty}(\Omega\setminus\Omega_{11})} \leq C (N^{-1} \max\norm{\psi'})^{2}. 
+\end{align*}
+\end{lemma}
+\begin{beweis}
+  $L_{\infty}$ statt $L_{2}$, ansonsten die Techniken des Satzes \ref{thm:7-9}. 
+\end{beweis}
+
+Schauen wir uns nun den Fall der charakteristischen Grenzschichten an, das heißt
+\begin{align*}
+  - \epsilon \Delta u - b u_{x} + cu = f &\In \Omega = (0, 1)^{2} \\
+u = 0& \Auf \partial \Omega 
+\end{align*}
+mit $b \geq \beta > 0$ und $ c + \frac 12 b_{x} \geq \gamma> 0$. 
+
 %%% local Variables: 
 %%% mode: latex
 %%% TeX-master: "vorlesung"
