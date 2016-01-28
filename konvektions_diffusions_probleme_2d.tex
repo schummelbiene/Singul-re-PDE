@@ -60,7 +60,8 @@ Diesen Problem haben wir schon betrachtet, es hat die Lösung
 \begin{align*}
   v(x) = (g - u_{0})(\bar x) \exp\(- \frac 1 \epsilon  b(\bar x) \cdot n(\bar x) \rho\). 
 \end{align*}
-Mit Hilfe einer asymptotischen Entwicklung, vergleiche Kapitel \ref{sec:asympt-entw-fur}, und einer Restgliedabschätzung erhalten wir eine Lösungszerlegung. Im Gegensatz zum 1d Fall benötigen wir aufgrund der Ecken \markdef{Kompatibilitätsbedingungen} bezüglich $f$. In Linß, Stynes: J.Math.Anal.Appl. 261, 604 - 632, 2001 finden wir
+Mit Hilfe einer asymptotischen Entwicklung, vergleiche Kapitel \ref{sec:asympt-entw-fur}, und einer Restgliedabschätzung erhalten wir eine Lösungszerlegung. Im Gegensatz zum 1d Fall benötigen wir aufgrund der Ecken 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\markdef{Kompatibilit''atsbedingungen} bezüglich $f$. In Linß, Stynes: J.Math.Anal.Appl. 261, 604 - 632, 2001 finden wir
 \begin{align*}
   f(0, 0) =   f(1, 0) =   f(0, 1) =   f(1, 1) = 0,\\
   \partial_{y} \( \frac f {b_{1}}\) (1, 1) =   \partial_{x} \( \frac f {b_{2}}\) (1, 1),\\
@@ -94,11 +95,11 @@ und für $x, y \in [0, 1]$
   \norm{\partial_{x}^{i} \partial_{y}^{j} w_{2}(x, y)} &\leq C \cdot \epsilon^{-j} e^{- \frac {\beta_{2} y}{\epsilon}}, \quad 0 \leq i \leq 2, 0 \leq j\leq n, \\
   \norm{\partial_{x}^{i} \partial_{y}^{j} w_{12}(x, y)} &\leq C \cdot \epsilon^{-(i+j)} e^{- \frac {\beta_{1} x}{\epsilon}}e^{- \frac {\beta_{2} y}{\epsilon}}, \quad 0 \leq i \leq n, 0 \leq j\leq n. 
 \end{align*}
-Für höhere Ableitungen werden mehr Glätte von $f$ und weitere Komatibilitätsbedingungen benötigt.
+Für höhere Ableitungen werden mehr Glätte von $f$ und weitere Kompatibilitätsbedingungen benötigt.
 \end{satz}
 \paragraph{(b) Charakteristische Grenzschichten}
 \label{sec:b-char-grenzsch}
-Hier führt die lokale Transformation auf eine parabolische partielle DIfferentialgleichung: 
+Hier führt die lokale Transformation auf eine parabolische partielle Differentialgleichung: 
 \begin{align*}
   - \epsilon v_{\rho\rho} + v_{\rho} = 0
 \implies \quad v \approx \exp\(- \frac \rho {\sqrt \epsilon}\) \approx \exp\(- \frac {\rho^{2}} \epsilon\). 
@@ -191,7 +192,68 @@ und Gitterzellen
 \begin{align*}
   \psi_{ij} = (x_{i-1}, x_{i}) \times (y_{j-1}, y_{j}), \quad i, j = 1, \dots, N. 
 \end{align*}
-SKIZZE 2D Gitter
+\begin{figure}[ht!]
+  \centering
+   \begin{tikzpicture}
+    
+ \newcommand*{\xMin}{0}%
+ \newcommand*{\xMax}{6}%
+ \newcommand*{\yMin}{0}%
+ \newcommand*{\yMax}{6}%
+ \def\Ncoarse {5};
+ \def\Nfine {10};
+ \def\lambday  {0.3};
+ \def\lambdax {0.3};
+ \def\h { (\xMax -\lambdax)/\Ncoarse};
+ \def\picscale {0.00125};
+ \pgfmathsetmacro\newvalue{\lambdax + \h * \picscale * \Nfine * \Nfine * \Nfine};
+
+ \begin{scope}
+   \foreach \i in {0,...,\Nfine} {
+     \pgfmathsetmacro\xcoord{(\lambdax + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\xcoord, \yMin) -- (\xcoord, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   }
+   \foreach \i in {0,...,\Nfine} {
+     \pgfmathsetmacro\ycoord{(\lambday + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\xMin,\ycoord) -- (\xMax,\ycoord);% node [left] at (\xMin,\ycoord) {$\i$};
+   }
+
+   \foreach \i in {0,...,\Ncoarse} {
+     \pgfmathsetmacro\xcoord{\newvalue * (\i * 0.2) + \xMax * (\Ncoarse - \i) * 0.2};
+     \draw [very thin,gray] (\xcoord, \yMin) -- (\xcoord, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   }
+
+   \foreach \i in {0,...,\Ncoarse} {
+     \pgfmathsetmacro\ycoord{(\newvalue * (\i * 0.2)) + (\yMax * (\Ncoarse - \i) * 0.2)};
+     \draw [very thin,gray] (\xMin, \ycoord) -- (\xMax, \ycoord);
+   }
+   \draw[thick,black] (\newvalue, \yMin) -- (\newvalue, \yMax) node [below] at (\newvalue, \yMin) {$\lambda_{x}$};
+   \draw[thick,black] (\xMin, \newvalue) -- (\xMax, \newvalue) node [left] at (\xMin, \newvalue) {$\lambda_{y}$};
+   \node [below left] at (0, 0) {$0$};
+   \node [below] at (\xMax, 0) {$1$};
+   \node [left] at (0, \yMax) {$1$};
+ \end{scope}
+ \begin{scope}[right=8cm]
+   \draw[thin,gray] (0, \yMin) -- (0, \yMax);
+   \draw[thin,gray] (\xMin, 0) -- (\xMax, 0);
+   \draw[thin,gray] (\xMax, \yMin) -- (\xMax, \yMax);
+   \draw[thin,gray] (\xMin, \yMax) -- (\xMax, \yMax);
+   \draw[thick,black] (\newvalue, \yMin) -- (\newvalue, \yMax) node [below] at (\newvalue, \yMin) {$\lambda_{x}$};
+   \draw[thick,black] (\xMin, \newvalue) -- (\xMax, \newvalue) node [left] at (\xMin, \newvalue) {$\lambda_{y}$};
+   \node[below left] at (0, 0) {$0$};
+   \node[below] at (\xMax, 0) {$1$};
+   \node[left] at (0, \yMax) {$1$};
+   \node[anchor=center] at (\newvalue * 0.5, \newvalue * 0.5) {$\Omega_{22}$};
+   \node[anchor=center] at (\newvalue * 0.5, \yMax * 0.5 + \newvalue * 0.5) {$\Omega_{12}$};
+   \node[anchor=center] at (\xMax * 0.5 + \newvalue * 0.5, \newvalue * 0.5) {$\Omega_{21}$};
+   \node[anchor=center] at (\xMax * 0.5 + \newvalue * 0.5, \yMax * 0.5 + \newvalue * 0.5) {$\Omega_{11}$};
+ \end{scope}
+\end{tikzpicture}
+
+\caption{Bezeichnung in 2D-Gittern}
+\label{fig:2d-grid}
+\end{figure}
+
 \begin{enumerate}
 \item in $\Omega_{11}$: isotrope Zellen, das heißt
   \begin{align*}
@@ -213,6 +275,10 @@ Stichwort \markdef{'aspect ratio'}.
 Auf anisotropen Gittern ist $\frac{h_{y}^{2}}{h_{x}}$ problematisch, da ausufernd. Außerdem liefert die Multiplikation, dass die Kleinheit der Zelle in eine Richtung Ableitungen in diese Richtung nicht auffangen kann. 
 Das ist schlecht. Wir benötigen also eine genauere Fehleranalysis. 
 \end{bemerkung*}
+
+\subsection{Interpolationsfehlerabschätzungen}
+\label{sec:interp}
+
 Wir folgen dazu der Theorie von Apel, Advanced Numerical Mathematics, Teubner-Verlag, 1999. Wir nutzen trotz der Ausführungen oben eine Version von Bramble-Hilbert, die funktioniert:
 \begin{lemma}\label{lem:7-4} Bramble/Hilbert, Numer. Math. 16, 362-369, 1971
   
@@ -431,16 +497,18 @@ mit Stabilität.
 Grenzschichtbereich $\Omega_{12} = [0, \lambda_{x}] \times [\lambda_{y}, 1]$: 
 \begin{align*}
     \epsilon \nnorm{((v + w_{1}) - (v + w_{1})^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} \( h_{i}^{2} \nnorm{(v + w_{1})_{xx}}^{2}_{L_{2}(\tau_{ij})}  + k_{j}^{2} \nnorm{(v + w_{1})_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
-&\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
-& \leq C\( \epsilon N^{-2}  + (N^{-1} \max \set{\psi'})^{2} +  N^{-2}\)\\
-& \leq C\( N^{-1} \max \set{\psi'}\)^{2}\\
+&\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \\
+&\int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
+& \leq C\( \epsilon N^{-2}  + (N^{-1} \max\norm{\psi'})^{2} +  N^{-2}\)\\
+& \leq C\( N^{-1} \max\norm{\psi'}\)^{2}\\
 %%%%
   \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{12})} &\leq C \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{12})} \\
 & \leq C \epsilon^{\frac 12} N^{- \sigma}. \\
 %%%%%
   \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} h_{i}^{2}  \nnorm{(w_{12})_{xx}}^{2}_{L_{2}(\tau_{ij})} + k_{j}^{2}\nnorm{(w_{12})_{xy}}^{2}_{L_{2}(\tau_{ij})} \\
- &\leq C\( \epsilon^{-1} (N^{-1} \max \set{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy \)\\
-& \leq C \( \epsilon (N^{-1} \max \set{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
+ &\leq C( \epsilon^{-1} (N^{-1} \max\norm{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \\
+&\epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy )\\
+& \leq C \( \epsilon (N^{-1} \max\norm{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
 \end{align*}
 Das $\epsilon^{-1}$ macht es uns kaputt.. Zweiter Weg:
 \begin{align*}
@@ -472,7 +540,648 @@ Schauen wir uns nun den Fall der charakteristischen Grenzschichten an, das heiß
 u = 0& \Auf \partial \Omega 
 \end{align*}
 mit $b \geq \beta > 0$ und $ c + \frac 12 b_{x} \geq \gamma> 0$. 
+Mit den gleichen Überlegungen wie im vorhergehenden Fall für reguläre Grenzschichten definieren wir uns die Übergangspunkte
+\begin{align*}
+  \lambda_{x} = \frac{\sigma\epsilon \ln N} \beta, \quad   \lambda_{y} = \sigma \sqrt\epsilon \ln N. 
+\end{align*}
+Diese Größen tauchten schon bei der 1d Konvektion-Diffusion und bei der 1d Reaktion-Diffusion auf. 
+\begin{definition}\label{def:7-11}
+  Ein \markdef{S-Typ-Gitter} für Probleme mit charakteristischen Grenzschichten ist ein Tensorprodukt zweier 1d-S-Typ-Gitter, das heißt
+  \begin{align*}
+    x_{i} &=
+    \begin{cases}
+      \sigma \frac \epsilon\beta \phi (i/N), & i = 0, \dots, N/2, \\
+\lambda_{x} + (2 i/N - 1)(1 - \lambda_{x}), & i = N/2, \dots, N,
+    \end{cases}
+\\
+    y_{j} &=
+    \begin{cases}
+      \sigma \epsilon^{\frac 12} \phi (2j/N), & j = 0, \dots, N/4, \\
+      \lambda_{y} + (4 j/N - 1)(1/2 - \lambda_{y}), & j = N/4, \dots, 3N/4,\\
+      1 - \sigma\epsilon^{\frac 12} \phi (2-2j/N), & j = 3N/4, \dots, N,
+    \end{cases}
+  \end{align*}
+($N$ sei durch $4$ teilbar).
 
+\begin{figure}[ht!]
+  \centering
+   \begin{tikzpicture}
+    
+ \newcommand*{\xMin}{0}%
+ \newcommand*{\xMax}{6}%
+ \newcommand*{\yMin}{0}%
+ \newcommand*{\yMax}{6}%
+ \def\Ncoarse {5};
+ \def\Nfine {10};
+ \def\lambday  {0.3};
+ \def\lambdax {0.3};
+ \def\h { (\xMax -\lambdax)/\Ncoarse};
+ \def\picscale {0.00125};
+ \pgfmathsetmacro\newvalue{\lambdax + \h * \picscale * \Nfine * \Nfine * \Nfine};
+
+ \begin{scope}
+   \foreach \i in {0,...,\Nfine} {
+     \pgfmathsetmacro\xcoord{(\lambdax + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\xcoord, \yMin) -- (\xcoord, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   }
+   \foreach \i in {0,...,\Nfine} {
+     \pgfmathsetmacro\ycoord{(\lambday + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\xMin,\ycoord) -- (\xMax,\ycoord);% node [left] at (\xMin,\ycoord) {$\i$};
+   }
+
+   \foreach \i in {0,...,\Nfine} {
+     \pgfmathsetmacro\ycoord{(\lambday + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\xMin,\yMax-\ycoord) -- (\xMax,\yMax-\ycoord);% node [left] at (\xMin,\ycoord) {$\i$};
+   }
+
+
+   \foreach \i in {0,...,\Ncoarse} {
+     \pgfmathsetmacro\xcoord{\newvalue * (\i * 0.2) + \xMax * (\Ncoarse - \i) * 0.2};
+     \draw [very thin,gray] (\xcoord, \yMin) -- (\xcoord, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   }
+
+   \foreach \i in {3,...,5} {
+     \pgfmathsetmacro\ycoord{(\newvalue * (\i * 0.2)) + (\yMax * (\Ncoarse - \i) * 0.2)};
+     \draw [very thin,gray] (\xMin, \ycoord) -- (\xMax, \ycoord);
+   }
+   \draw[thick,black] (\newvalue, \yMin) -- (\newvalue, \yMax) node [below] at (\newvalue, \yMin) {$\lambda_{x}$};
+   \draw[thick,black] (\xMin, \newvalue) -- (\xMax, \newvalue) node [left] at (\xMin, \newvalue) {$\lambda_{y}$};
+   \draw[thick,black] (\xMin, \yMax -\newvalue) -- (\xMax, \yMax -\newvalue) node [left] at (\xMin,\yMax- \newvalue) {$1- \lambda_{y}$};
+   \node [below left] at (0, 0) {$0$};
+   \node [below] at (\xMax, 0) {$1$};
+   \node [left] at (0, \yMax) {$1$};
+ \end{scope}
+
+
+ \begin{scope}[right=8cm]
+   \draw[thin,gray] (0, \yMin) -- (0, \yMax);
+   \draw[thin,gray] (\xMin, 0) -- (\xMax, 0);
+   \draw[thin,gray] (\xMax, \yMin) -- (\xMax, \yMax);
+   \draw[thin,gray] (\xMin, \yMax) -- (\xMax, \yMax);
+   \draw[thick,black] (\newvalue, \yMin) -- (\newvalue, \yMax) node [below] at (\newvalue, \yMin) {$\lambda_{x}$};
+   \draw[thick,black] (\xMin, \newvalue) -- (\xMax, \newvalue) node [left] at (\xMin, \newvalue) {$\lambda_{y}$};
+   \draw[thick,black] (\xMin,\yMax- \newvalue) -- (\xMax, \yMax-\newvalue) node [left] at (\xMin,\yMax- \newvalue) {$1-\lambda_{y}$};
+   \node[below left] at (0, 0) {$0$};
+   \node[below] at (\xMax, 0) {$1$};
+   \node[left] at (0, \yMax) {$1$};
+   \node[anchor=center] at (\newvalue * 0.5, \newvalue * 0.5) {$\Omega_{22}$};
+   \node[anchor=center] at (\newvalue * 0.5, \xMax -\newvalue * 0.5) {$\Omega_{22}$};
+   \node[anchor=center] at (\newvalue * 0.5, \yMax * 0.5 ) {$\Omega_{12}$};
+   \node[anchor=center] at (\xMax * 0.5 + \newvalue * 0.5, \newvalue * 0.5) {$\Omega_{21}$};
+   \node[anchor=center] at (\xMax * 0.5 + \newvalue * 0.5, \yMax-\newvalue * 0.5) {$\Omega_{21}$};
+   \node[anchor=center] at (\xMax * 0.5 + \newvalue * 0.5, \yMax * 0.5 ) {$\Omega_{11}$};
+ \end{scope}
+\end{tikzpicture}
+
+\caption{Bezeichnung in 2D-Gittern mit charakteristischer Grenzschicht}
+\label{fig:2d-char-grid}
+\end{figure}
+
+\end{definition}
+\begin{satz}\label{thm:7-12}
+  Auf einem S-Typ-Gitter mit $\sigma>2$ gilt für $\epsilon^{\frac 12} < CN^{-1}$ für Probleme mit charakteristischen Grenzschichten
+  \begin{align*}
+    \nnorm{u - u^{I}}_{L_{\infty}(\Omega_{11})} \leq C N^{-2},
+    \nnorm{u - u^{I}}_{L_{\infty}(\Omega\setminus\Omega_{11})} \leq C (N^{-1} \max\norm{\psi'})^{2}. 
+  \end{align*}
+und
+\begin{align*}
+  \epsilon^{\frac 12} \nnorm{\nabla(u - u^{I})}_{L_{2}(\Omega_{11})} \leq C N^{-1}  \epsilon^{\frac 12} \nnorm{\nabla(u - u^{I})}_{L_{2}(\Omega\setminus\Omega_{11})} \leq C N^{-1} \max \norm{\psi'}, 
+\end{align*}
+insgesamt
+\begin{align*}
+  \nnnorm{u - u^{I}}_{\epsilon} \leq C N^{-1} \max \norm{\psi'}. 
+\end{align*}
+\end{satz}
+\begin{beweis}
+  von uns...
+\end{beweis}
+
+% \datum{21. Januar 2016}
+
+\subsection{Konvergenzanalysis für die Galerkin-FEM}
+\label{sec:konv-fur-die}
+Betrachten wir zuerst das Galerkin-Verfahren für Probleme mit exponentiellen Grenzschichten. Es sei dazu
+\begin{align*}
+  a(u, v) &= \epsilon(\nabla u, \nabla v) + (cu -b \cdot \nabla u, v)\\
+  (u, v) &= \int_{\Omega} u\cdot v
+\end{align*}
+und
+\begin{align*}
+  f(v) = (f, v). 
+\end{align*}
+Die (eigentlich: eine) schwache Formulierung lautet dann: Gesucht ist $u \in H_{0}^{1}(\Omega)$, sodass
+\begin{align*}
+  a(u, v) = f(v) \quad \forall v \in H_{0}^{1}(\Omega). 
+\end{align*}
+Unter $C + \frac 12 \div b \geq \gamma > 0$ folgt
+\begin{align*}
+  a(v, v) &= \epsilon \nnorm{\nabla v}_{L_{2}}^{2} + (c v - b \cdot \nabla v, v)\\
+  &= \epsilon \nnorm{\nabla v}_{L_{2}}^{2} + ((c + \frac 12 \div b)v, v)\\
+& \geq \epsilon \nnorm{\nabla v}_{L_{2}}^{2} + \gamma\nnorm{v}_{L_{2}}^{2} \eqqcolon \nnnorm{v}^{2}_{\epsilon}
+\end{align*}
+also Koerzitivität bezüglich $\nnnorm \cdot _{\epsilon}$ unter Zuhilfenahme von
+\begin{align*}
+  - (b \cdot \nabla v, v) &= (\div b \cdot v, v) + (v, b \cdot \nabla v),\\
+\implies \quad   - (b \cdot \nabla v, v) &= (\frac 12 \div b \cdot v, v).
+\end{align*}
+Die Galerkin-Formulierung für $V_{h} \subset H_{0}^{1}(\Omega)$ lautet dann: 
+
+Gesucht ist $u^{N} \in V_{h}$, sodass
+\begin{align*}
+  a(u^{N}, v) = f(v)  \quad \forall v \in V_{h}. 
+\end{align*}
+Galerkin-Orthogonalität:
+\begin{align*}
+  a(u - u^{N}, v) = 0 \quad \forall v \in V_{h}. 
+\end{align*}
+\begin{satz}\label{thm:7-13}
+  Auf einem S-Typ-Gittter mit $\sigma > 2$ gilt für $h \leq CN^{-1}$ und $N^{-1} \max \norm{\psi'} (\ln N)^{\frac 12} \leq C$ und bilineare Elemente
+  \begin{align*}
+    \nnnorm{u - u^{N}}_{\epsilon} \leq C N^{-1}\max\norm{\psi'}. 
+  \end{align*}
+
+\end{satz}
+\begin{beweis}
+  Zerlegen wir $u - u^{N} = \chi - \eta$ mit $\chi = u^{I} - u^{N}$, $\eta = u^{I} - u$, so folgt
+  \begin{align*}
+    \nnnorm{u - u^{N}}_{\epsilon} \leq \nnnorm \chi_{\epsilon}  + \nnnorm \eta_{\epsilon}
+  \end{align*}
+mit
+\begin{align*}
+\nnnorm{\eta}_{\epsilon} \leq C N^{-1} \max \norm{\psi'} 
+\end{align*}
+nach Satz \ref{thm:7-9}. Die Koerzitivität, Galerkin-Orthogonalität und partielle Integration liefern
+\begin{align*}
+  \nnnorm{\chi}_{\epsilon}^{2} &\leq a(\chi, \chi) = a (\eta, \chi) = \epsilon(\nabla \eta, \nabla \chi) + (\eta, b \cdot \nabla \chi) + ((c + \div b)\eta, \chi)\\
+&\leq C \nnnorm \eta_{\epsilon} \nnnorm \chi_{\epsilon} + C\( \nnorm{\eta}_{L_{2}(\Omega_{11})}  \nnorm{b\cdot \nabla \chi}_{L_{2}(\Omega_{11})} + \nnorm{\eta}_{L_{\infty}(\Omega\setminus\Omega_{11})}  \nnorm{b\cdot \nabla \chi}_{L_{1}(\Omega\setminus\Omega_{11})} \).
+\end{align*}
+Beim Übergang von $L_{1}$ nach $L_{2}$ gewinnen wir
+\begin{align*}
+  \nnorm{\nabla \chi}_{L_{1}(\Omega \setminus \Omega_{11})} &\leq C \meas^{\frac 12}(\Omega \setminus \Omega_{11})\nnorm{\nabla \chi}_{L_{2}(\Omega \setminus \Omega_{11})}\\
+&\leq \epsilon^{\frac 12} (\ln N)^{\frac 12}   \nnorm{\nabla \chi}_{L_{2}(\Omega \setminus \Omega_{11})}\\
+&\leq (\ln N)^{\frac 12} \nnnorm{\chi}_{\epsilon}. 
+\end{align*}
+In $\Omega_{11}$ nutzen wir eine inverse Ungleichung und erhalten
+\begin{align*}
+  \nnorm{\nabla \chi}_{L_{2}(\Omega_{11})} \leq C N \nnorm{\chi}_{L_{2} (\Omega_{11})} \leq C N \nnnorm \chi_{2}. 
+\end{align*}
+Mit den Interpolationsfehlerabschätzungen
+\begin{align*}
+  \nnnorm \eta _{\epsilon} &\leq C N^{-1} \max\norm{\psi'}\\
+  \nnorm \eta _{L_{2}(\Omega_{11})} &\leq C N^{-2}\\
+  \nnorm \eta _{L_{\infty}(\Omega\setminus\Omega_{11})} &\leq C (N^{-1} \max \norm{\psi'})^{2}
+\end{align*}
+aus Satz \ref{thm:7-9} und Lemma \ref{lem:7-10} folgt
+\begin{align*}
+  \nnnorm \chi_{\epsilon}^{2} & \leq C (N^{-1} \max\norm{\psi'} + N^{-2}N + (N^{-1}\max\norm{\psi'})^{2}(\ln N)^{\frac 12})\nnnorm \chi_{\epsilon}\\
+& \leq C N^{-1} \max\norm{\psi'} \nnnorm \chi_{\epsilon}. 
+\end{align*}
+\end{beweis}
+Für Probleme mit charakteristischen Grenzschichten ist
+\begin{align*}
+  a(u, v) = \epsilon(\nabla u, \nabla v) + (c u - b u_{x}, v). 
+\end{align*}
+Alle anderen Eigenschaften bleiben und wir erhalten die Konvergenzabschätzungen:
+\begin{satz}\label{thm:7-14}
+  Auf einem S-Typ-Gitter mit $\sigma>2$ gilt für $h \leq C N^{-1}$ und $N^{-\frac 12} \max \norm{\psi'} (\ln N)^{\frac 12} \leq C$
+  \begin{align*}
+    \nnnorm{u - u^{N}}_{\epsilon} \leq C N^{-1} \max \norm{\psi'}. 
+  \end{align*}
+\end{satz}
+\begin{beweis}
+  Wie in Satz \ref{thm:7-13} gilt
+  \begin{align*}
+    \nnnorm \chi _{\epsilon}^{2} \leq C \nnnorm \eta _{\epsilon} \nnnorm \chi _{\epsilon} + C\norm{(\eta, b \cdot  \chi_{x})}.
+  \end{align*}
+In $\Omega_{11}$ und $\Omega_{12} \cup \Omega_{22}$ gilt wie zuvor
+\begin{align*}
+  \norm{(\eta,b \cdot \chi_{x} )_{\Omega_{11}}} &\leq C \nnorm{\eta}_{L_{2}(\Omega_{11})} N \nnorm{\chi}_{L_{2}(\Omega_{11})} \leq C N^{-1} \nnnorm{\chi}_{\epsilon}\\
+\norm{(\eta,b \cdot \chi_{x} )_{ \Omega_{12} \cup \Omega_{22}}} &\leq C \meas^{\frac 12}(\Omega_{12} \cup \Omega_{22}) \nnorm{\eta}_{L_{\infty}(\Omega_{12} \cup \Omega_{22})} \nnorm{\chi_{x}}_{L_{2}}\\
+&\leq C (N^{-1}\max \norm{\psi'})^{2}(\ln N)^{\frac 12} \nnnorm{\chi}_{\epsilon}. 
+\end{align*}
+Aber $\meas^{\frac 12}(\Omega_{11}) \leq C \epsilon^{\frac 14}(\ln N)^{\frac 12}$ und somit funktioniert obige Technik hier nicht (ganz).
+\begin{align*}
+  \nnorm{\chi_{x}}_{L_{2}(\Omega_{21})} &\leq C \epsilon^{\frac 12} \nnnorm{\chi}_{\epsilon}\\
+  \nnorm{\chi_{x}}_{L_{2}(\Omega_{21})} &\leq C N \nnnorm{\chi}_{\epsilon}\\
+\implies \quad   \nnorm{\chi_{x}}^{2}_{L_{2}(\Omega_{21})} &\leq C N \epsilon^{- \frac 12} \nnnorm{\chi}^{2}_{\epsilon}.
+\end{align*}
+Dann
+\begin{align*}
+  \norm{(\eta, b \cdot \chi_{x})_{\Omega_{21}}} &\leq C \nnorm{\eta}_{L_{2}(\Omega_{21})} \nnorm{\chi_{x}}_{L_{2}(\Omega_{21})}\\
+  &\leq C \meas^{\frac 12}(\Omega_{21}) \nnorm{\eta}_{L_{\infty}(\Omega_{21})}\epsilon^{- \frac 14} N^{\frac 12} \nnnorm{\chi}_{\epsilon}\\
+  &\leq C (N^{-1} \max \norm{\psi'})^{2} (\ln N)^{\frac 12} N^{\frac 12} \nnnorm{\chi}_{\epsilon}\\
+\implies \quad \nnnorm \chi_{\epsilon}^{2} &\leq C \( N^{-1}\max \norm{\psi'} + N^{-1} + (N^{-1} \max \norm{\psi'})^{2} (\ln N)^{\frac 12} + (N^{-1} \max \norm{\psi'})^{2}(\ln N)^{\frac 12} N^{\frac 12}\) \nnnorm \chi_{\epsilon}\\
+& \leq C N^{-1} \max \norm{\psi'} \nnnorm \chi_{\epsilon}. 
+\end{align*}
+\end{beweis}
+Auch in 2D kann bezüglich der Standart-Interpolierenden in $Q_{1}$ Supercloseness gezeigt werden. Als Hilfsmittel können dazu die Lin-Formeln verwendet werden.
+\begin{lemma}\label{lem:7-15}
+  Es sei $\psi_{ij}$ ein Rechteck mit dem Mittelpunkt $(\tilde x_{i}, \tilde y_{i})$ und den Seiten $l_{1}, l_{2}$, die parallel zur $y$-Achse verlaufen. Für jede Funktion $w \in H^{3}(\bar \tau_{ij})$ und $\chi \in Q_{1}(\tau_{ij})$ gilt dann mit
+  \begin{align*}
+    E_{i}(x) &= \frac{(x - \tilde x_{i})^{2}} 2 - \frac{h_{i}^{2}}8, \\
+    F_{j}(y) &= \frac{(y - \tilde y_{j})^{2}} 2 - \frac{k_{j}^{2}}8:\\
+    \int_{\tau_{ij}} (w - w^{I})_{x} \chi_{x} &= \int_{\tau_{ij}} (F_{j} \chi_{x} - \frac 13 (F_{j}^{2})' \chi_{xy})w_{xyy}\\
+    \int_{\tau_{ij}} (w - w^{I})_{x} \chi &= H_{ij}(w, \chi) + \frac{h_{i}^{2}}{12}(\int_{l_{1}} - \int_{l_{2}}) \chi w_{xx} dy\\
+  \end{align*}
+wobei
+\begin{align*}
+  H_{ij}(w, \chi) = \int_{\tau_{ij}} (F_{j}(\chi - E_{i}' \chi_{x}) - \frac{(F_{j}^{2})'}3(\chi_{y} - E_{i}' \chi_{xy})) w_{xyy} + \int_{\tau_{ij}}(\frac{E_{i}^{2}} 6 \chi_{x} - \frac{h_{i}^{2}}{12} \chi)w_{xxx}. 
+\end{align*}
+\end{lemma}
+\begin{beweis}
+  Ohne Indizes $i, j$. Es gilt
+  \begin{align*}
+    F'(y) &= y - \tilde y, \\
+    F''(y) &= 1\\
+    (F^{2}(y))''' &= 6(y - \tilde y)\\
+    v &\coloneqq w - w^{I}. 
+  \end{align*}
+Mit Taxlor folgt
+\begin{align*}
+  \chi_{x} (x, y) = \chi_{x}(\tilde x, \tilde y) + (y - \tilde y) \chi_{xy}(\tilde x, \tilde y) = F''(y) \chi_{x}(\tilde x, \tilde y) + \frac 16(F^{2}(y))''' \chi_{xy}(\tilde x, \tilde y). \\
+\implies \quad \int_{\tau} v_{x}\chi_{x} = \int_{\tau}v_{x}F''(y) \chi_{x}(\tilde x, \tilde y) + \frac 16 \int_{\tau} v_{x} (F^{2}(y))''' \chi_{xy}(\tilde x,\tilde y). 
+\end{align*}
+Wir fangen mit dem ersten Term an und wenden partielle Integration an:
+\begin{align*}
+  \int_{\tau}v_{x} F''(y) &= (\int_{l_{4}}- \int_{l_{3}}) v_{x} F'(y) dx - \int_{\tau} v_{xy}F'(y)\\
+  &= F'(y)|_{l_{4}} \( v(P_{3}) - v(P_{2})\) - F'(y)|_{l_{3}} \( v(P_{1}) - v(P_{0})\) - (\int_{l_{4}} - \int_{l_{3}})v_{xy} F(y) dx + \int_{\tau}v_{xyy}F(y). 
+\end{align*}
+
+\begin{figure}[ht!]
+  \centering
+  \begin{tikzpicture}
+    \draw (-1,-1) -- (1,-1) -- (1,1) -- (-1,1) -- cycle;
+    \draw[fill] (-1,-1)  circle (1.5pt);
+    \draw[fill] (1,-1)  circle(1.5pt);
+    \draw[fill] (1,1) circle(1.5pt);
+    \draw[fill] (-1,1) circle(1.5pt);
+
+    \node at (0, 0) {$\tau$};
+    \node[right] at (1, 0) {$l_{2}$};
+    \node[above] at (0, 1) {$l_{4}$};
+    \node[above right] at (1, 1) {$p_{3}$};
+    \node[left] at (-1, 0) {$l_{0}$};
+    \node[below] at (0, -1) {$l_{3}$};
+    \node[below left] at (-1, -1) {$p_{0}$};
+    \node[above left] at (-1, 1) {$p_{3}$};
+    \node[below right] at (1, -1) {$p_{1}$};
+  \end{tikzpicture}
+  \caption{Bezeichnungen für $\tau$}
+  \label{fig:tau}
+\end{figure}
+
+
+
+
+ Da $v = w - w^{I}$ ist $v(P_{j}) = 0$, $F(y)|_{l_{3}} = F(y)|_{l_{4}} = 0$.
+\begin{align*}
+  \implies \quad \int_{\tau} v_{x} F''(y) = \int_{\tau} v_{xyy}F(y). 
+\end{align*}
+Weiter
+\begin{align*}
+  \int_{\tau} v_{x}(F^{2}(y))''' &= \underbrace{(\int_{l_{4}} - \int_{l_{3}}) v_{x}(F^{2}(y))''dx}_{= 0} - \int_{\tau} v_{xy} (F^{2}(y))'' \\
+  &= - \underbrace{(\int_{l_{4}} - \int_{l_{3}}) v_{xy}(F^{2}(y))'dx}_{= 0} - \int_{\tau} v_{xyy} (F^{2}(y))' \\
+&= \int_{\tau} v_{xyy}(F^{2}(y))'\\
+\implies \quad \tau (w - w^{I})_{x} \chi_{x} &= \int_{\tau} (F(y) \chi_{x}(\tilde x, \tilde y) + \frac 16 (F^{2}(y))' \chi_{xy}(\tilde x, \tilde y)) w_{xyy}.  
+\end{align*}
+Mit
+\begin{align*}
+  \chi_{x}(\tilde x, \tilde y) &= \chi_{x}(x, y) - (y - \tilde y)\chi_{xy}(x, y)\\
+%  &= \chi_{x}(x, y) - \frac 12(F^{2}(y))'\chi_{xy}(x, y)\\
+\implies \quad \int_{\tau}(w - w^{I})_{x} \chi_{x} &= \int_{\tau} F(y) \chi_{x}(x, y) w_{xyy}- \int_{\tau} F(y)(y - \tilde y) \chi_{xy} w_{xyy} + \frac 16 \int_{\tau}(F^{2}(y))' \chi_{xy} w_{xyy}.  
+\end{align*}
+Mit $(F^{2}(y))' = 2 F(y) F'(y) = 2 F(y)(y - \tilde y)$ folgt
+\begin{align*}
+  \int_{\tau} (w - w^{I})_{x} \chi_{x} = \int_{\tau}(F(y) \chi_{x} - \frac 13 (F^{2}(y))' \chi_{xy})w_{xyy}.
+\end{align*}
+Die zweite Formel kann ebenfalls mit einer Taylorentwicklung $\chi(x, y) = \chi(\tilde x, \tilde y) + (x - \tilde x)\chi_{x}(\tilde x, \tilde y) + (y - \tilde y)\chi_{y}(\tilde x, \tilde y)+ (x - \tilde x)(y - \tilde y)\chi_{xy}$ + Ableitungen von $E, F$ und partieller Integration gezeigt werden.
+\end{beweis}
+
+% \datum{22. Januar 2016}
+
+Mit Hilfe des Lemmas \label{lem:7-15}, Cauchy-Schwarz-Ungleichung und inverser Ungleichung erhalten wir
+\begin{align*}
+  \norm{((w-w^{I})_{x}, \chi_{x})_{\tau_{ij}}} \leq C k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})} \nnorm{\chi_{x}}_{L_{2}(\tau_{ij})}
+\end{align*}
+sowie
+\begin{align*}
+  \norm{H_{ij}(w, \chi)} \leq C \(k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})} + h_{i}^{2} \nnorm{w_{xxx}}_{L_{2}(\tau_{ij})}\) \nnorm{\chi}_{L_{2}(\tau_{ij})}. 
+\end{align*}
+Einen alternativen Weg für die obere Ungleichung nutzt ein Resultat von Zlámal (1978 % Geburtsjahr S.Franz
+), siehe Duran, Lombardi, Prieto, IMAJNA 32(2), 511-533, 2012.
+\begin{lemma}\label{lem:7-16}
+  Es sei $\tau_{ij}$ ein achsenparalleles Rechteck und $w \in H^{3}(\tau_{ij})$ sowie $\chi \in Q_{1}(\tau_{ij})$. Dann gilt
+  \begin{align*}
+    \norm{((w-w^{I})_{x}, \chi_{x})_{\tau_{ij}}} \leq C\( k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})} + h_{i}k_{j}\nnorm{w_{xxx}}_{L_{2}(\tau_{ij})} + h_{i}^{2}\nnorm{w_{xxy}}_{L_{2}(\tau_{ij})}\)\nnorm{\chi_{x}}_{L_{2}(\tau_{ij})}. 
+  \end{align*}
+\end{lemma}
+\begin{beweis}
+  Es sei $p \in P_{2}(\tau_{ij})$. Dann gilt mit der Mittelpunktsregel
+  \begin{align*}
+    \int_{\tau_{ij}}(p - p^{I})_{x}\chi_{x} &= \int_{x_{i-1}}^{x_{i}} \int_{y_{i-1}}^{y_{i}} \underbrace{(p - p^{I})_{x}}_{\in P_{1(\tau_{ij})}} \underbrace{\chi_{x}}_{= a+ by} dydx \\
+&= h_{i}\int_{y_{i-1}}^{y_{i}} (p-p^{I}_{x})|_{x = i- \frac 12} \chi_{x} dy. 
+  \end{align*}
+Nun ist $(p-p^{I})_{x}|_{x= x_{i- \frac 12}} = 0$. Nun ist oBdA. $\tau= (0, 1)^{2}$ und $p = a + bx + cy + d xy + e x^{2} + fy^{2}$
+\begin{align*}
+  p_{x} &= b + dy + 2ex\\
+  p^{I}_{x} &= b + dy + e\\
+\implies \quad p_{x}(\frac 12 , y) &= (p^{I}_{x})(\cdot, y)\\
+\implies \quad \int_{\tau_{ij}} (p-p^{I})_{x} \chi_{x} &= 0. 
+\end{align*}
+Weiter
+\begin{align*}
+  \norm{((w-w^{I})_{x}, \chi_{x})_{\tau_{ij}}} &=  \norm{(((w-p) - (w-p)^{I})_{x}, \chi_{x})_{\tau_{ij}}} \\
+ &\leq  \nnorm{((w-p) - (w-p)^{I})_{x}}_{L_{2}(\tau_{ij})} \nnorm{ \chi_{x}}_{L_{2}(\tau_{ij})} \\
+ &\leq C\(h_{i} \nnorm{(w-p)_{xx}}_{L_{2}(\tau_{ij})} + k_{j} \nnorm{(w-p)_{xy}}_{L_{2}(\tau_{ij})}\) \nnorm{ \chi_{x}}_{L_{2}(\tau_{ij})}. 
+\end{align*}
+Da $p \in P_{2}$ noch frei ist, können wir es geeignet wählen und erhalten zum Beispiel für ein gemitteltes Taylor-Polynom zu $w$
+\begin{align*}
+  \nnorm{(w-p)_{xx}}_{L_{2})(\tau_{ij})} & \leq C \( h_{i} \nnorm{w_{xxx}}_{L_{2}(\tau_{ij})} + k_{j} \nnorm{w_{xxy}}_{L_{2}(\tau_{ij})}\)\\
+  \nnorm{(w-p)_{xy}}_{L_{2})(\tau_{ij})} & \leq C \( h_{i} \nnorm{w_{xxy}}_{L_{2}(\tau_{ij})} + k_{j} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})}\)\\
+\implies \quad   \norm{(w-w^{I})_{x}, \chi_{x}}_{\tau_{ij}} & \leq C \( h^{2}_{i} \nnorm{w_{xxx}}_{L_{2}(\tau_{ij})} + h_{i}k_{j} \nnorm{w_{xxy}}_{L_{2}(\tau_{ij})} + k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})}\) \nnorm{\chi_{x}}_{L_{2}(\tau_{ij})}. 
+0
+\end{align*}
+\end{beweis}
+
+\begin{satz}\label{thm:7-17}
+  Auf einem S-Typ-Gitter mit $\sigma \geq \frac 52$ und $h \leq CN^{-1}$ gilt für die Galerkin-Lösung des Problems mit exponentiellen bzw. des Problems mit charakteristischen Grenzschichten
+  \begin{align*}
+    \nnnorm{u^{N} - u^{I}}_{\epsilon} &\leq C(N^{-2} (\ln N)^{\frac 12} + (N^{-1} \max \norm{\psi'})^{2}).  
+  \end{align*}
+\end{satz}
+\begin{beweis}
+Exponentielle Grenzschichten:  Linß, NMPDE, 16(5), 426-440, 2000;
+Charakteristische Grenzschichten:  Franz, Linß, NMPDE, 24(1), 144-164, 2008. 
+
+Clevere Kombination der Interpolations- , Stabilitätsabschätzungen und der Lin-Formeln liefern das Ergebnis. 
+
+Für die darin auftretenden Linienintegrale $I_{3}$ in $\Omega_{12} \cup \Omega_{22}$ lässt sich für den glatten Anteil $v$
+\begin{align*}
+  \norm{I_{3}} & \leq C (h^{2} + N^{-2})\nnorm{\chi_{x}v_{xx} + \chi v_{xxx}}_{L_{1}(\Omega_{12} \cup \Omega_{22})}\\
+  &\leq C (h^{2} + N^{-2})\epsilon^{\frac 12} (\ln N)^{\frac 12} \nnorm{\chi_{x}v_{xx} + \chi v_{xxx}}_{L_{2}(\Omega_{12} \cup \Omega_{22})}\\
+  &\leq C  N^{-2} (\ln N)^{\frac 12} \nnnorm{\chi}_{\epsilon}
+\end{align*}
+zeigen, was vermutlich suboptimal ist. 
+\end{beweis}
+Mit biquadratischer Interpolation auf einem geeigneten Makrogitter (siehe 1D) erhält man dann
+\begin{align*}
+  \nnnorm{u - Pu^{N}}_{\epsilon} \leq C (N^{-2}(\ln N)^{\frac 12} + (N^{-1} \max \norm{\psi'})^{2}). 
+\end{align*}
+
+\subsection{Lokale Projektionsstabilisierung - LPS}
+\label{sec:lokale-proj-lps}
+
+Die Idee des LPS hatten wir bereits im Kapitel 6.4 anklingen lassen. Das Galerkin-Verfahren stabilisiert selbst alle 'groben' Moden, bis auf die feinste. Die SDFEM-Stabilisierung hilft, indem mit $(\delta(Lu - f), b \cdot \nabla v)$ stabilisiert wird. Dabei ist der Term
+\begin{align*}
+(  \delta b \cdot \nabla u, b \cdot\nabla v)
+\end{align*}
+der hauptsächlich hilfreiche Term. Die restlichen Terme werden für die Konsistenz benötigt, rufen allerdings zusätzliche Kopplungen, zum Beispiel in Systemen von PDEs hervor. 
+
+Wir betrachten daher LPS als modernere Stabilisierungsmethode (die allerdings nicht ganz so gut ist). Wir definieren diese für beliebige Polynomgrade $p$ als \markdef{1-Level-Ansatz}, und hier nur für Probleme mit charakteristischen Grenzschichten. Sei dazu $\Pi_{\tau}$ die lokale $L_{2}$-Projektion in den Funktionenraum $D(\tau) = \cP_{p-1}(\tau)$. Darauf aufbauend gibt es einen Fluktuationsoperator $\kappa_{\tau}: L_{2}(\tau) \to L_{2}(\tau)$ ist definiert als
+\begin{align*}
+  \kappa_{\tau}(v) \coloneqq v - \Pi_{\tau}(v)
+\end{align*}
+und 'schneidet' die groben Skalen ab. 
+\begin{beispiel*} $p = 3$, 
+
+  $w = x(1 - x)\in \cP_{2}[0, 1]$, $\chi = \sin(42 \pi x) \implies v = w +\chi$
+  \begin{align*}
+    \kappa(v) = v - \Pi v = v + \chi - v = \chi
+  \end{align*}
+Oszillationen
+\end{beispiel*}
+Es gilt die $L_{2}$-Stabilität
+\begin{align*}
+  \nnorm{\kappa_{\tau}v}_{L_{2}(\tau)} \leq C \nnorm v _{L_{2}(\tau)} 
+\end{align*}
+und die anisotropen Fehlerabschätzungen
+\begin{align*}
+  \nnorm{\kappa_{\tau} v}_{L_{2}(\tau_{ij})} \leq C \sum_{r = 0}^{s} \nnorm{h^{s-r}_{i} k_{j}^{r} \frac{\partial^{s} v}{\partial^{s-r} x\partial^{r}y}}_{L_{2}(\tau_{ij})}
+\end{align*}
+für $0 \leq s \leq p$. 
+
+Der Stabilisierungsterm lautet mit einer noch zu definierenden Parameterfunktion $\delta$
+\begin{align*}
+  s(u, v) = \sum_{\tau \subseteq \Omega} (\delta_{\tau}\kappa_{\tau}(bu_{x}), \kappa_{\tau}(b v_{x}))_{\tau}
+\end{align*}
+Aufgrund der Struktur von $s(\cdot, \cdot)$ gilt
+\begin{align*}
+  \norm{s(u, v)} \leq (c(u, u))^{\frac 12} (s(v, v))^{\frac 12}
+\end{align*}
+(Cauchy-Schwarz). 
+Bilinearformenbetrachtung: 
+
+Die Galerkin-Bilinearform lautet
+\begin{align*}
+  a_{Gal}(u, v) &= \epsilon(\nabla u, \nabla v) + (c u - bu_{x}, v), 
+\end{align*}
+und die stabilisierte LPS-Bilinearform
+\begin{align*}
+  a_{LPS}(u, v) &= a_{Gal}(u, v) + s(u, v). 
+\end{align*}
+Das stabilisierte Problem lautet dann mit einem diskreten Raum $V_{N} \subset H_{0}^{1}(\Omega)$: 
+
+Gesucht ist ein $u^{N} \in V_{N}$ mit $a_{LPS}(u^{N}, v) = f(v) = (f, v)$ für alle $v \in V_{N}$. 
+
+Die LPS-Bilinearform erfüllt nur noch eine 'schwache' Galerkin-Orthogonalität
+\begin{align*}
+  a_{LPS}(u - u^{N}, v) = s(u, v) \quad \forall v \in V_{N}. 
+\end{align*}
+Zugeordnete Normen sind
+\begin{align*}
+  \nnnorm{u}_{\epsilon} = (\epsilon \nnorm{\nabla u}_{L_{2}}^{2} + \gamma \nnorm u_{L_{2}}^{2})^{\frac 12}, 
+\end{align*}
+koerzitiv mit $a_{Gal}(\cdot, \cdot)$ und 
+\begin{align*}
+    \nnnorm{u}_{LPS} = (\epsilon \nnorm{\nabla u}_{L_{2}}^{2} + \gamma \nnorm u_{L_{2}}^{2} + s(u, u))^{\frac 12}, 
+\end{align*}
+koerzitiv mit $a_{LPS}(\cdot, \cdot)$.
+%%% Vorlesungsteile fehlen!
+Für $\delta$ wurde 
+%%% ein Wort fehlt
+eine stückweise konstante Funktion gewählt. 
+Da die Stabilisierung in der axponentiellen Grenzschicht vernachlässigbar ist ($\delta \to 0$ für $\epsilon \to 0$) wählen wir
+
+
+
+
+%\datum{28. Januar 2016}
+Kombinieren wir die Idee von Satz \ref{thm:6-22}, das heißt mit
+\begin{align*}
+  S &= [\lambda_{x}, \lambda_{x} + H]\times [0, 1], \\
+\delta|_{\tau} &=
+\begin{cases}
+  0, & \tau \subset \Omega_{12} \cup \Omega_{22}\\
+\frac{x- \lambda_{x}}H \delta_{11},& \tau \subset \Omega_{11} \cap S\\
+\delta_{11}, &\tau \subset \Omega_{11}\setminus S\\
+\frac{x- \lambda_{x}}H \delta_{21},&\tau \subset \Omega_{21} \cap S\\
+\delta_{21},&\tau \subset \Omega_{21} \setminus S.
+\end{cases}
+\end{align*}
+mit der LPS-Stabilisierung, so folgt:
+\begin{lemma}\label{lem:7-19}
+  Auf einem S-Typ-Gitter mit $\sigma \geq p + \frac 12$ gilt für $\epsilon \norm{\ln \epsilon} \leq \beta \cdot H$
+  \begin{align*}
+\norm{S(u - Iu, u - Iu)} & \leq C \(\delta_{11}N^{-2p} + \delta_{21}\epsilon^{\frac 12} \( \ln N N^{-2p} + (N^{-1} \max \norm{\psi'})^{2p}\)\), 
+  \end{align*}
+falls $h \leq CN^{-1}$. 
+\end{lemma}
+\begin{beweis}
+  $\Omega_{11}$: Nutze die Stabilitätsabschätzung
+  \begin{align*}
+    \nnorm{(Iw)_{x}}_{L_{\infty}(\tau)} \leq C \cdot \nnorm{w_{x}}_{L_{\infty}(\tau)}. 
+  \end{align*}
+Fangen wir mir $w = w_{1} + w_{12}$ an:
+\begin{align*}
+  \sum_{\tau \subset \Omega_{11}\setminus S} \delta_{11} \nnorm{\kappa_{\tau} (b(w - Iw)_{x})}_{L_{2}(\tau)}^{2} & \leq C  \sum_{\tau \subset \Omega_{11}\setminus S} \delta_{11} \nnorm{ b(w - Iw)_{x}}_{L_{2}(\tau)}^{2} \\
+& \leq C \cdot \delta_{11} \( \nnorm{w _{x}}_{L_{2}(\Omega_{11}\setminus S)}^{2} + \nnorm{(Iw) _{x}}_{L_{2}(\Omega_{11}\setminus S)}^{2}\) \\ 
+& \leq C \cdot \delta_{11} \nnorm{w _{x}}_{L_{\infty}(\Omega_{11}\setminus S)}^{2}\\
+& \leq C \cdot \delta_{11} \cdot \epsilon^{-2} w_{x}^{2}|_{x = \lambda_{x} + H}\\
+& \leq C \cdot \delta_{11} \cdot \epsilon^{-2} e^{- \frac{2\beta (\lambda_{x} + H)}{\epsilon}}\\
+& \leq C \cdot \delta_{11} \cdot \epsilon^{-2} N^{-2\sigma} \epsilon^{2}\\
+& \leq C \cdot \delta_{11}  N^{-2\sigma}. 
+\end{align*}
+Für die Abschätzungen auf $\Omega_{11}\cap S$ benötigen wir das Hilfsresultat
+\begin{align*}
+  \int_{\lambda_{x}}^{\lambda_{x} + H} (x - \lambda_{x})\kappa^{2}(v)dx & \leq 2  \int_{\lambda_{x}}^{\lambda_{x} + H} (x - \lambda_{x})v^{2}(x)dx + 2 p^{2}\nnorm v^{2}_{L_{1}(\lambda_{x}, \lambda_{x}+H)}, 
+\end{align*}
+welches wir hier nicht beweisen werden ($p$ ist der Polynomgrad). 
+
+Auf $\Omega_{11}\cap S$:
+\begin{align*}
+  \delta_{11} &\underbrace{\int_{\lambda_{x}}^{\lambda_{x} + H}\int_{\lambda_{y}}^{1-\lambda_{y}}}_{= \Omega_{11} \cap S} \frac {x - \lambda_{x}} H \kappa^{2}(b(w - Iw)_{x})dydx\\
+&\leq C \frac{\delta_{11}}H \(\int_{\Omega_{11}\cap S} (x - \lambda_{x})((w - Iw)_{x})^{2} + \nnorm{(w - Iw)_{x}}^{2}_{L_{1}(\Omega_{11}\cap S)} \)\\
+&\leq C \frac{\delta_{11}}H 
+\(\int_{\Omega_{11}\cap S} (x - \lambda_{x})w_{x}^{2} +
+\int_{\Omega_{11}\cap S} (x - \lambda_{x})(Iw)_{x}^{2} 
++ \nnorm{w_{x}}^{2}_{L_{1}(\Omega_{11}\cap S)}
++ \nnorm{(Iw)_{x}}^{2}_{L_{1}(\Omega_{11}\cap S)} \)\\
+&\leq C \frac{\delta_{11}}H \( \epsilon^{-2}\epsilon^{2} N^{-2\sigma} + N^{2}N^{-2\sigma} N^{-2} + \epsilon^{-2}\epsilon^{2} N^{-2\sigma} + N^{2}N^{-2}N^{-2\sigma}\)\\
+& \leq C \delta_{11} N^{-(2\sigma -1)}. 
+\end{align*}
+Inverse Ungleichung, usw.
+
+Für $w_{2}$ erhalten wir analog
+\begin{align*}
+\sum_{\tau \subset \Omega_{11}} \nnorm{ delta_{\tau}^{\frac 12} \kappa_{\tau} (b(w_{2} - Iw_{2})_{x})}_{L_{2}(\tau)}^{2} & \leq C \delta_{21} N^{-2\sigma}. 
+\end{align*}
+In $\Omega_{21}$ verfahren wir für $w = w_{1} + w_{12}$ ähnlich, da diese abgeklungen sind und erhalten
+\begin{align*}
+  \sum_{\tau \subset \Omega_{21}} \nnorm{ \delta_{\tau}^{\frac 12} \kappa_{\tau} (b(w - Iw_{x})}_{L_{2}(\tau)}^{2} & \leq C \delta_{21} N^{-(2\sigma - 1)} \epsilon^{\frac 12} \ln N.  
+\end{align*}
+Da $w_{2}$ nicht abgeklungen ist, nutzen wir $\delta_{\tau} \leq \delta_{21}$ und die Standard-Fehlerabschätzungen und erhalten damit
+\begin{align*}
+  \sum_{\tau \subset \Omega_{21}} \nnorm{ \delta_{\tau}^{\frac 12} \kappa_{\tau} (b(w_{2} - Iw_{2})_{x})}_{L_{2}(\tau)}^{2} & 
+\leq C \delta_{21} \sum_{\tau \subset \Omega_{21}} \nnorm{(w_{2} - Iw_{2})_{x}}_{L_{2}(\tau)}^{2}\\
+&\leq C \delta_{21} \( N^{-2p}\nnorm{\partial_{x}^{p+1} w_{2}}^{2}_{L_{2}(\Omega_{21})} + \nnorm{k_{j}^{p} \partial_{x} \partial_{y}^{p} w_{2}}^{2}_{L_{2}(\Omega_{21})}\)\\
+&\leq C \delta_{21} \( N^{-2\sigma} \epsilon^{\frac 12} + (N^{-1}\max\norm{\psi'})^{2p} \epsilon^{\frac 12} \)\\
+&\leq C \delta_{21} \epsilon^{\frac 12} (N^{-1}\max\norm{\psi'})^{2p}. 
+\end{align*}
+Mit $\sigma\geq p + \frac 12$ und Lemma \ref{lem:7-18} folgt die Aussage. 
+\end{beweis}
+
+Analog zum bilinearen Fall in Satz \ref{thm:7-12} gilt
+\begin{satz}\label{thm:7-20}
+  Auf einem S-Typ-Gitter mit $\sigma \geq p+1$ und $h \leq CN^{-1}$ gilt
+  \begin{align*}
+    \nnorm{u - Iu}_{L_{\infty}(\Omega_{11})} & \leq CN^{-(p+1)}\\
+    \nnorm{u - Iu}_{L_{\infty}(\Omega\setminus\Omega_{11})} & \leq C(N^{-1} \max \norm{\psi'})^{p+1}
+  \end{align*}
+sowie
+\begin{align*}
+    \nnnorm{u - Iu}_{\epsilon} & \leq C(N^{-1}\max\norm{\psi'})^{p}. 
+\end{align*}
+\end{satz}
+Die Konvergenz der LPS-FEM ist in der LPS-Norm also beweisbar:
+
+\begin{satz}\label{thm:7-21}
+  Auf einem S-Typ-Gitter mit $\sigma \geq p+1$, $\epsilon \norm{\ln \epsilon} \leq \beta \cdot H$ und $N^{-\frac 12} \max \norm{\psi'} (\ln N)^{\frac 12} \leq C$, sowie $h \leq C N^{-1}$ gilt für $0 \leq \delta_{11} \leq C$ und $0 \leq \delta_{21} \leq C \epsilon^{- \frac 12}$:
+  \begin{align*}
+\nnnorm{u - n^{N}}_{LPS} \leq C \( (N^{-1} \max \norm{\psi'})^{p} + (\ln N)^{\frac 12} N^{-p} \).  
+  \end{align*}
+\end{satz}
+\begin{beweis}
+  Wie üblich fangen wir mit
+  \begin{align*}
+    \nnnorm{u - u^{N}}_{LPS} &\leq \nnnorm{u - Iu}_{LPS} + \nnnorm{Iu - u^{N}}_{LPS} 
+  \end{align*}
+an. Mit Lemma \ref{lem:7-19} und Satz \ref{thm:7-20} folgt
+\begin{align*}
+    \nnnorm{u - Iu}_{LPS} &\leq C\( (N^{-1} \max \norm{\psi'})^{p} + (\ln N)^{\frac 12} N^{-p} \).  
+\end{align*}
+Mit Koerzitivität und schwacher Galerkin-Orthogonalität folgt für $\chi = Iu - u^{N}$, $\eta = Iu- u$
+\begin{align*}
+    \nnnorm{Iu - u^{N}}^{2}_{LPS} &\leq a_{LPS}(Iu - u^{N}, \chi)\\
+&= a_{LPS}(\eta, \chi) + a_{LPS}(u - u^{N}, \chi)\\
+&= a_{LPS}(\eta, \chi) + S(u, \chi)\\
+&= a_{Gal}(\eta, \chi) + S(Iu, \chi)
+\end{align*}
+Für die Anteile der Galerkin-Bilinearform verfahren wir wie im Beweis zu Satz \ref{thm:7-14}:
+\begin{align*}
+  \norm{a_{Gal}(\eta, \chi)} & \leq C \nnnorm{\eta}_{\epsilon}\nnnorm{\chi}_{\epsilon} + C\norm{(\eta, b \chi_{x})}\\
+\norm{(\eta, b \chi_{x})_{\Omega_{11}}} & \leq C \nnorm \eta_{L_{2}(\Omega_{21})} N \nnorm \chi _{L_{2}(\Omega_{21})} \leq C N^{-p} \nnnorm \chi_{\epsilon}\\
+\norm{(\eta, b \chi_{x})_{\Omega_{12} \cup \Omega_{22}}} & \leq C \meas^{\frac 12}(\Omega_{12} \cup \Omega_{22}) \nnorm \eta_{L_{2}(\Omega_{12} \cup \Omega_{22})} \nnorm {\chi_{x}} _{L_{2}(\Omega_{12} \cup \Omega_{22})}\\
+& \leq C (\ln N)^{-\frac 12}(N^{-1} \max \norm{\psi'})^{\tau+1} \nnnorm \chi_{\epsilon}\\
+\norm{(\eta, b \chi_{x})}_{\Omega_{21}} & \leq C \meas^{\frac 12}(\Omega_{21}) \nnorm \eta_{L_{\infty}(\Omega_{21}} \epsilon^{- \frac 14} N^{\frac 12} \nnnorm \chi _{\epsilon}\\
+& \leq  C (N^{-1} \max \norm{\psi'})^{p+1} + (\ln N)^{\frac 12} N^{-\frac 12} \nnnorm \chi_{\epsilon}\\
+\implies \quad  \norm{a_{Gal}(\eta, \chi)} & \leq C(N^{-1}\max \norm{\psi'})^{p} \nnnorm{\chi}_{LPS}. 
+\end{align*}
+%%% \tau ???
+Den Stabilisierungsterm erweitern wir
+\begin{align*}
+  \norm{S(Iu, \chi)} & \leq \norm{S(Iu - u, \chi)}  + \norm{S( u, \chi)} \\
+& \leq \norm{S(Iu - u, Iu - u)}^{\frac 12} S(\chi, \chi)^{\frac 12}  + \norm{S( u, \chi)} \\
+& \leq C \( (N^{-1}\max \norm{\psi'})^{p} + (\ln N)^{\frac 12} N^{-p}\) \nnnorm \chi_{LPS} + \norm{S(u, \chi)}. 
+\end{align*}
+mit CSU und Lemma \ref{lem:7-19}. Um $\norm{S(u, \chi)}$ abzuschätzen können wir die anisotropen Interpolationsabschätzungen von $\kappa_{\tau}$ nutzen. Für $v$:
+\begin{align*}
+  \norm{S(u, \chi)} & \leq S(v, v)^{\frac 12} S(\chi, \chi)^{\frac 12} \leq S(v, v)^{\frac 12} \nnnorm \chi_{LPS}. \\
+S(v, v) & = \sum_{\tau \subset \Omega_{11} \cup \Omega_{21}} (\delta_{\tau} \kappa_{\tau} (b v_{x}), \kappa_{\tau} (bv_{x}))_{\tau}\\
+& \leq \nnorm{\delta^{\frac 12} \kappa(b v_{x})}^{2}_{L_{2}(\Omega_{11})}  +\nnorm{\delta^{\frac 12} \kappa(b v_{x})}^{2}_{L_{2}(\Omega_{21})} \\
+& \leq C \delta_{11} \sum_{r = 0}^{p}\nnorm{h_{i}^{p-r} k_{j}^{r} \partial_{x}^{p-r} \partial_{y}^{r} v}^{2}_{L_{2}(\Omega_{11})} + 
+ C \delta_{21} \sum_{r = 0}^{p}\nnorm{h_{i}^{p-r} k_{j}^{r} \partial_{x}^{p-r} \partial_{y}^{r} v}^{2}_{L_{2}(\Omega_{21})}\\
+& \leq C (\delta_{11} N^{-2p} +  \delta_{21} N^{-2p} \epsilon^{\frac 12} \ln N) \\
+& \leq C N^{-2p} \ln N. 
+\end{align*}
+Stillschweigend wurde
+\begin{align*}
+  \nnorm{\partial_{x}^{p-r}\partial_{y}^{r} (bv)}_{L_{2}(\tau)} \leq\nnorm{\partial_{x}^{p-r}\partial_{y}^{r} v}_{L_{2}(\tau)}
+\end{align*}
+angenommen.
+Für $w = w_{1} + w_{12}$ teilen wir $\Omega_{11} \cup \Omega_{21}$ in $S = [\lambda_{x}, \lambda_{x} + H] \times [0, 1]$ und den Rest in
+\begin{align*}
+  S(w, w) &\leq C \left( \delta_{11} \nnorm{\kappa (b w_{x})}^{2}_{L_{2}(\Omega_{11}\setminus S)} + \right.
+%\\
+%& \quad
+\delta_{11} \nnorm{\(\frac{x - \lambda_{x}} H \)^{\frac 12}\kappa (b w_{x})}^{2}_{L_{2}(\Omega_{11}\cap S)}
+\\
+& \quad
++\delta_{21} \nnorm{\kappa (b w_{x})}^{2}_{L_{2}(\Omega_{21}\setminus S)}+ 
+%\\
+%& \quad 
+\left.\delta_{21} \nnorm{\(\frac{x - \lambda_{x}} H \)^{\frac 12}\kappa (b w_{x})}^{2}_{L_{2}(\Omega_{21}\cap S)}\right)\\
+&= I + II + III + IV \\
+I &\leq  \delta_{11} \nnorm{w_{x}}^{2}_{L_{2}(\Omega_{11}\setminus S)} \\
+&\leq C \delta_{11} \epsilon^{-2} \epsilon e^{- \frac {2 \beta (\lambda_{x} + H)} \epsilon} \leq C \delta_{11} \epsilon N^{-2\sigma}\\
+III & \leq C \delta_{21} \nnorm{ w_{x}}^{2}_{L_{2}(\Omega_{21}\setminus S)} \leq C \delta_{21} \epsilon^{ \frac 32} \ln N N^{-2\sigma}\\
+II &\leq C\frac {\delta_{11}} H \epsilon^{-2} \( \int_{\Omega_{11} \cap S} (x - \lambda_{x}) e^{- \frac {2 \beta x} \epsilon} + \nnorm{e^{- \frac \beta x} \epsilon}^{2}_{L_{1}(\Omega_{11} \cap S)} \) \leq C \delta_{11} N^{-(2 \sigma - 1)}\\
+IV &\leq \dots \leq C \delta_{21} \epsilon^{\frac 12} \ln N N^{-(2 \sigma - 1)}. 
+\end{align*}
+Es folgt
+\begin{align*}
+  S(w, w) \leq C (\delta_{11} + \delta_{21} \epsilon^{\frac 12} \ln N)N^{- (2 \sigma - 1)} \leq C \ln N N^{-2p}. 
+\end{align*}
+Bleibt noch $w_{2}$:
+\begin{align*}
+  S(w_{2}, w_{2}) &\leq C (\delta_{11} \nnorm{\kappa (b w_{2})_{x}}_{L_{2}(\Omega_{11})}^{2} + \delta_{21} \nnorm{\kappa (b w_{2})_{x}}_{L_{2}(\Omega_{21})}^{2} )\\
+&\leq C (\delta_{11} \nnorm{ (w_{2})_{x}}_{L_{2}(\Omega_{11})}^{2} + \delta_{21} \sum_{r = 0}^{p} \nnorm{h_{i}^{p-r} k_{j}^{r} \partial_{x}^{p-r} \partial_{y}^{r} w_{2}}_{L_{2}(\Omega_{21})}^{2} )\\
+& \leq C (\delta_{11}  \epsilon^{\frac 12} N^{-2 \sigma} + \delta_{21} (N^{-1} \max \norm{\psi'})^{2p} \epsilon^{\frac 12})\\
+& \leq C (N^{-1} \max \norm{\psi'})^{2p}. 
+\end{align*}
+
+
+\end{beweis}
 %%% local Variables: 
 %%% mode: latex
 %%% TeX-master: "vorlesung"
