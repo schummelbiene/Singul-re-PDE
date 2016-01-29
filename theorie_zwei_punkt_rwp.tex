@@ -4,8 +4,8 @@ Für diesesn Abschnitt bezeichne
 \begin{subequations}
   \label{eq:2-1}
 \begin{align}
-  Lu (x) \coloneqq p_{2}(x) u''(x) + p_{1}(x)u'(x) + p_{0}u(x) = f(x), \quad x \in (a, b)\label{eq:2-1a}\\
-  u(a) = u(b) = 0\label{eq:2-1b}
+  Lu (x) \coloneqq p_{2}(x) u''(x) + p_{1}(x)u'(x) + p_{0}u(x) =& f(x), \quad x \in (a, b)\label{eq:2-1a}\\
+  u(a) = u(b)=& 0\label{eq:2-1b}
 \end{align}
 \end{subequations}
 das Randwertproblem zweiter Ordnung. Hierbei sind $f$ und $p_{i}$ Funktionen aus $C[a, b]$. Insbesondere sei $p_{2}(x) \neq 0 \, \forall x \in [a, b]$. Für Anfangswertprobleme liefern die Sätze von Peano und Picard-Lindelöf die Existenz und Eindeutigkeit. Besitzen \eqref{eq:2-1a} und \eqref{eq:2-1b}  eine eindeutige Lösung? \eqref{eq:2-1a}  kann als System von Gleichungen erster Ordung beschrieben werden:
@@ -45,7 +45,7 @@ für jeden Vektor $c \in \R^{n}$ eine eindeutige Lösung $v$ mit $v \in C^1[a, b
   Gegeben sei $g \in C[a, b]$. Dann besitzt das AWP
   \begin{align*}
     L u_{1} &= g \quad \text{auf } (a, b)\\
-    u_{1}(a &=0\\
+    u_{1}(a) &=0\\
     u_{1}'(a) &=1
   \end{align*}
 eine Lösung $u_{1} \in C^{2}[a, b]$. Ebenso besitzt 
@@ -105,12 +105,12 @@ Beweis dessen:
 \begin{enumerate}
 \item Erfüllung der Randbedingungen: 
   \begin{align*}
-    u(a) = \int_{a}^{b} G(a, \xi)f(\xi) d\xi = 0
-    u(b) = \int_{a}^{b} G(b, \xi)f(\xi) d\xi = 0
+    u(a) = \int_{a}^{b} G(a, \xi)f(\xi) d\xi &= 0\\
+    u(b) = \int_{a}^{b} G(b, \xi)f(\xi) d\xi &= 0
   \end{align*}
 \item Die Darstellung erfüllt die Differentialgleichung:
   \begin{align*}
-    u(x) &= \int_{a}^{x} G(a, \xi)f(\xi) d\xi  + \int_{x}^{b} G(x, \xi)f(\xi) d\xi = 0\\
+    u(x) &= \int_{a}^{x} G(a, \xi)f(\xi) d\xi  + \int_{x}^{b} G(x, \xi)f(\xi) d\xi\\
     u'(x) &= G(x, x) f(x) + \int_{a}^{x} G_{x}(x, \xi)f(\xi) d\xi  - G(x, x)f(x)  + \int_{x}^{b} G_{x}(x, \xi)f(\xi) d\xi \\
     &= \int_{a}^{x} G_{x}(x, \xi)f(\xi) d\xi    + \int_{x}^{b} G_{x}(x, \xi)f(\xi) d\xi\\
     u''(x) &= G_{x}(x, x^{-})f(x^{-}) + \int_{a}^{x} G_{xx}(x, \xi)f(\xi) d\xi - G_{x}(x, x^{+})f(x^{+}) + \int_{x}^{b} G_{xx}(x, \xi)f(\xi) d\xi\\
@@ -156,12 +156,12 @@ Wir sagen dann, dass $L$ ein Maximumprinzip erfüllt.
   \begin{align*}
     z(x) = e^{\alpha(x - c)} - 1
   \end{align*}
-mit geeignetem $\alpha > 0$. Dann gilt $z(x) < 0$ für $x \in [a, c)$, $z(c) = 0$, $z(x)>0$ für $x \in [c, b]$. Dann folgt
+mit geeignetem $\alpha > 0$. Dann gilt $z(x) < 0$ für $x \in [a, c)$, $z(c) = 0$, $z(x)>0$ für $x \in (c, b]$. Dann folgt
 \begin{align*}
   Lz &= -z'' + p_{1}z' + p_{0}z\\
   &= -\alpha^{2} e^{\alpha(x - c)} + p_{1} \alpha e^{\alpha(x - c)} + p_{0}(e^{\alpha(x - c)} - 1)\\
-  &= \(-\alpha^{2} + p_{1}(x) \alpha + p_{0}\)\cdot(e^{\alpha(x - c)} - p_{0}(x)\\
-  &\leq \(-\alpha^{2} + \bar p_{1}(x) \alpha + \bar p_{0}\)\cdot(e^{\alpha(x - c)} - p_{0}(x)
+  &= \(-\alpha^{2} + p_{1}(x) \alpha + p_{0}\)\cdot e^{\alpha(x - c)} - p_{0}(x)\\
+  &\leq \(-\alpha^{2} + \bar p_{1}(x) \alpha + \bar p_{0}\)\cdot e^{\alpha(x - c)} - p_{0}(x)
 \end{align*}
 mit $\bar p_{1} = \max p_{1}(x)$, $\bar p_{0} = \max p_{0}(x)$. Setzen wir nun
 \begin{align*}
@@ -193,7 +193,7 @@ also war die Annahme, dass $u(d)$ immer positiv ist, falsch.
   Es seien $p_{0}(x) \geq 0$ auf $(a, b)$ und $p_{0}, p_{1}$ beschränkt auf $[a, b]$. Dann besitzt \eqref{eq:2-3} nur die triviale Lösung $u = 0$. 
 \end{lemma}
 \begin{beweis}
-  Sei $\tilde u$ eine beliebige Lösung von \eqref{eq:2-3}. mit $L \tilde u = 0$, $\tilde u (a) = 0$ und $\tilde u (b) = 0$  und Satz \ref{thm:2-5} folgt $\tilde u (x)\leq 0$ auf $(a, b)$. Mit $L(- \tilde u) = 0$, $-\tilde u(a) = 0$, $-\tilde u(b) = 0$ und Satz \ref{thm:2-5} folgt $-\tilde u(x) \leq 0$ auf $(a, b)$. 
+  Sei $\tilde u$ eine beliebige Lösung von \eqref{eq:2-3}. Mit $L \tilde u = 0$, $\tilde u (a) = 0$ und $\tilde u (b) = 0$  und Satz \ref{thm:2-5} folgt $\tilde u (x)\leq 0$ auf $(a, b)$. Mit $L(- \tilde u) = 0$, $-\tilde u(a) = 0$, $-\tilde u(b) = 0$ und Satz \ref{thm:2-5} folgt $-\tilde u(x) \leq 0$ auf $(a, b)$. 
 Also $\tilde u(x) = 0$ auf $(a, b)$. 
 \end{beweis}
 \begin{lemma}\label{lem:2-7}(Vergleichsprinzip)
@@ -208,7 +208,7 @@ Dann gilt $u_{1}(x)\leq u_{2}(x)$ für alle $x \in [a, b]$.
   Satz \ref{thm:2-5} auf $u_{1} - u_{2}$ anwenden. 
 \end{beweis}
 \begin{lemma}\label{lem:2-8} (Schrankenfunktionen)
-  Seien die Voraussetzungen wie in Lemma \ref{lem:2-8}, aber mit
+  Seien die Voraussetzungen wie in Lemma \ref{lem:2-7}, aber mit
   \begin{enumerate}
   \item $\norm{Lu_{1}(x)} \leq Lu_{2}(x)$ für alle $x \in (a, b)$ 
   \item $\norm{u_{1}(x)}\leq u_{2}(x)$ für $x = a$ und $x = b$
