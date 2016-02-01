@@ -80,9 +80,7 @@ Gesucht ist die asymptotische Entwicklung für $\norm z \gg 1$, $z <0$, also $\e
 
 Nutzen wir die asymptotische Sequenz $\phi_{n}$ mit
 \begin{align*}
-  \phi_{1} &= 1\\
-  \phi_{2} &= \frac 1z\\
-  \phi_{3} &= \frac 1{z^{2}}\ \dots\\
+  \phi_{1} &= 1, \quad \phi_{2} = \frac 1z, \quad \phi_{3} = \frac 1{z^{2}}\ \dots\\
 \implies \quad y(z) &= \sum_{m = 0}^{\infty} u_{m} z^{-m}\\
 0 &= y(- \infty) = u_{0}
 \end{align*}
@@ -138,9 +136,27 @@ für jedes $z < 0$ divergiert! Das stört nicht; trotzdem ist die Entwicklung n�
 \begin{align*}
   \norm{y(z) - \sum_{m = 1}^{2}\frac{(m-1)!} {z^{-m}}} \leq 2! \cdot 10^{-3}, 
 \end{align*}
-also eine sehr gute Approximation von $y(-10)$ mit $2$ Termen. Typischerweise verhalten sich die Terme wie 
+also eine sehr gute Approximation von $y(-10)$ mit $2$ Termen. Typischerweise verhalten sich die Terme wie in Abbilung \ref{fig:terms} dargestellt. 
 
-SKIZZE NUM\_SING 1. 
+\begin{figure}[ht!]
+
+\tikzset{cross/.style={cross out, draw, 
+         minimum size=2*(#1-\pgflinewidth), 
+         inner sep=0pt, outer sep=0pt}}
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=10cm, height=7cm, yticklabels = {,,}, 
+ytick=\empty, 
+ymax=7.5,ymin=0,xmin=0.5, xmax = 8.5,  xticklabels={1,2, 3, 4, 5, 6, 7, 8}, xtick={1, ..., 8},axis y line = left, axis x line = bottom]
+      \addplot[ybar, fill=gray!60] plot coordinates {(1,6) (2,4.5) (3,2.7) (4, 1.7) (5, 2) (6, 3.3) (7, 4.8) (8, 6)};
+    \end{axis}
+      \draw [thick, ->] (1.5,4) -- (3.5, 1.5){};
+      \draw [thick, ->] (4.1,1.5) -- (6.6, 4)node[cross=7pt, rotate=35, orange]at (5.35, 2.75){};
+%      \node [cross] at (6, 2.75){};
+  \end{tikzpicture}
+  \caption{Termverhalten}
+  \label{fig:terms}
+\end{figure}
 
 \paragraph{Rechenregeln}
 \label{sec:rechenregeln}

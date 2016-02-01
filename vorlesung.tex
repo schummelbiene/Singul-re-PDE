@@ -2,7 +2,9 @@
 
 \usepackage{import}
 \usepackage{tikz}
-\usetikzlibrary{calc}
+\usepackage{pgfplots}
+\usepackage{cite}
+\usetikzlibrary{calc, arrows, patterns, shapes}
 \import{/home/susi/Uni/}{head}
 \title{Numerik singulär gestörter Differentialgleichungen}
 \author {PD Dr. Sebastian Franz \\ \LaTeX -Mitschrift von Susanne Stimpert}
@@ -10,6 +12,8 @@
 
 \begin{document}
 \maketitle
+
+
 \include{einfuehrung}
 \include{theorie_zwei_punkt_rwp}
 \include{asymptotische_entwicklung}
@@ -17,6 +21,22 @@
 \include{a-priori_abschaetzungen}
 \include{fem}
 \include{konvektions_diffusions_probleme_2d}
+
+
+%Anhang
+\section{Anhang}
+\def\thesubsection{\Alph{subsection}}
+\setcounter{subsection}{1}
+\addcontentsline{toc}{subsection}{\thesubsection. \hspace{4mm}Variablenverzeichnis}
+
+\nocite{*}
+{%
+\def\section{\subsection}
+\gdef\refname{\thesubsection. Literatur}
+\bibliography{literature}
+\bibliographystyle{plain}
+}
+\addcontentsline{toc}{subsection}{\thesubsection. \hspace{4mm}Literatur}
 \end{document}
 
 
@@ -24,5 +44,4 @@
 % - Literaturverzeichnis
 % - Definitionenverzeichnis
 % - Variablenverzeichnis
-% - einige Skizzen
 % - Layout

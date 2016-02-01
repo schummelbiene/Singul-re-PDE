@@ -61,7 +61,8 @@ Diesen Problem haben wir schon betrachtet, es hat die Lösung
   v(x) = (g - u_{0})(\bar x) \exp\(- \frac 1 \epsilon  b(\bar x) \cdot n(\bar x) \rho\). 
 \end{align*}
 Mit Hilfe einer asymptotischen Entwicklung, vergleiche Kapitel \ref{sec:asympt-entw-fur}, und einer Restgliedabschätzung erhalten wir eine Lösungszerlegung. Im Gegensatz zum 1d Fall benötigen wir aufgrund der Ecken 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\markdef{Kompatibilit''atsbedingungen} bezüglich $f$. In Linß, Stynes: J.Math.Anal.Appl. 261, 604 - 632, 2001 finden wir
+%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+\markdef{Kompatibilitätsbedingungen} bezüglich $f$. In \cite{LS_JMAA} finden wir
 \begin{align*}
   f(0, 0) =   f(1, 0) =   f(0, 1) =   f(1, 1) = 0,\\
   \partial_{y} \( \frac f {b_{1}}\) (1, 1) =   \partial_{x} \( \frac f {b_{2}}\) (1, 1),\\
@@ -108,8 +109,7 @@ Der Korrekturterm ist
 \begin{align*}
   v = (g - u_{0})(\bar x) \exp\(- \frac \rho {\sqrt \epsilon}\).  
 \end{align*}
-Die Analysis für eine Lösungszerlegung ist hier deutlich schwieriger, als im Fall der exponentiellen Grenzschichten. In Kellog/Stynes J.Diff.Eq. 213, 81-120 (2005) und Appl. Math. Letter 20, 539-544 (2007)
-finden wit folgende Aussage:
+Die Analysis für eine Lösungszerlegung ist hier deutlich schwieriger, als im Fall der exponentiellen Grenzschichten. In \cite{KS_JDE}und \cite{KS_AML} finden wir folgende Aussage:
 \begin{satz}\label{thm:7-2}
   Angenommen, $b_{1} > 0$ und $c > 0$ sind konstant. Es sei $f \in C^{8}(\bar \Omega)$ mit der Kompatibilitätsbedingung
   \begin{align*}
@@ -279,8 +279,8 @@ Das ist schlecht. Wir benötigen also eine genauere Fehleranalysis.
 \subsection{Interpolationsfehlerabschätzungen}
 \label{sec:interp}
 
-Wir folgen dazu der Theorie von Apel, Advanced Numerical Mathematics, Teubner-Verlag, 1999. Wir nutzen trotz der Ausführungen oben eine Version von Bramble-Hilbert, die funktioniert:
-\begin{lemma}\label{lem:7-4} Bramble/Hilbert, Numer. Math. 16, 362-369, 1971
+Wir folgen dazu der Theorie nach Apel \cite{A_BOOK}. Wir nutzen trotz der Ausführungen oben eine Version von Bramble-Hilbert, die funktioniert:
+\begin{lemma}\label{lem:7-4} \cite{BH_NM}
   
 Es sei $R$ ein Rechteck, $l \geq 1$, $p \in [1, \infty)$ und $u \in W^{l}_{p}(R)$. Außerdem sei $K$ eine Menge von Multiindizes, sodass die Menge geschachtelt werden kann:
 \begin{align*}
@@ -869,7 +869,7 @@ sowie
   \norm{H_{ij}(w, \chi)} \leq C \(k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})} + h_{i}^{2} \nnorm{w_{xxx}}_{L_{2}(\tau_{ij})}\) \nnorm{\chi}_{L_{2}(\tau_{ij})}. 
 \end{align*}
 Einen alternativen Weg für die obere Ungleichung nutzt ein Resultat von Zlámal (1978 % Geburtsjahr S.Franz
-), siehe Duran, Lombardi, Prieto, IMAJNA 32(2), 511-533, 2012.
+), siehe \cite{DPL_IMAJNA}.
 \begin{lemma}\label{lem:7-16}
   Es sei $\tau_{ij}$ ein achsenparalleles Rechteck und $w \in H^{3}(\tau_{ij})$ sowie $\chi \in Q_{1}(\tau_{ij})$. Dann gilt
   \begin{align*}
@@ -911,8 +911,8 @@ Da $p \in P_{2}$ noch frei ist, können wir es geeignet wählen und erhalten zum
   \end{align*}
 \end{satz}
 \begin{beweis}
-Exponentielle Grenzschichten:  Linß, NMPDE, 16(5), 426-440, 2000;
-Charakteristische Grenzschichten:  Franz, Linß, NMPDE, 24(1), 144-164, 2008. 
+Exponentielle Grenzschichten:  \cite{L_NMPDE},
+Charakteristische Grenzschichten:  \cite{FL_NMPDE}.
 
 Clevere Kombination der Interpolations- , Stabilitätsabschätzungen und der Lin-Formeln liefern das Ergebnis. 
 
@@ -999,12 +999,38 @@ koerzitiv mit $a_{Gal}(\cdot, \cdot)$ und
 koerzitiv mit $a_{LPS}(\cdot, \cdot)$.
 %%% Vorlesungsteile fehlen!
 Für $\delta$ wurde 
+NICHT LESBAR
 %%% ein Wort fehlt
 eine stückweise konstante Funktion gewählt. 
 Da die Stabilisierung in der axponentiellen Grenzschicht vernachlässigbar ist ($\delta \to 0$ für $\epsilon \to 0$) wählen wir
 
+\begin{align*}
+  \delta|_{\tau} =
+  \begin{cases}
+    0, & \tau \subset \Omega_{12} \cup \Omega_{22}\\
+    \delta_{11}, & \tau \subset \Omega_{11} \\
+    \delta_{21}, & \tau \subset \Omega_{21} \\
+  \end{cases}
+\end{align*}
+Der erste Fall entspricht der exponentiellen Grenzschicht und den Eckbereichen, der zweite Fall ist der grobe Bereich und der dritte Fall stellt die charakteristische Grenzschicht dar. Mithilfe der anisotropen Interpolationsfehlerabschätzung von Satz \ref{thm:7-1} kann folgendes nützliches Resultat gezeigt werden:
+\begin{lemma}\label{lem:7-18}
+  Für den glatten Anteil der Lösung $u$ gilt
+  \begin{align*}
+    \norm{S(v - Iv, v-Iv)} & \leq (\delta_{11} + \delta_{21}\epsilon^{\frac 12} \ln N)N^{-2p}, 
+  \end{align*}
+falls $h \leq CN^{-1}$. 
+\end{lemma}
+\begin{beweis}
+  Mit der $L_{2}$-Stabilität von NICHT LESBAR und der Interoplationsfehlerabschätzung von $I$ gilt
+  \begin{align*}
+\norm{S(v - Iv, v-Iv)} & \leq \sum_{\tau \subset \Omega_{11} NICHT LESBAR} \delta_{\tau} \nnorm{\kappa_{\tau}(b(v-Iv)_{x})}_{L_{2}(\tau)}^{2}\\
+& \leq C \sum_{\tau \subset NICHT LESBAR} \delta_{\tau} \nnorm{(v-Iv)_{x}}_{L_{2}(\tau)}^{2}\\
+& \leq C (\delta_{11}(N^{-2p} \nnorm{\partial_{x}^{p+1}v}_{L_{2}(\Omega_{21})}^{2} + N^{-2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{11})}+ \delta_{21} (N^{-2p}\nnorm{\partial_{x}^{p+1}v}^{2}_{L_{2}(\Omega_{21})} + k^{2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{21})})\\
+& \leq C (\delta_{11} + \delta_{21}\epsilon^{\frac 12} \ln N)N^{-2p}. 
+  \end{align*}
+\end{beweis}
 
-
+Lemma \ref{lem:7-18} reicht nicht aus, um $\nnnorm{u - Iu}_{LPS}$ abzuschätzen. Aber $\norm{S(w - Iw, w- Iw)}$ lässt sich für $w = w_{1} + w_{2} + w_{12}$ NICHT LESBAR gleichmäßig abschätzen. 
 
 %\datum{28. Januar 2016}
 Kombinieren wir die Idee von Satz \ref{thm:6-22}, das heißt mit
@@ -1186,15 +1212,57 @@ Bleibt noch $w_{2}$:
 \subsection{Reduktion der Räume}
 \label{sec:reduktion-der-raume}
 
-Die Konvergenzabschätzungen auf anisotropen Gittern basieren auf anisotropen Interpolationsfehlerabschätzungen, wie in Satz \ref{thm:7-7} für $Q_{p}(\tau)$. Allerdings benötigt der Raum $Q_{p}$ lokal $(p+1)^{2}$ und global $(pN+1)^{2} \sim p^{2} N^{2}$ Freiheitsgrade (entspricht Dimension der Matrix). Das resultiert in großem Speicher- und Rechenaufwand. In Franz, Matthies: Applied Numerical Mathematics 61, 723-737, 2011 werden Teilräume des $Q_{p}$ untersucht, die ebenfalls solche anisotropen Fehlerabschätzungen der gleichen Ordnung erfüllen und die stetig zusammensetzbar sind. Wir wollen die kleinste Klasse dieser Räume anschauen, die \markdef{Serendipityräume} oder auch \markdef{Rumpfräume}. 
+Die Konvergenzabschätzungen auf anisotropen Gittern basieren auf anisotropen Interpolationsfehlerabschätzungen, wie in Satz \ref{thm:7-7} für $Q_{p}(\tau)$. Allerdings benötigt der Raum $Q_{p}$ lokal $(p+1)^{2}$ und global $(pN+1)^{2} \sim p^{2} N^{2}$ Freiheitsgrade (entspricht Dimension der Matrix). Das resultiert in großem Speicher- und Rechenaufwand. In \cite{FM_ANM} werden Teilräume des $Q_{p}$ untersucht, die ebenfalls solche anisotropen Fehlerabschätzungen der gleichen Ordnung erfüllen und die stetig zusammensetzbar sind. Wir wollen die kleinste Klasse dieser Räume anschauen, die \markdef{Serendipityräume} oder auch \markdef{Rumpfräume}. 
 
 Der bekannteste davon ist der quadratische $S_{2}$. Dieser wird über die Freiheitsgrade definiert als:   
 
-SKIZZE S2
+\begin{figure}[ht!]
+  \centering
+  \begin{tikzpicture}
+    \draw (-1, -1) -- (-1, 1) -- (1,1) -- (1, -1) -- cycle;
+
+    \draw[fill] (-1,-1)  circle (1.5pt);
+    \draw[fill] (1,-1)  circle(1.5pt);
+    \draw[fill] (1,1) circle(1.5pt);
+    \draw[fill] (-1,1) circle(1.5pt);
+    \draw[fill] (0,-1)  circle (1.5pt);
+    \draw[fill] (-1,0)  circle (1.5pt);
+    \draw[fill] (0,1)  circle (1.5pt);
+    \draw[fill] (1,0)  circle (1.5pt);
+  \end{tikzpicture}
+  \caption{Freiheitsgrade für $S_2$ }
+  \label{fig:s2}
+\end{figure}
 
 Es fehlt zum vollen $Q_{2}$ nur ein Freiheitsgrad und damit eine Basisfunktion (Polynom, schwierig aufzuschreiben). Analog kann man das für den $q_{3}$ durchführen:
 
-SKIZZE S2
+
+\begin{figure}[ht!]
+  \centering
+  \begin{tikzpicture}
+    \def\x{1}
+    \draw (-\x, -\x) -- (-\x, \x) -- (\x,\x) -- (\x, -\x) -- cycle;
+
+    \draw[fill] (-\x,-\x)  circle (1.5pt);
+    \draw[fill] (\x,-\x)  circle(1.5pt);
+    \draw[fill] (\x,\x) circle(1.5pt);
+    \draw[fill] (-\x,\x) circle(1.5pt);
+
+    \draw[fill] (-0.33,-\x)  circle (1.5pt);
+    \draw[fill] (-\x,-0.33)  circle (1.5pt);
+    \draw[fill] (-0.33,\x)  circle (1.5pt);
+    \draw[fill] (\x,-0.33)  circle (1.5pt);
+
+    \draw[fill] (0.33,-\x)  circle (1.5pt);
+    \draw[fill] (-\x,0.33)  circle (1.5pt);
+    \draw[fill] (0.33,\x)  circle (1.5pt);
+    \draw[fill] (\x,0.33)  circle (1.5pt);
+
+  \end{tikzpicture}
+  \caption{Freiheitsgrade für $S_3$ }
+  \label{fig:s3}
+\end{figure}
+
 
 Für höhere Polynomgrade entstehen innere Freiheitsgrade, deshalb geht dieses Verfahren dort nicht mehr. Wir wollen den Raum $S_{p}$ über den aufgespannten Polynomraum definieren. Für diesen gilt
 \begin{align*}
@@ -1208,9 +1276,109 @@ Es ist im Übrigen
   Q_{p} &= \Span \set{x^{i}\cdot y^{j}, 0 \leq i, j \leq p},\\
   P_{p} &= \Span \set{x^{i}\cdot y^{j}, 0 \leq i + j \leq p}. 
 \end{align*}
-Blidliche Darstellung: Ein Kästchen an der Position $(i, j)$ repräsentiert ein Monom $x^{i}y^{j}$ im Polynomraum. 
+Bildliche Darstellung: Ein Kästchen an der Position $(i, j)$ repräsentiert ein Monom $x^{i}y^{j}$ im Polynomraum. 
 
-Skizze q5, S\_5\_tau
+\begin{figure}[ht!]
+  \centering
+   \begin{tikzpicture}
+    
+ \newcommand*{\xMin}{0}%
+ \newcommand*{\xMax}{6}%
+ \newcommand*{\yMin}{0}%
+ \newcommand*{\yMax}{6}%
+ \def\Ncoarse {5};
+ \def\Nfine {10};
+ \def\lambday  {0.3};
+ \def\lambdax {0.3};
+ \def\h { (\xMax -\lambdax)/\Ncoarse};
+ \def\picscale {0.00125};
+ \pgfmathsetmacro\newvalue{\lambdax + \h * \picscale * \Nfine * \Nfine * \Nfine};
+
+ \begin{scope}
+   \foreach \i in {0,...,5} {
+%     \pgfmathsetmacro\xcoord{(\lambdax + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\i, \yMin) -- (\i, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+     \node[below] at (\i+0.5, 0) {\i};
+   }
+   \foreach \i in {0,...,5} {
+%     \pgfmathsetmacro\xcoord{(\lambdax + \h*\i*\i*\i) * \picscale};
+     \draw [very thin,gray] (\xMin, \i) -- (\xMax, \i);% node [below] at (\xcoord,\yMin) {$\i$};
+
+     \node[left] at (0, \i+0.5) {\i};
+   }
+
+   \fill[red!30] (4, 3) rectangle (5, 4);
+
+     \draw [very thin,gray] (\xMin, 6) -- (\xMax, 6);% node [below] at (\xcoord,\yMin) {$\i$};
+     \draw [very thin,gray] (6, \xMin) -- (6, \xMax);% node [below] at (\xcoord,\yMin) {$\i$};
+
+     \draw [very thin,black, ->, thick] (0, \yMin) -> (0, \yMax+1) node [left] at (0,\yMax+1) {$j$};
+     \draw [very thin,black, ->, thick] (\xMin, 0) -> (\xMax+1, 0) node [below] at (\xMax+1,0) {$i$};
+
+     \draw [very thin,black, thick] (4.5, 3.5) edge [bend left = 30, ->] (4.5, \yMax+0.5) node [below] at (4.5, \yMax + 1) {$x^{4}y^{3} \in Q_{5}$};
+ \end{scope}
+
+
+ \begin{scope}[right=8cm]
+
+   \foreach \i in {0,...,5} {
+%     \pgfmathsetmacro\xcoord{(\lambdax + \h*\i*\i*\i) * \picscale};
+     \node[below] at (\i+0.5, 0) {\i};
+   }
+   \foreach \i in {0,...,5} {
+%     \pgfmathsetmacro\xcoord{(\lambdax + \h*\i*\i*\i) * \picscale};
+
+     \node[left] at (0, \i+0.5) {\i};
+   }
+
+   \draw [very thin,gray] (0, \yMin) -- (0, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (1, \yMin) -- (1, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (2, \yMin) -- (2, \yMax);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (3, \yMin) -- (3, \yMax-2);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (4, \yMin) -- (4, \yMax-3);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (5, \yMin) -- (5, \yMax-4);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (6, \yMin) -- (6, \yMax-4);% node [below] at (\xcoord,\yMin) {$\i$};
+
+
+   \draw [very thin,gray] (\xMin, 0) -- (\xMax, 0);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (\xMin, 1) -- (\xMax, 1);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (\xMin, 2) -- (\xMax, 2);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (\xMin, 3) -- (\xMax-2, 3);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (\xMin, 4) -- (\xMax-3, 4);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (\xMin, 5) -- (\xMax-4, 5);% node [below] at (\xcoord,\yMin) {$\i$};
+   \draw [very thin,gray] (\xMin, 6) -- (\xMax-4, 6);% node [below] at (\xcoord,\yMin) {$\i$};
+
+   \draw [very thin,black, ->, thick] (0, \yMin) -> (0, \yMax+1) node [left] at (0,\yMax+1) {$j$};
+   \draw [very thin,black, ->, thick] (\xMin, 0) -> (\xMax+1, 0) node [below] at (\xMax+1,0) {$i$};
+   
+
+
+%   \fill[pattern color = red!30, pattern=north east lines] (0, 0) rectangle (2, 6);
+
+   \fill[color = red!30, opacity = 0.5] (0, 0) rectangle (2, 6);
+   \fill[blue!30,opacity = 0.5] (0, 0) rectangle (6, 2);
+   \fill[color = yellow!50, opacity = 0.5] (2, 2) rectangle (4, 3);
+   \fill[yellow!50, opacity = 0.5] (2, 3) rectangle (3, 4);
+
+   \fill[pattern color = black!70, pattern=north east lines] (3, 0) rectangle (4, 2);
+   \fill[pattern color = black!70, pattern=north east lines] (5, 0) rectangle (6, 2);
+
+   \fill[pattern color = black!70, pattern=north east lines] (0, 3) rectangle (2, 4);
+   \fill[pattern color = black!70, pattern=north east lines] (0, 5) rectangle (2, 6);
+
+
+%   \draw[color = red] (0, 0) rectangle (2, 6);
+%   \draw[color = blue] (0, 0) rectangle (6, 2);
+   \draw[color = orange, thick] (0,0) -- (6,0) --(6,1) --(5,1) -- (5,2) --(4,2) --(4, 3) -- (3,3) --(3,4) --(2,4) --(2,5) --(1,5) --(1,6) --(0,6) -- cycle;
+
+ \end{scope}
+\end{tikzpicture}
+
+\caption{Veranschaulichung von $Q_{5}$ und $S_{5}(\tau)$}
+\text{$I$ rot $II$ blau, $III$ gelb, $IV$ schwarz schraffiert, $V$ orange}
+\label{fig:Q5_S5_tau}
+\end{figure}
+
 
 Der Serendipity-Raum $S_{p}$ reichert den $\cP_{p}$ um genau zwei Kanten-Blasenfunktionen an. Es gilt
 \begin{align*}
@@ -1241,7 +1409,32 @@ t_{i} = -1 + \frac {2i}p.
 \end{align*}
 Das ergibt $4 + 2(p-1)+ 2(p-1)+ \frac 12 (p-3)(p-2) = \frac 12 ((p+1)(p+2) +4)$ Bedingungen. 
 
-Skizze LAgrange s5
+\begin{figure}[hb!]
+  \centering
+  \begin{tikzpicture}
+
+    \foreach \i in {0,...,5} {
+     \draw [very thin,gray!60] (\i, -1) -- (\i, 6);% node [below] at (\xcoord,\yMin) {$\i$};
+     \draw (\i, 0) circle (1.5 pt);
+     \draw (\i, 5) circle (1.5 pt);
+   }
+    \foreach \i in {0,...,5} {
+     \draw [very thin,gray!60] (-1, \i) -- (6, \i);% node [below] at (\xcoord,\yMin) {$\i$};
+     \draw (0, \i) circle (1.5 pt);
+     \draw (5, \i) circle (1.5 pt);
+   }
+
+     \draw (1, 1) circle (1.5 pt);
+     \draw (2, 1) circle (1.5 pt);
+     \draw (1, 2) circle (1.5 pt);
+     \node[below left] at (0, 0) {$t_{1}$};
+     \node[below right] at (5, 0) {$t_{6}$};
+
+     \draw (0, 0) rectangle (5, 5);
+  \end{tikzpicture}
+  \caption{Lagrange $S_5$}
+  \label{fig:lagrange_s5}
+\end{figure}
 
 
 Die für $\gamma = (0, 0)$ (siehe vorherige Kapitel), das heißt $\nnorm{u - Iu}$ benötigten Funktionale entsprechen denen der Definition von $I$. Für $\gamma = (0, 1)$, das heißt $\nnorm{(u - Iu)_{y}}$ nutzen wir
@@ -1294,7 +1487,7 @@ Also ist auch hier Lemma \ref{lem:7-6} anwendbar.
 
 %% ENDE
 
-Prüfung: Keine Beweise runterbeten, Anisotropie, Abschätzungen
+%Prüfung: Keine Beweise runterbeten, Anisotropie, Abschätzungen
 
 %%% local Variables: 
 %%% mode: latex

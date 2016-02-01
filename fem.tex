@@ -1,7 +1,7 @@
 % \datum{06. November 2015}
 
-T. Linß Layer-adapted meshes for reaction-convection--diffusion problems
-Roos, Stynes, Tobiska: Robust numerical methods for singulary perturbed differential equations (NS!!)
+\cite {L_BOOK},
+\cite{bibel}
 
 \section{Finite Elemente Methoden}
 \label{sec:finite-elem-meth}
@@ -258,7 +258,7 @@ Speziell folgt
   &= a (u, G(x_{i}))
 \end{align*}
 ($G(x_{i})$ sei Testfunktion). 
-Also sind gute Testfunktionen solche, die $G_{i} = G(x_{i}, \cdot)$ approximieren. Diese Idee stammt von Hemker (1977).  Dies motiviert die definition der \markdef{$\bar L^{*}$-Splines} oder \markdef{Hemker-Funktionen} $\psi_{i} \in H_{0}^{1}$ (Kombination von $\exp$-Funktionen), $i= 1, \dots, N-1$, die per
+Also sind gute Testfunktionen solche, die $G_{i} = G(x_{i}, \cdot)$ approximieren. Diese Idee stammt von Hemker (1977).  Dies motiviert die Definition der \markdef{$\bar L^{*}$-Splines} oder \markdef{Hemker-Funktionen} $\psi_{i} \in H_{0}^{1}$ (Kombination von $\exp$-Funktionen), $i= 1, \dots, N-1$, die per
 \begin{enumerate}
 \item $\bar L^{*} \psi_{i} = - \epsilon \psi_{i}'' + \bar b \psi_{i}' + \bar c \psi_{i} = 0$
   auf jedem $x_{j-1}, x_{j}$, $j = 1, \dots, n$
@@ -266,14 +266,35 @@ Also sind gute Testfunktionen solche, die $G_{i} = G(x_{i}, \cdot)$ approximiere
 \end{enumerate}
 definiert sind, wobei $\bar b$ und $\bar c$ stückweise konstante Approximiationen von $b$ und $c$ sind. 
 
-Haifischflossenskizze
+\begin{figure}[bht!]
+  \centering
+  \begin{tikzpicture}
+
+    \begin{axis}[ymin = -.1, ymax = 1.1, xmin= -2, xmax=8, axis y line = none, axis x line = none, height = 3cm, width = 5cm]
+      \draw (axis cs:-2, 0) -- (axis cs:8, 0);
+      \draw (axis cs:0, 0.1) -- (axis cs:0, -0.1) node[below] at (axis cs:0, -0.1) {$x_{i-1}$};
+      \draw (axis cs:3, 0.1) -- (axis cs:3, -0.1) node[below] at (axis cs:3, -0.1) {$x_{i}$};
+      \draw (axis cs:6, 0.1) -- (axis cs:6, -0.1) node[below] at (axis cs:6, -0.1) {$x_{i+1}$};
+
+      \addplot[orange, domain = 0:3] {1 - sqrt(9 - x^2)*1/3};
+      \addplot[orange, domain = 3:6] {sqrt(9 - (x- 3)^2)*1/3} node[above right] {$\psi_{i}$};
+      \addplot[orange, domain = -1:0] {0};
+      \addplot[orange, domain = 6:7] {0};
+      \draw[orange](axis cs: 3, 1)circle (1pt) node[left] {$1$};
+    \end{axis}    
+  \end{tikzpicture}
+  \caption{Haifischflosse, $\bar L^{*}$-Splines}
+  \label{fig:hai}
+\end{figure}
+
 
 Sei außerdem die diskretisierte Green'sche Funktion $G_{i}(x)$ definiert als
 \begin{enumerate}
 \item $- \epsilon G_{i}'' + \bar b G_{i}' + \bar c G_{i} = 0$ auf jedem $(x_{j-1}, x_{j})$, $j = 1, \dots, n$, 
 \item $G_{i} \in C[0, 1]$ mit $G(0) = G(1) = 0$, 
 \item \label{num:iii} $\lim_{x \to x_{j}^{-0}} (\epsilon G_{i}' - \bar b G_{i})(x) - \lim_{x \to x_{j}^{+0}} (\epsilon G_{i}' - \bar b G_{i})(x) = \delta_{ij}$
-  skizze 2  
+%  skizze 2  
+
 \end{enumerate}
 Also $G_{i} \in \set{\bar L^{*} - \text{Spline}}$ und $\nnorm {G_{i}}_{L_{\infty}}\leq C$. Wir brauchen noch eine passende Bilinearform: 
 
@@ -322,7 +343,10 @@ Im Allgemeinen gilt trotzdem in der ersten Gitterzelle
 \begin{align*}
   \max_{x \in (0, x_{1})} \norm{u(x) - u_{h}(x)} = \cO(1), \qquad H \gg\epsilon. 
 \end{align*}
-=( (skizze 3) 'Hier fehlt noch was'. 
+=(
+% (skizze 3)
+
+% 'Hier fehlt noch was'. 
 
 Trotz 'guter' Methode erhalten wir nur in den Gitterpunkten eine gute Lösung. Außerhalb dieser (speziell im Grenzschichtbereich) ist der Approximationsfehler mit stückweise linearen Funktionen zu schlecht. Wir sollten also einen Raum nutzen, der das Lösungsverhalten besser wiederspiegelt (andere Funktionen verwenden). 
 
@@ -332,8 +356,26 @@ Die natürliche Wahl sind hier die $\bar L$-Splines $\Span \set{\phi_{i}}_{i = 1
 \end{align*}
 auf jedem $(x_{j-1}, x_{j})$, $j = 1, \dots, n$, $\phi_{i}(x_{j}) = \delta_{ij}$, $j = 1, \dots, n$. 
 
-Skizze inverse haifischflosse
+\begin{figure}[bht!]
+  \centering
+  \begin{tikzpicture}
 
+    \begin{axis}[ymin = -.1, ymax = 1.1, xmin= -8, xmax=2, axis y line = none, axis x line = none, height = 3cm, width = 5cm]
+      \draw (axis cs:-8, 0) -- (axis cs:2, 0);
+      \draw (axis cs:-6, 0.1) -- (axis cs:-6, -0.1) node[below] at (axis cs:-6, -0.1) {$x_{i-1}$};
+      \draw (axis cs:-3, 0.1) -- (axis cs:-3, -0.1) node[below] at (axis cs:-3, -0.1) {$x_{i}$};
+      \draw (axis cs:0, 0.1) -- (axis cs:0, -0.1) node[below] at (axis cs:0, -0.1) {$x_{i+1}$};
+
+      \addplot[orange, domain = -6:-3] {sqrt(9 - (x+3)^2)*1/3};
+      \addplot[orange, domain = -3:0] {1 - sqrt(9 - x^2)*1/3}node[above right] {$\phi_{i}$};
+      \addplot[orange, domain = -7:-6] {0};
+      \addplot[orange, domain = 0:1] {0};
+      \draw[orange](axis cs: -3, 1)circle (1pt) node[right] {$1$};
+    \end{axis}    
+  \end{tikzpicture}
+  \caption{Inverse Haifischflosse, $\tau$-Spline}
+  \label{fig:hai2}
+\end{figure}
 % \datum{13. November 2015}
 
 \begin{bemerkung*}
@@ -341,7 +383,7 @@ Skizze inverse haifischflosse
   \begin{align*}
     \nnorm{\chi'}_{L_{1}(x_{i-1}, x_{i})} \leq C\cdot h_{i}^{- \frac 12} \epsilon^{\frac 12}\nnorm{\chi'}_{L_{2}(x_{i-1}, x_{i})}
   \end{align*}
-  (siehe O'Riordan, Stynes, Math. Comp 57(195), 1991). 
+  (siehe \cite{OS_MC}). 
 \end{bemerkung*}
 \begin{lemma}\label{lem:6-4}
   Auf einem äquidistantem Gitter $x_{0}< x_{1}< \dots < x_{N}$ sei der Raum $U_{h} = \set{\bar L\text{-Splines}}$ gegeben und mit $u^{I}$ bezeichnen wir die nodale Interpolierende aus $U_{h}$, das heißt
@@ -366,12 +408,16 @@ Skizze inverse haifischflosse
     \begin{align*}
       \nnnorm{u-u^{I}}^{2}_{\epsilon} &\leq a(u-u^{I}, u-u^{I})\\
       &= \sum_{i} \int_{x_{i-1}}^{x_{i}} \( - \epsilon(u-u^{I})'' - b(u-u^{I})' + c(u- u^{I})\)(u-u^{I}) dx\\
-      &= \sum_{i} \int_{x_{i-1}}^{x_{i}} \(\underbrace{Lu}_{= f} - \underbrace{\bar L u^{I}}_{= 0} + ' (b- \bar b)(u^{I})' + (c- \bar c)(u^{I})\)(u-u^{I}) dx\\
-      \norm{ \sum_{i} \int_{x_{i-1}}^{x_{i}} \(f - (c- \bar c)(u^{I})\)(u-u^{I}) dx} &\leq \(\nnorm f_{L_{\infty}} + 2\cdot\nnorm c _{L_{\infty}}\nnorm{u^{I}}_{L_{\infty}}\) \underbrace{\sum_{i} \int_{x_{i-1}}^{x_{i}} \nnorm{u-u^{I}} dx}_{\leq C\cdot H}\\
-      \norm{ \sum_{i} \int_{x_{i-1}}^{x_{i}} \(b - \bar b\)(u^{I})(u-u^{I}) dx} & \sum_{i} \nnorm{(u^{I})'}_{L_{1}(x_{i-1}, x_{i})} \cdot \underbrace{\nnorm{b - \bar b}_{L_{\infty}(x_{i-1}, x_{i})}}_{\leq C\cdot \nnorm{b'}_{L_{\infty}(x_{i-1}, x_{i})}\cdot h_{i}} \cdot \nnorm{u - \bar u^{I}}_{L_{\infty}(x_{i-1}, x_{i})}\\
-      & C\cdot \nnorm{u - u^{I}}_{L_{\infty}} \cdot \nnorm{b'}_{L_{\infty}} \cdot \sum_{i} h_{i} h_{i}^{- \frac 12} \epsilon^{\frac 12} \nnorm{(u^{I})'}_{L_{2}(x_{i-1}, x_{i})}\\
-      & C\cdot \nnorm{u - u^{I}}_{L_{\infty}} \cdot \nnorm{b'}_{L_{\infty}} \cdot \epsilon^{\frac 12}\underbrace{\(\sum_{i} h_{i}\)^{\frac 12}}_{= 1} \(\sum_{i} \nnorm{(u^{I})'}_{L_{2}(x_{i-1}, x_{i})}^{2}\)^{\frac 12}\\
-      & C\cdot \nnorm{b'}_{L_{\infty}} \cdot \underbrace{\epsilon^{\frac 12} \cdot \nnorm{(u^{I})'}_{L_{2}}}_{\leq \nnnorm{u^{I}}_{\epsilon} \leq C} \nnorm{u- u^{I}}_{\infty}\leq C\cdot H. 
+      &= \sum_{i} \int_{x_{i-1}}^{x_{i}} \(\underbrace{Lu}_{= f} - \underbrace{\bar L u^{I}}_{= 0} + ' (b- \bar b)(u^{I})' + (c- \bar c)(u^{I})\)(u-u^{I}) dx
+\end{align*}
+\begin{align*}
+      &\norm{ \sum_{i} \int_{x_{i-1}}^{x_{i}} \(f - (c- \bar c)(u^{I})\)(u-u^{I}) dx} \\
+&\quad\leq \(\nnorm f_{L_{\infty}} + 2\cdot\nnorm c _{L_{\infty}}\nnorm{u^{I}}_{L_{\infty}}\) \underbrace{\sum_{i} \int_{x_{i-1}}^{x_{i}} \nnorm{u-u^{I}} dx}_{\leq C\cdot H}\\
+      &\norm{ \sum_{i} \int_{x_{i-1}}^{x_{i}} \(b - \bar b\)(u^{I})(u-u^{I}) dx}  \\
+&\quad\leq\sum_{i} \nnorm{(u^{I})'}_{L_{1}(x_{i-1}, x_{i})} \cdot \underbrace{\nnorm{b - \bar b}_{L_{\infty}(x_{i-1}, x_{i})}}_{\leq C\cdot \nnorm{b'}_{L_{\infty}(x_{i-1}, x_{i})}\cdot h_{i}} \cdot \nnorm{u - \bar u^{I}}_{L_{\infty}(x_{i-1}, x_{i})}\\
+      &\quad\leq C\cdot \nnorm{u - u^{I}}_{L_{\infty}} \cdot \nnorm{b'}_{L_{\infty}} \cdot \sum_{i} h_{i} h_{i}^{- \frac 12} \epsilon^{\frac 12} \nnorm{(u^{I})'}_{L_{2}(x_{i-1}, x_{i})}\\
+      &\quad\leq C\cdot \nnorm{u - u^{I}}_{L_{\infty}} \cdot \nnorm{b'}_{L_{\infty}} \cdot \epsilon^{\frac 12}\underbrace{\(\sum_{i} h_{i}\)^{\frac 12}}_{= 1} \(\sum_{i} \nnorm{(u^{I})'}_{L_{2}(x_{i-1}, x_{i})}^{2}\)^{\frac 12}\\
+      &\quad\leq C\cdot \nnorm{b'}_{L_{\infty}} \cdot \underbrace{\epsilon^{\frac 12} \cdot \nnorm{(u^{I})'}_{L_{2}}}_{\leq \nnnorm{u^{I}}_{\epsilon} \leq C} \nnorm{u- u^{I}}_{\infty}\leq C\cdot H. 
     \end{align*}
     per partieller Integration im ersten Schritt und später Hölder, mit
     \begin{align*}
@@ -497,7 +543,7 @@ Mit
 \end{align*}
 folgt (benutze $ab \leq \frac 1 4 a^{2} + \frac 14 b^{2})$)
 \begin{align*}
-  \norm{ \int_{x_{i-1}}^{ x_{i}}\delta_{i}(\epsilon v_{h}'' -  c v_{h})(bv_{h}')dx} & \leq nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \( \frac 1{\sqrt{2} \epsilon^{\frac 12} \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})}} + \frac1{\sqrt{2} \gamma^{\frac 12} \nnorm{ v_{h}}_{L_{2}(x_{i-1}, x_{i})}} \)\\
+  \norm{ \int_{x_{i-1}}^{ x_{i}}\delta_{i}(\epsilon v_{h}'' -  c v_{h})(bv_{h}')dx} & \leq \nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \( \frac 1{\sqrt{2} \epsilon^{\frac 12} \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})}} + \frac1{\sqrt{2} \gamma^{\frac 12} \nnorm{ v_{h}}_{L_{2}(x_{i-1}, x_{i})}} \)\\
   &\leq \frac 12 \nnorm{\sqrt{\delta_{i}} bv_{h}'}^{2}_{L_{2}(x_{i-1}, x_{i})}  + \frac 12 \epsilon \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})} + \frac 12 \gamma \nnorm{v_{h}}_{L_{2}(x_{i-1}, x_{i})}\\
   &= \frac 12 \nnnorm{v_{j}}_{SD}^{2}. 
 \end{align*}
@@ -605,7 +651,7 @@ Das Resultat zeigt optimale Konvergenzraten für festes $\epsilon$. Für $\epsil
   \norm u_{k+1} &\leq C \epsilon^{- (k+ \frac 12)} \to \infty!
 \end{align*}
 Also muss $h \sim \epsilon$ gelten, um die Beschränktheit des Fehlers zu garantieren. Andererseits gilt für klassische Probleme das Lemma von Cea: Fehler $\sim$ Approximationsfehler. 
-In Chen, Xu Contemp. math 383, p. 191-201, 2005 und Numer. Math 109, p. 167-191 2008 wird eine Version der SDFEM vorgestellt, die in 1D die Quasi-Optimalität bezüglich der $L_{\infty}$-Norm erfüllt. Diese beruht auf der Definition (mit konstantem $b$)
+In \cite{CX_CM} und \cite{CX_NM} wird eine Version der SDFEM vorgestellt, die in 1D die Quasi-Optimalität bezüglich der $L_{\infty}$-Norm erfüllt. Diese beruht auf der Definition (mit konstantem $b$)
 \begin{align*}
   \delta_{i} = \frac {3h_{i}} b \min \set{1, \frac{bh_{i}}{2\epsilon}}\underbrace{\phi_{i-1}(x) \phi_{i}(x)}_{\in \Pi_{2}(x_{i-1}, x_{i})}
 \end{align*}
@@ -747,7 +793,14 @@ Idee: Nutze ein äquidistantes $t$-Gitter nahe bei $x = 0$ und projiziere auf di
   q(1 - e^{- \beta \frac x {\sigma\epsilon}})= t_{i} = \frac i n, \quad i = 0, 1, \dots, N
 \end{align*}
 mit $q \in (0, 1)$ und $\sigma > 0$. Weg von der Grenzschicht wird ein äquidistantes x-Gitter gewählt und der Übergangspunkt $\tau$ zwischen diesen beiden Bereichen so bestimmt, dass die gittererzeugende Funktion $\phi$ in $C^{1}$ ist. 
-SKizze 4
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[scale = 0.3]{6_tau.png}
+  
+  \caption{Lage von $\tau$}
+  \label{fig:position_tau}
+  \text{Pink: Tangente an $\chi(t)$ durch $(1, 1)$, rot: äquidistant, grün: graduiert, blau: $\tau$}
+\end{figure}
 \begin{align*}
   \phi(x) =
   \begin{cases}
@@ -868,7 +921,21 @@ Wir haben hier ein deutlich einfacheres Gitter mit einfacherer Analysis, das opt
   N^{-1} \ln N \leq C N^{-t}
 \end{align*}
 für alle $0 < t < 1$. 
-Skizze log
+\begin{figure}[ht!]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=7cm, height=7cm, legend pos = outer north east]
+      \addplot [color=blue, thick, domain= 1:17000, variable=\x ]plot ({\x}, {1/\x}); 
+      \addplot [color=red, thick, domain= 1:17000, variable=\x ]plot ({\x}, {1/\x*ln(\x)}); 
+      \legend{$N^{-1}$, $N^{-1}\cdot \ln N$};
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{$N^{-1}$ vs. $N^{-1} \cdot \ln N$}
+  \label{fig:log}
+\end{figure}
+
+
+
 Trotzdem verdirbt der $\log$-Faktor die Konvergenzordung, speziell bei Methoden höherer Ordnung. Daher modifizieren wir die Gitter. Dabei belassen wir den Übergangspunkt $\tau$ und das Verhalten außerhalb der Grenzschicht, verändern aber das Gitter auf $[0, \tau]$. Dies wird generiert mit der Funktion $\tilde\phi$. Für diese fordern wir nur
 \begin{enumerate}
 \item $\tilde \phi (0) = 0$, 
@@ -933,12 +1000,12 @@ die monoton fallend ist.
     & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x}{ \sigma\epsilon}} e^{- \frac{\beta x_{i-1}}{ 2 \epsilon}}\\
     & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{ \sigma\epsilon}}e^{\frac{\beta s\cdot h_{i}}{ \sigma\epsilon}}e^{- \frac{\beta x_{i-1}}{ 2 \epsilon}}\\
     & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{ \epsilon} \cdot\(\frac 1 \sigma - \frac 1 2\)}e^{\frac{\beta \cdot s\cdot C}{ \sigma}}\\
-%    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta}{\epsilon} \(\frac {x_{i}} \sigma - \frac {x_{i-1}} 2\)}\\
-%    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta h_{i}}{\sigma\epsilon} } e^{\frac{\beta x_{i-1}}{\epsilon} (\frac 1 \sigma - \frac 12)}\\
-%    & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{\epsilon} (\frac {2 -  \sigma} {2 \sigma})}\\
+    % & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta}{\epsilon} \(\frac {x_{i}} \sigma - \frac {x_{i-1}} 2\)}\\
+    % & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta h_{i}}{\sigma\epsilon} } e^{\frac{\beta x_{i-1}}{\epsilon} (\frac 1 \sigma - \frac 12)}\\
+    % & \leq h_{i} + C N^{-1}\max \norm{\psi'} e^{\frac{\beta x_{i-1}}{\epsilon} (\frac {2 -  \sigma} {2 \sigma})}\\
     & \leq h + C N^{-1}\max \norm{\psi'}. 
   \end{align*}
-mit $s \in (0, 1)$, da $\sigma\geq 2$.
+  mit $s \in (0, 1)$, da $\sigma\geq 2$.
 \end{beweis}
 \paragraph{S-Typ Gitter aus der Literatur}
 \label{sec:s-typ-gitter}
@@ -1167,58 +1234,58 @@ Erstaunlicherweise ist nicht der Grenzschichtanteil, sondern der glatte Anteil $
 \paragraph{Postprocessing (Nachbearbeitung)}
 \label{sec:postpr-nachb}
 
-Die Idee des Postprocessings ist es, mithilfe einer preiswerten Methode aus der bereits berechneten numerischen Lösung eine neue numerische Lösung zu gewinnen. Es gibt viele Möglichkeiten, hier besprechen wir einen Ansatz, der die vorhandene Lösung in einen Polynomraum höherer Ordnung auf einenm gröberen Gitter interpolieren (nach Stynes, Tobiska, SINUM 41(5), pages 1620-1642, 2003). Zu dem vorhandenen Gitter $T_{N}$ konstruieren wir uns ein Makrogitter $M_{N}$, indem je zwei Gitterzellen zu einer Makrozelle zusammengefasst werden. 
+Die Idee des Postprocessings ist es, mithilfe einer preiswerten Methode aus der bereits berechneten numerischen Lösung eine neue numerische Lösung zu gewinnen. Es gibt viele Möglichkeiten, hier besprechen wir einen Ansatz, der die vorhandene Lösung in einen Polynomraum höherer Ordnung auf einenm gröberen Gitter interpolieren (nach \cite{ST_SINUM}). Zu dem vorhandenen Gitter $T_{N}$ konstruieren wir uns ein Makrogitter $M_{N}$, indem je zwei Gitterzellen zu einer Makrozelle zusammengefasst werden. 
 \begin{figure}[ht!]
   \centering
-   \begin{tikzpicture}
+  \begin{tikzpicture}
     
- \newcommand*{\xMin}{0}%
- \newcommand*{\xMax}{6}%
- \newcommand*{\yMin}{0}%
- \newcommand*{\yMax}{6}%
- \def\Ncoarse {6};
- \def\Nfine {10};
- \def\lambday  {0.3};
- \def\lambdax {0.3};
- \def\h { (\xMax -\lambdax)/\Ncoarse};
- 
- \def\picscale {0.00125};
- \pgfmathsetmacro\newvalue{\lambdax + \h * \picscale * \Nfine * \Nfine * \Nfine};
-\pgfmathsetmacro\hfine{(\newvalue/\Nfine)};
+    \newcommand*{\xMin}{0}%
+    \newcommand*{\xMax}{6}%
+    \newcommand*{\yMin}{0}%
+    \newcommand*{\yMax}{6}%
+    \def\Ncoarse {6};
+    \def\Nfine {10};
+    \def\lambday  {0.3};
+    \def\lambdax {0.3};
+    \def\h { (\xMax -\lambdax)/\Ncoarse};
+    
+    \def\picscale {0.00125};
+    \pgfmathsetmacro\newvalue{\lambdax + \h * \picscale * \Nfine * \Nfine * \Nfine};
+    \pgfmathsetmacro\hfine{(\newvalue/\Nfine)};
 
- \begin{scope}[scale = 2]
-   \foreach \i in {0, 2, 4, 6, 8} {
-     \pgfmathsetmacro\xcoord{\hfine*\i};
-     \draw [very thin,red] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord*10,\yMin) {\hfine};
-     \pgfmathsetmacro\xcoord{\hfine*(\i+1)};
-     \draw [very thin,gray] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord,\yMin) {$\i$};
-   }
-%   \foreach \i in {0,...,\Nfine} {
-%     \pgfmathsetmacro\ycoord{(\lambday + \h*\i*\i*\i) * \picscale};
-     \draw [very thin,gray] (\xMin,0) -- (\xMax,0);% node [left] at (\xMin,\ycoord) {$\i$};
-%   }
+    \begin{scope}[scale = 2]
+      \foreach \i in {0, 2, 4, 6, 8} {
+        \pgfmathsetmacro\xcoord{\hfine*\i};
+        \draw [very thin,red] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord*10,\yMin) {\hfine};
+        \pgfmathsetmacro\xcoord{\hfine*(\i+1)};
+        \draw [very thin,gray] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord,\yMin) {$\i$};
+      }
+      % \foreach \i in {0,...,\Nfine} {
+      % \pgfmathsetmacro\ycoord{(\lambday + \h*\i*\i*\i) * \picscale};
+      \draw [very thin,gray] (\xMin,0) -- (\xMax,0);% node [left] at (\xMin,\ycoord) {$\i$};
+      % }
 
-   \foreach \i in {0, 2, 4} {
-     \pgfmathsetmacro\xcoord{\newvalue * (\i * 0.16666) + \xMax * (\Ncoarse - \i) * 0.16666};
-     \draw [very thin,red] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord,\yMin) {$\i$};
-     \pgfmathsetmacro\xcoord{\newvalue * ((\i+1) * 0.1666) + \xMax * (\Ncoarse - (\i+1)) * 0.1666};
-     \draw [very thin,gray] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord,\yMin) {$\i$};
-   }
+      \foreach \i in {0, 2, 4} {
+        \pgfmathsetmacro\xcoord{\newvalue * (\i * 0.16666) + \xMax * (\Ncoarse - \i) * 0.16666};
+        \draw [very thin,red] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord,\yMin) {$\i$};
+        \pgfmathsetmacro\xcoord{\newvalue * ((\i+1) * 0.1666) + \xMax * (\Ncoarse - (\i+1)) * 0.1666};
+        \draw [very thin,gray] (\xcoord, \yMin-0.1) -- (\xcoord, \yMin+0.1);% node [below] at (\xcoord,\yMin) {$\i$};
+      }
 
 
-   \draw[thick,red] (\newvalue, \yMin -0.1) -- (\newvalue, \yMin+0.1) node [below] at (\newvalue, \yMin) {$\tau \in M$};
+      \draw[thick,red] (\newvalue, \yMin -0.1) -- (\newvalue, \yMin+0.1) node [below] at (\newvalue, \yMin) {$\tau \in M$};
 
-   \node[below] at (\newvalue - .7, \yMin -0.1) {$h$};
-   \node[below] at (\newvalue + 1.1, \yMin -0.1) {$H$};
-%   \draw[thick,black] (\xMin, \newvalue) -- (\xMax, \newvalue) node [left] at (\xMin, \newvalue) {$\lambda_{y}$};
-   \node [below left] at (0, 0) {$0$};
-   \node [below right] at (\xMax, 0) {$1$};
-%   \node [left] at (0, \yMax) {$1$};
- \end{scope}
-\end{tikzpicture}
+      \node[below] at (\newvalue - .7, \yMin -0.1) {$h$};
+      \node[below] at (\newvalue + 1.1, \yMin -0.1) {$H$};
+      % \draw[thick,black] (\xMin, \newvalue) -- (\xMax, \newvalue) node [left] at (\xMin, \newvalue) {$\lambda_{y}$};
+      \node [below left] at (0, 0) {$0$};
+      \node [below right] at (\xMax, 0) {$1$};
+      % \node [left] at (0, \yMax) {$1$};
+    \end{scope}
+  \end{tikzpicture}
 
-\caption{Makro-Mikro-Gitter, $M_{N}$ rot, $T_{N}$ schwarz}
-\label{fig:macro-micro-grid}
+  \caption{Makro-Mikro-Gitter, $M_{N}$ rot, $T_{N}$ schwarz}
+  \label{fig:macro-micro-grid}
 \end{figure}
 
 Da auf einem S-Typ-Gitter die Schrittweiten $h$ und $H$ unterschiedliche Größenordnungen bezüglich $\epsilon$ haben, sollte kein Makroelement aus einer kleinen und einer großen Zelle bestehen (also sollte die Grenze $\tau$ im Makrogitter auch Grenze sein). Sei daher $qN$ und $(1-q)N$ gerade, zum Beispiel $q = \frac 12$ und $N \mod 4 = 0$. Im Allgemeinen wird $M_{N} \neq T_{\frac N 2}$ sein, da $\tau$ und $\phi$ nicht dieselben sind! Wir definieren nun den Projektor
@@ -1546,7 +1613,22 @@ Für die Standardwahl von $\delta$ lässt sich $\nnorm{\delta^{\frac 12} b (E - 
   \end{cases}
 \end{align*}
 
-SKIZZE VARDELTA
+\begin{figure}[ht!]
+  \centering
+  \begin{tikzpicture}[scale = 2]
+    
+    \draw[thick, ->] (0,0)-- (0, 1) node[below left] at (0, 0) {$0$};
+    \draw[thick, ->] (0,0)-- (4, 0) node[below] at (4, 0) {$1$};
+    \draw[red] (0, 0) -- (1,0) -- (1.4, 0.6) -- (4, 0.6) node[above] at (3.4, 0.6) {$\delta(x)$};
+    \draw (-0.05, 0.6) -- (0.05, 0.6) node[left] at (0,0.6) {$\delta$};
+
+    \draw (1, -0.05) -- (1, 0.05) node at (1, -0.15) {$\tau$};
+    \draw (1.4, -0.05) -- (1.4, 0.05) node at (1.4, -0.15){$\tau +1$};
+
+  \end{tikzpicture}
+  \caption{Skizze zu $\delta(x)$}
+  \label{fig:vardelta}
+\end{figure}
 
 Zusätzlich fordern wir $\epsilon \norm{\ln \epsilon} \leq 2 \beta H$. 
 \begin{satz}\label{thm:6-22}
@@ -1594,7 +1676,7 @@ Zusätzlich fordern wir $\epsilon \norm{\ln \epsilon} \leq 2 \beta H$.
 \subsection{Sonstiges: Bessere Stabilität des Galerkin-Verfahrens}
 \label{sec:sonst-bess-stab+}
 Im Beispiel 2.3 des SIREV-Papers ist erwähnt, dass die Galerkin-FEM eine höhere Stabilität besitzt, als die Koerzivität hergibt. 
-Wir folgen dazu Knobloch/Tobiska IMA Journal Num. Analysis 2011(31), 147-164. 
+Wir folgen dazu \cite{KT_IMA}.
 
 Gegeben seien:
 \begin{itemize}
@@ -1650,41 +1732,56 @@ Gegeben seien:
       \nnnorm{u - u_{h}}_{\epsilon} \leq C (N^{-1} \max \norm{\psi'})^{p}
     \end{align*}
     für die Galerkin-Lösung $u_{h}$ des Grades $p$ bewiesen werden. 
-Damit folgt aber auch
-\begin{align*}
-  \beta \nnnorm{Iu - u_{h}} &\leq  \sup_{v_{h} \in V_{h}} \frac{a(Iu - u_{h}, v_{h})} {\nnnorm {v_{h}}}\\
-  & \leq C \sup_{v_{h} \in V_{h}} \frac{(N^{-1} \max \norm{\psi'})^{p} \nnnorm{v_{h}}_{\epsilon}} {\nnnorm {v_{h}}}\\
-  & \leq C (N^{-1} \max \norm{\psi'})^{p}, 
-\end{align*}
-also (diskrete) Konvergenz in der stärkeren Norm. 
-\item Es sei $x_{i} = \frac i N$ für $i = 0, \dots, N$ und für $k \geq 1$ sei $\tilde x_{j} = x_{k \cdot j}$, $k = 0, 1, \dots, \ceil{\frac Nk - 1}$, $\tilde x_{J} = 1 = x_{n}$, $J = \ceil{\frac N k}$ sowie $V_{h}$ stückweise linear über $\set{x_{i}}$. Weiterhin sei $v^{k} \in V_{h}$ mit
-  \begin{itemize}
-  \item stückweise linear über $\set{\tilde x_{j}}$, \\
-  \item $v^{k}(0) = v^{k}(1) = 0$, $v^{k}(\tilde x_{j}) = (-1)^{j}$, $j = 1, \dots, J-1$. 
-  \end{itemize}
-SKIZZE VK
-  \end{enumerate}
-FÜr die Galerkin-Lösung $u_{h}$ gilt
-\begin{align*}
-  \nnnorm{u_{h}}^{2}_{\epsilon} \leq a(u_{h}, u_{h}) = (f, u_{h}) \psi \nnorm f _{L_{2}} \nnnorm {u_{h}}_{\epsilon}, 
-\end{align*}
-alsi ist $ \nnnorm {u_{h}}_{\epsilon}$ beschränkt. Kann $v^{k}$ Bestandteil von $u_{h}$ sein? Mit einer direkten Rechnung kann man zeigen, dass
-\begin{align*}
-  \nnnorm{v_{k}}_{\epsilon}^{2} \leq C \( \frac \epsilon {h^{2}} + 1\), 
-\end{align*}
-was für kleines $\epsilon$ beschränkt ist. Also: Aus der Stabilität bezüglich der Energienorm kann eine solche Funktion $v^{k}$ nicht ausgeschlossen werden. 
+    Damit folgt aber auch
+    \begin{align*}
+      \beta \nnnorm{Iu - u_{h}} &\leq  \sup_{v_{h} \in V_{h}} \frac{a(Iu - u_{h}, v_{h})} {\nnnorm {v_{h}}}\\
+      & \leq C \sup_{v_{h} \in V_{h}} \frac{(N^{-1} \max \norm{\psi'})^{p} \nnnorm{v_{h}}_{\epsilon}} {\nnnorm {v_{h}}}\\
+      & \leq C (N^{-1} \max \norm{\psi'})^{p}, 
+    \end{align*}
+    also (diskrete) Konvergenz in der stärkeren Norm. 
+  \item Es sei $x_{i} = \frac i N$ für $i = 0, \dots, N$ und für $k \geq 1$ sei $\tilde x_{j} = x_{k \cdot j}$, $k = 0, 1, \dots, \ceil{\frac Nk - 1}$, $\tilde x_{J} = 1 = x_{n}$, $J = \ceil{\frac N k}$ sowie $V_{h}$ stückweise linear über $\set{x_{i}}$. Weiterhin sei $v^{k} \in V_{h}$ mit
+    \begin{itemize}
+    \item stückweise linear über $\set{\tilde x_{j}}$, \\
+    \item $v^{k}(0) = v^{k}(1) = 0$, $v^{k}(\tilde x_{j}) = (-1)^{j}$, $j = 1, \dots, J-1$. 
+    \end{itemize}
+    \begin{figure}[ht!]
+      \centering
+      \begin{tikzpicture}
+        \draw (0,0) -- (13,0);
+        \draw node[below] at (0, 0) {$0$};
+        \draw node[below] at (13, 0) {$1$};
+        \foreach \i in {0, ..., 13}{
+          \draw (\i, -0.1) -- (\i, 0.1);}
 
-Aber: Mit $B(k) = \set{v \in V_{h}: \, v(\tilde x_{j}) = 0, \, j = 0, 1, \dots, J}$ als polynomialen Blasenraum und $\Pi_{k}$ als stückweise $L_{2}$-Projektion auf diesem Blasenraum folgt
-\begin{align*}
-  \nnorm{\Pi_{k}1}_{0, h}^{2} = \alpha \cdot h
-\end{align*}
-mit von $k$ und $h$ unabhängigen $\alpha$. Sei nun $\delta = \delta_{k}$ konstant. Dann folgt
-\begin{align*}
-  \sum_{k} \delta \nnorm{\Pi_{k} v^{k'}}_{L_{2}(k)}^{2} \geq \alpha \delta \nnorm {v_{h}'}_{L_{2}(\tilde x_{1}, \tilde x_{J-1})} = \frac{4 \alpha \delta}{k^{2} h^{2}} (\tilde x_{J-1} - \tilde x_{1}) \geq C h^{-1}, 
-\end{align*}
-($\delta = h$). Somit können die $v^{k}$ für $k \geq 2$ nicht Bestandteil von $u_{h}$ sein 
-%($k = 1$: uninteressant, Funktionen, die stückweise linear und in den Gitterpunkten $0$ sind\dots)
-. Nur die hochfrequenten Funktionen $v^{1}$ können Bestandteil sein. 
+        \draw[blue] (0, 0)-- (1, 1) -- (2, -1) -- (3, 1) -- (4, -1)-- (5, 1) -- (6, -1) -- (7, 1)-- (8, -1)-- (9, 1)-- (10, -1)-- (11, 1)-- (12, -1) -- (13, 0) node[above] at (5, 1) {$v_{1}$};
+        \draw[orange] (0, 0)-- (2, 1) -- (4, -1) -- (6, 1) -- (8, -1)-- (10, 1) -- (12, -1) -- (13, 0) node[above] at (6, 1) {$v_{2}$};
+        \draw[red] (0, 0)-- (3, 1) -- (6, -1) -- (9, 1) -- (12, -1) -- (13, 0) node[above] at (4, 0.5) {$v_{3}$};
+      \end{tikzpicture}
+      \caption{Skizze zu $v_k$}
+      \label{fig:vk}
+    \end{figure}
+  \end{enumerate}
+  Für die Galerkin-Lösung $u_{h}$ gilt
+  \begin{align*}
+    \nnnorm{u_{h}}^{2}_{\epsilon} \leq a(u_{h}, u_{h}) = (f, u_{h}) \psi \nnorm f _{L_{2}} \nnnorm {u_{h}}_{\epsilon}, 
+  \end{align*}
+  alsi ist $ \nnnorm {u_{h}}_{\epsilon}$ beschränkt. Kann $v^{k}$ Bestandteil von $u_{h}$ sein? Mit einer direkten Rechnung kann man zeigen, dass
+  \begin{align*}
+    \nnnorm{v_{k}}_{\epsilon}^{2} \leq C \( \frac \epsilon {h^{2}} + 1\), 
+  \end{align*}
+  was für kleines $\epsilon$ beschränkt ist. Also: Aus der Stabilität bezüglich der Energienorm kann eine solche Funktion $v^{k}$ nicht ausgeschlossen werden. 
+
+  Aber: Mit $B(k) = \set{v \in V_{h}: \, v(\tilde x_{j}) = 0, \, j = 0, 1, \dots, J}$ als polynomialen Blasenraum und $\Pi_{k}$ als stückweise $L_{2}$-Projektion auf diesem Blasenraum folgt
+  \begin{align*}
+    \nnorm{\Pi_{k}1}_{0, h}^{2} = \alpha \cdot h
+  \end{align*}
+  mit von $k$ und $h$ unabhängigen $\alpha$. Sei nun $\delta = \delta_{k}$ konstant. Dann folgt
+  \begin{align*}
+    \sum_{k} \delta \nnorm{\Pi_{k} v^{k'}}_{L_{2}(k)}^{2} \geq \alpha \delta \nnorm {v_{h}'}_{L_{2}(\tilde x_{1}, \tilde x_{J-1})} = \frac{4 \alpha \delta}{k^{2} h^{2}} (\tilde x_{J-1} - \tilde x_{1}) \geq C h^{-1}, 
+  \end{align*}
+  ($\delta = h$). Somit können die $v^{k}$ für $k \geq 2$ nicht Bestandteil von $u_{h}$ sein 
+  % ($k = 1$: uninteressant, Funktionen, die stückweise linear und in den Gitterpunkten $0$ sind\dots)
+  . Nur die hochfrequenten Funktionen $v^{1}$ können Bestandteil sein. 
 \end{bemerkung*}
 
 %%% local Variables: 
