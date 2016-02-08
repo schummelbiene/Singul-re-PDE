@@ -328,7 +328,7 @@ Mit $w \in Q_{l-1}(R)$ mit $D^{\gamma}w = w_{0}$ folgt dann
   \end{align*}
 erfüllen, betrachten wir einen Multiindex $\gamma$ mit $\norm\gamma = m$ und definieren $j = \dim D^{\gamma} Q_{k}(R)$. Angenommen, es existieren $j$ lineare Funktionale $F_{i}$ mit den drei Eigenschaften
 \begin{enumerate}
-\item $F_{i} \in (W_{p}^{k+1-m} (R))$ (stetiges, lineares Funktional), 'einfach', 
+\item $F_{i} \in (W_{p}^{k+1-m} (R))'$ (stetiges, lineares Funktional), 'einfach', 
 \item $F_{i}(D^{\gamma}(u- Iu)) = 0$, $i = 1, \dots, j$, Konsistenz, 'schwieriger', 
 \item $w \in Q_{k}(R), \, F^{i}(D^{\gamma}w) = 0, \, i = 1, \dots, j \, \implies\, D^{\gamma}w = 0$, Unisolvenz auf $D^{\gamma}Q_{k}(R)$, 
 \end{enumerate}
@@ -359,7 +359,7 @@ Nun erhalten wir eine anisotrope Fehlerabschätzung:
 \begin{satz}\label{thm:7-7}
   Angenommen, $\tau$ ist ein Rechteck mit den Seiten parallel zu den Achsen und Seitenlängen $h = (h_{x}, h_{y})$. Sei $\gamma$ ein Multiindex mit der Ordnung $m = \norm \gamma$ und $u \in C(\tau)$ mit $D^{\gamma} u \in W_{p}^{k+1-m}(\tau)$ und $m \in \N_{0}$, $p \in [1, \infty]$, sowie $0 \leq m < k+1$. Existieren dann Funktionale $F_{i}$ gemäß Lemma \ref{lem:7-6}, so gilt die \markdef{anisotrope Interpolationsfehlerabschätzung}
   \begin{align*}
-    \nnorm{D^{\gamma}(u - Iu)}_{L_{p}(\tau)} \leq C \sum_{\norm \alpha = 1} h^{k+1-m} \nnorm{D^{\gamma + (k+1-m)\alpha}u}_{L_{p}(\tau)}. 
+    \nnorm{D^{\gamma}(u - Iu)}_{L_{p}(\tau)} \leq C \sum_{\norm \alpha = 1} h^{(k+1-m)\alpha} \nnorm{D^{\gamma + (k+1-m)\alpha}u}_{L_{p}(\tau)}. 
   \end{align*}
 \end{satz}
 
@@ -434,7 +434,7 @@ Da $\phi_{0}$ und $\phi_{1} \geq0$ in $\tau$ gilt
   Die Aussagen des Lemmas \ref{lem:7-8} gelten nicht, falls $L_{\infty}$ durch $L_{2}$ ersetzt wird:
   \begin{align*}
     u = \max \set{ 1 - \frac x \epsilon, 0}, \epsilon \in (0, 1) \implies \nnorm{u^{I}}^{2}_{L_{2}(\tau)} &= \int_{0}^{1}\int_{0}^{1} (1 - x)^{2} dxdy = \frac 13\\
-\implies \nnorm{u}^{2}_{L_{2}(\tau)} &= \int_{0}^{1}\int_{0}^{\epsilon} (1 - \frac x \epsilon)^{2} dxdy = \frac \epsilon 3
+\implies \nnorm{u}^{2}_{L_{2}(\tau)} &= \int_{0}^{1}\int_{0}^{\epsilon} \(1 - \frac x \epsilon\)^{2} dxdy = \frac \epsilon 3
   \end{align*}
 Also gilt nicht gleichmäßig:
 \begin{align*}
@@ -451,8 +451,8 @@ Kommen wir nun zur Abschätzung auf S-Typ-Gittern:
 \begin{satz} \label{thm:7-9}
   Auf einem S-Typ-Gitter mit $\sigma > 2$ gilt für $\epsilon \leq CN^{-1}$ ($\iff \leq CN^{-1}$)
   \begin{align*}
-    \nnorm{u - u^{I}}_{L_{2}(\Omega_{11})} \leq CN^{-2},\\
-    \nnorm{u - u^{I}}_{L_{2}(\Omega\setminus\Omega_{11})} \leq C(N^{-1} \max \norm{\psi'})^{2},\\
+    &\nnorm{u - u^{I}}_{L_{2}(\Omega_{11})} \leq CN^{-2},\\
+    &\nnorm{u - u^{I}}_{L_{2}(\Omega\setminus\Omega_{11})} \leq C(N^{-1} \max \norm{\psi'})^{2},\\
   \end{align*}
 und
 \begin{align*}
@@ -464,61 +464,61 @@ also insgesamt
   \nnnorm{u-u^{I}}_{\epsilon} \leq C N^{-1} \max \norm{\psi'}. 
 \end{align*}
 \end{satz}
-% \begin{beweis}
-%   Der Beweis ist nicht schwierig, aber langwierig, da
-%   \begin{enumerate}
-%   \item drei Normen sind beteiligt ($\nnorm \cdot$, $\nnorm {(\cdot)_{x}}$,$\nnorm {(\cdot)_{y}}$)
-%   \item vier Lösungsbestandteile
-%   \item vier Teilgebiete von $\Omega$
-%   \item zwei Abschätzungstechniken (lokale anisotrope Abschätzungen (wenn die Ableitungen nichts kosten oder von den Gitterweiten aufgefangen werden) und Stabilitätsaussagen nutzen (wenn Lösungsbestandteil abgeklungen ist, eventuell inverse Ungleichung nutzen))
-%   \end{enumerate}
-% Hier nur $\nnorm{(\cdot)_{x}}$, da $\nnorm{(\cdot)_{y}}$ aufgrund der Symmetrie des Problems analog folgt und $\nnorm \cdot$ ähnlich funktioniert. Starten wir mit $\Omega_{11}$:
-% \begin{align*}
-%   \epsilon\nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\Omega_{11})}& = \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} \nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\tau_{ij})} \\
-%   & \leq C \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\tau_{ij})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
-%   & = C \epsilon N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{11})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{11})}\)\\
-%   &\leq C \epsilon N^{-2}
-% \end{align*}
-% die erste Ungleichung folgt mit lokaler anisotroper, die zweite mit Satz \ref{thm:7-1}.
-% Betrachte
-% \begin{align*}
-%   \epsilon \nnorm{((w_{1} + w_{12}) - (w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
-% &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
-% &\leq C\epsilon^{-1} \int_{\Omega_{11}} e^{-2 \beta_{1} \frac x \epsilon} (1 + \underbrace{e^{-2 \beta_{2} \frac y \epsilon}}_{\leq1}) dxy + C \epsilon N^{2} \nnorm{(w_{1} + w_{12})^{I}}^{2}_{L_{2}(\Omega_{11})}\\
-% &\leq C N^{ - 2 \sigma} + C \epsilon N^{2} \( N^{-1} + \epsilon\) N^{-2\sigma}\\
-% &\leq C ( 1 + \epsilon N)^{2}  N^{- 2\sigma}. \\
-% %%%%%%%%%%%
-%   \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})} &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})}\\
-% &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{11})}\\
-% &\leq C \epsilon^{\frac 12} N^{-\sigma}
-% \end{align*}
-% mit Stabilität. 
+\begin{beweis}
+  Der Beweis ist nicht schwierig, aber langwierig, da
+  \begin{enumerate}
+  \item drei Normen sind beteiligt ($\nnorm \cdot$, $\nnorm {(\cdot)_{x}}$,$\nnorm {(\cdot)_{y}}$)
+  \item vier Lösungsbestandteile
+  \item vier Teilgebiete von $\Omega$
+  \item zwei Abschätzungstechniken (lokale anisotrope Abschätzungen (wenn die Ableitungen nichts kosten oder von den Gitterweiten aufgefangen werden) und Stabilitätsaussagen nutzen (wenn Lösungsbestandteil abgeklungen ist, eventuell inverse Ungleichung nutzen))
+  \end{enumerate}
+Hier nur $\nnorm{(\cdot)_{x}}$, da $\nnorm{(\cdot)_{y}}$ aufgrund der Symmetrie des Problems analog folgt und $\nnorm \cdot$ ähnlich funktioniert. Starten wir mit $\Omega_{11}$:
+\begin{align*}
+  \epsilon\nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\Omega_{11})}& = \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} \nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\tau_{ij})} \\
+  & \leq C \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\tau_{ij})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
+  & = C \epsilon N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{11})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{11})}\)\\
+  &\leq C \epsilon N^{-2}
+\end{align*}
+die erste Ungleichung folgt mit lokaler anisotroper, die zweite mit Satz \ref{thm:7-1}.
+Betrachte
+\begin{align*}
+  \epsilon \nnorm{((w_{1} + w_{12}) - (w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
+&\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
+&\leq C\epsilon^{-1} \int_{\Omega_{11}} e^{-2 \beta_{1} \frac x \epsilon} (1 + \underbrace{e^{-2 \beta_{2} \frac y \epsilon}}_{\leq1}) dxy + C \epsilon N^{2} \nnorm{(w_{1} + w_{12})^{I}}^{2}_{L_{2}(\Omega_{11})}\\
+&\leq C N^{ - 2 \sigma} + C \epsilon N^{2} \( N^{-1} + \epsilon\) N^{-2\sigma}\\
+&\leq C ( 1 + \epsilon N)^{2}  N^{- 2\sigma}. \\
+%%%%%%%%%%%
+  \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})} &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})}\\
+&\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{11})}\\
+&\leq C \epsilon^{\frac 12} N^{-\sigma}
+\end{align*}
+mit Stabilität. 
 
-% Grenzschichtbereich $\Omega_{12} = [0, \lambda_{x}] \times [\lambda_{y}, 1]$: 
-% \begin{align*}
-%     \epsilon \nnorm{((v + w_{1}) - (v + w_{1})^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} \( h_{i}^{2} \nnorm{(v + w_{1})_{xx}}^{2}_{L_{2}(\tau_{ij})}  + k_{j}^{2} \nnorm{(v + w_{1})_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
-% &\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \\
-% &\int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
-% & \leq C\( \epsilon N^{-2}  + (N^{-1} \max\norm{\psi'})^{2} +  N^{-2}\)\\
-% & \leq C\( N^{-1} \max\norm{\psi'}\)^{2}\\
-% %%%%
-%   \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{12})} &\leq C \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{12})} \\
-% & \leq C \epsilon^{\frac 12} N^{- \sigma}. \\
-% %%%%%
-%   \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} h_{i}^{2}  \nnorm{(w_{12})_{xx}}^{2}_{L_{2}(\tau_{ij})} + k_{j}^{2}\nnorm{(w_{12})_{xy}}^{2}_{L_{2}(\tau_{ij})} \\
-%  &\leq C( \epsilon^{-1} (N^{-1} \max\norm{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \\
-% &\epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy )\\
-% & \leq C \( \epsilon (N^{-1} \max\norm{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
-% \end{align*}
-% Das $\epsilon^{-1}$ macht es uns kaputt.. Zweiter Weg:
-% \begin{align*}
-%   \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} \) \\
-% &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \meas (\Omega_{12}) \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{\infty}(\Omega_{12})} \) \\
-% &\leq C \(\epsilon N^{-2\sigma} + \epsilon^{2} \ln N \epsilon^{-2} N^{-2\sigma}\) \\
-% &\leq C  \ln N N^{-2 \sigma}
-% \end{align*}
-% Mit den gleichen Techniken kann auf $\Omega_{21}$ und $\Omega_{22}$ abgeschätzt werden. 
-% \end{beweis}
+Grenzschichtbereich $\Omega_{12} = [0, \lambda_{x}] \times [\lambda_{y}, 1]$: 
+\begin{align*}
+    \epsilon \nnorm{((v + w_{1}) - (v + w_{1})^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} \( h_{i}^{2} \nnorm{(v + w_{1})_{xx}}^{2}_{L_{2}(\tau_{ij})}  + k_{j}^{2} \nnorm{(v + w_{1})_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
+&\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \\
+&\int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
+& \leq C\( \epsilon N^{-2}  + (N^{-1} \max\norm{\psi'})^{2} +  N^{-2}\)\\
+& \leq C\( N^{-1} \max\norm{\psi'}\)^{2}\\
+%%%%
+  \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{12})} &\leq C \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{12})} \\
+& \leq C \epsilon^{\frac 12} N^{- \sigma}. \\
+%%%%%
+  \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} h_{i}^{2}  \nnorm{(w_{12})_{xx}}^{2}_{L_{2}(\tau_{ij})} + k_{j}^{2}\nnorm{(w_{12})_{xy}}^{2}_{L_{2}(\tau_{ij})} \\
+ &\leq C( \epsilon^{-1} (N^{-1} \max\norm{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \\
+&\epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy )\\
+& \leq C \( \epsilon (N^{-1} \max\norm{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
+\end{align*}
+Das $\epsilon^{-1}$ macht es uns kaputt.. Zweiter Weg:
+\begin{align*}
+  \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} \) \\
+&\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \meas (\Omega_{12}) \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{\infty}(\Omega_{12})} \) \\
+&\leq C \(\epsilon N^{-2\sigma} + \epsilon^{2} \ln N \epsilon^{-2} N^{-2\sigma}\) \\
+&\leq C  \ln N N^{-2 \sigma}
+\end{align*}
+Mit den gleichen Techniken kann auf $\Omega_{21}$ und $\Omega_{22}$ abgeschätzt werden. 
+\end{beweis}
 % \datum{15. Januar 2016}
 \begin{lemma}\label{lem:7-10}
   Unter den Voraussetzungen von Satz \ref{thm:7-9} gilt zusätzlich
@@ -530,9 +530,9 @@ und
     \nnorm{u - u^{I}}_{L_{\infty}(\Omega\setminus\Omega_{11})} \leq C (N^{-1} \max\norm{\psi'})^{2}. 
 \end{align*}
 \end{lemma}
-% \begin{beweis}
-%   $L_{\infty}$ statt $L_{2}$, ansonsten die Techniken des Satzes \ref{thm:7-9}. 
-% \end{beweis}
+ \begin{beweis}
+   $L_{\infty}$ statt $L_{2}$, ansonsten die Techniken des Satzes \ref{thm:7-9}. 
+ \end{beweis}
 
 Schauen wir uns nun den Fall der charakteristischen Grenzschichten an, das heißt
 \begin{align*}
@@ -674,7 +674,7 @@ Die (eigentlich: eine) schwache Formulierung lautet dann: Gesucht ist $u \in H_{
 \begin{align*}
   a(u, v) = f(v) \quad \forall v \in H_{0}^{1}(\Omega). 
 \end{align*}
-Unter $C + \frac 12 \div b \geq \gamma > 0$ folgt
+Unter $c + \frac 12 \div b \geq \gamma > 0$ folgt
 \begin{align*}
   a(v, v) &= \epsilon \nnorm{\nabla v}_{L_{2}}^{2} + (c v - b \cdot \nabla v, v)\\
   &= \epsilon \nnorm{\nabla v}_{L_{2}}^{2} + ((c + \frac 12 \div b)v, v)\\
@@ -696,7 +696,7 @@ Galerkin-Orthogonalität:
   a(u - u^{N}, v) = 0 \quad \forall v \in V_{h}. 
 \end{align*}
 \begin{satz}\label{thm:7-13}
-  Auf einem S-Typ-Gittter mit $\sigma > 2$ gilt für $h \leq CN^{-1}$ und $N^{-1} \max \norm{\psi'} (\ln N)^{\frac 12} \leq C$ und bilineare Elemente
+  Auf einem S-Typ-Gitter mit $\sigma > 2$ gilt für $h \leq CN^{-1}$ und $N^{-1} \max \norm{\psi'} (\ln N)^{\frac 12} \leq C$ und bilineare Elemente
   \begin{align*}
     \nnnorm{u - u^{N}}_{\epsilon} \leq C N^{-1}\max\norm{\psi'}. 
   \end{align*}
@@ -775,7 +775,7 @@ Dann
 & \leq C N^{-1} \max \norm{\psi'} \nnnorm \chi_{\epsilon}. 
 \end{align*}
 \end{beweis}
-Auch in 2D kann bezüglich der Standart-Interpolierenden in $Q_{1}$ Supercloseness gezeigt werden. Als Hilfsmittel können dazu die Lin-Formeln verwendet werden.
+Auch in 2D kann bezüglich der Standard-Interpolierenden in $Q_{1}$ Supercloseness gezeigt werden. Als Hilfsmittel können dazu die Lin-Formeln verwendet werden.
 \begin{lemma}\label{lem:7-15}
   Es sei $\psi_{ij}$ ein Rechteck mit dem Mittelpunkt $(\tilde x_{i}, \tilde y_{i})$ und den Seiten $l_{1}, l_{2}$, die parallel zur $y$-Achse verlaufen. Für jede Funktion $w \in H^{3}(\bar \tau_{ij})$ und $\chi \in Q_{1}(\tau_{ij})$ gilt dann mit
   \begin{align*}
@@ -797,7 +797,7 @@ wobei
     (F^{2}(y))''' &= 6(y - \tilde y)\\
     v &\coloneqq w - w^{I}. 
   \end{align*}
-Mit Taxlor folgt
+Mit Taylor folgt
 \begin{align*}
   \chi_{x} (x, y) = \chi_{x}(\tilde x, \tilde y) + (y - \tilde y) \chi_{xy}(\tilde x, \tilde y) = F''(y) \chi_{x}(\tilde x, \tilde y) + \frac 16(F^{2}(y))''' \chi_{xy}(\tilde x, \tilde y). \\
 \implies \quad \int_{\tau} v_{x}\chi_{x} = \int_{\tau}v_{x}F''(y) \chi_{x}(\tilde x, \tilde y) + \frac 16 \int_{\tau} v_{x} (F^{2}(y))''' \chi_{xy}(\tilde x,\tilde y). 
@@ -860,7 +860,7 @@ Die zweite Formel kann ebenfalls mit einer Taylorentwicklung $\chi(x, y) = \chi(
 
 % \datum{22. Januar 2016}
 
-Mit Hilfe des Lemmas \label{lem:7-15}, Cauchy-Schwarz-Ungleichung und inverser Ungleichung erhalten wir
+Mit Hilfe des Lemmas \ref{lem:7-15}, Cauchy-Schwarz-Ungleichung und inverser Ungleichung erhalten wir
 \begin{align*}
   \norm{((w-w^{I})_{x}, \chi_{x})_{\tau_{ij}}} \leq C k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})} \nnorm{\chi_{x}}_{L_{2}(\tau_{ij})}
 \end{align*}
@@ -882,7 +882,7 @@ Einen alternativen Weg für die obere Ungleichung nutzt ein Resultat von Zlámal
     \int_{\tau_{ij}}(p - p^{I})_{x}\chi_{x} &= \int_{x_{i-1}}^{x_{i}} \int_{y_{i-1}}^{y_{i}} \underbrace{(p - p^{I})_{x}}_{\in P_{1(\tau_{ij})}} \underbrace{\chi_{x}}_{= a+ by} dydx \\
 &= h_{i}\int_{y_{i-1}}^{y_{i}} (p-p^{I}_{x})|_{x = i- \frac 12} \chi_{x} dy. 
   \end{align*}
-Nun ist $(p-p^{I})_{x}|_{x= x_{i- \frac 12}} = 0$. Nun ist oBdA. $\tau= (0, 1)^{2}$ und $p = a + bx + cy + d xy + e x^{2} + fy^{2}$
+Nun ist $(p-p^{I})_{x}|_{x= x_{i- \frac 12}} = 0$. Nun ist o.B.d.A. $\tau= (0, 1)^{2}$ und $p = a + bx + cy + d xy + e x^{2} + fy^{2}$
 \begin{align*}
   p_{x} &= b + dy + 2ex\\
   p^{I}_{x} &= b + dy + e\\
@@ -913,7 +913,7 @@ Da $p \in P_{2}$ noch frei ist, können wir es geeignet wählen und erhalten zum
 Exponentielle Grenzschichten:  \cite{L_NMPDE},
 Charakteristische Grenzschichten:  \cite{FL_NMPDE}.
 
-Clevere Kombination der Interpolations- , Stabilitätsabschätzungen und der Lin-Formeln liefern das Ergebnis. 
+Clevere Kombination der Interpolations-, Stabilitätsabschätzungen und der Lin-Formeln liefern das Ergebnis. 
 
 Für die darin auftretenden Linienintegrale $I_{3}$ in $\Omega_{12} \cup \Omega_{22}$ lässt sich für den glatten Anteil $v$
 \begin{align*}
@@ -931,11 +931,11 @@ Mit biquadratischer Interpolation auf einem geeigneten Makrogitter (siehe 1D) er
 \subsection{Lokale Projektionsstabilisierung - LPS}
 \label{sec:lokale-proj-lps}
 
-Die Idee des LPS hatten wir bereits im Kapitel 6.4 anklingen lassen. Das Galerkin-Verfahren stabilisiert selbst alle 'groben' Moden, bis auf die feinste. Die SDFEM-Stabilisierung hilft, indem mit $(\delta(Lu - f), b \cdot \nabla v)$ stabilisiert wird. Dabei ist der Term
+Die Idee des LPS hatten wir bereits im Kapitel 6.4 anklingen lassen. Das Galerkin-Verfahren stabilisiert selbst alle 'groben' Moden, bis auf die feinste. Die SDFEM-Stabilisierung hilft da, indem mit $(\delta(Lu - f), b \cdot \nabla v)$ stabilisiert wird, zum Beispiel mit
 \begin{align*}
-(  \delta b \cdot \nabla u, b \cdot\nabla v)
+(  \delta b \cdot \nabla u, b \cdot\nabla v). 
 \end{align*}
-der hauptsächlich hilfreiche Term. Die restlichen Terme werden für die Konsistenz benötigt, rufen allerdings zusätzliche Kopplungen, zum Beispiel in Systemen von PDEs hervor. 
+Das ist allerdings zu viel. Die restlichen Terme werden für die Konsistenz benötigt, rufen allerdings zusätzliche Kopplungen, zum Beispiel in Systemen von PDEs hervor. 
 
 Wir betrachten daher LPS als modernere Stabilisierungsmethode (die allerdings nicht ganz so gut ist). Wir definieren diese für beliebige Polynomgrade $p$ als \markdef{1-Level-Ansatz}, und hier nur für Probleme mit charakteristischen Grenzschichten. Sei dazu $\Pi_{\tau}$ die lokale $L_{2}$-Projektion in den Funktionenraum $D(\tau) = \cP_{p-1}(\tau)$. Darauf aufbauend gibt es einen Fluktuationsoperator $\kappa_{\tau}: L_{2}(\tau) \to L_{2}(\tau)$ ist definiert als
 \begin{align*}
@@ -966,7 +966,7 @@ Der Stabilisierungsterm lautet mit einer noch zu definierenden Parameterfunktion
 \end{align*}
 Aufgrund der Struktur von $s(\cdot, \cdot)$ gilt
 \begin{align*}
-  \norm{s(u, v)} \leq (c(u, u))^{\frac 12} (s(v, v))^{\frac 12}
+  \norm{s(u, v)} \leq (s(u, u))^{\frac 12} (s(v, v))^{\frac 12}
 \end{align*}
 (Cauchy-Schwarz). 
 Bilinearformenbetrachtung: 
@@ -997,11 +997,8 @@ koerzitiv mit $a_{Gal}(\cdot, \cdot)$ und
 \end{align*}
 koerzitiv mit $a_{LPS}(\cdot, \cdot)$.
 %%% Vorlesungsteile fehlen!
-Für $\delta$ wurde 
-NICHT LESBAR
-%%% ein Wort fehlt
-eine stückweise konstante Funktion gewählt. 
-Da die Stabilisierung in der axponentiellen Grenzschicht vernachlässigbar ist ($\delta \to 0$ für $\epsilon \to 0$) wählen wir
+Für $\delta$ wird üblicherweise eine stückweise konstante Funktion gewählt. 
+Da die Stabilisierung in der exponentiellen Grenzschicht vernachlässigbar ist ($\delta \to 0$ für $\epsilon \to 0$) wählen wir
 
 \begin{align*}
   \delta|_{\tau} =
@@ -1020,17 +1017,17 @@ Der erste Fall entspricht der exponentiellen Grenzschicht und den Eckbereichen, 
 falls $h \leq CN^{-1}$. 
 \end{lemma}
 \begin{beweis}
-  Mit der $L_{2}$-Stabilität von NICHT LESBAR und der Interpolationsfehlerabschätzung von $I$ gilt
+  Mit der $L_{2}$-Stabilität von $\kappa$ und der Interpolationsfehlerabschätzung von $I$ gilt
   \begin{align*}
-\norm{S(v - Iv, v-Iv)} & \leq \sum_{\tau \subset \Omega_{11} NICHT LESBAR} \delta_{\tau} \nnorm{\kappa_{\tau}(b(v-Iv)_{x})}_{L_{2}(\tau)}^{2}\\
-& \leq C \sum_{\tau \subset NICHT LESBAR} \delta_{\tau} \nnorm{(v-Iv)_{x}}_{L_{2}(\tau)}^{2}\\
+\norm{S(v - Iv, v-Iv)} & \leq \sum_{\tau \subset \Omega_{11} \cup \Omega_{21}} \delta_{\tau} \nnorm{\kappa_{\tau}(b(v-Iv)_{x})}_{L_{2}(\tau)}^{2}\\
+& \leq C \sum_{\tau \subset \Omega_{11} \cup \Omega_{21}} \delta_{\tau} \nnorm{(v-Iv)_{x}}_{L_{2}(\tau)}^{2}\\
 & \leq C (\delta_{11}(N^{-2p} \nnorm{\partial_{x}^{p+1}v}_{L_{2}(\Omega_{21})}^{2} + N^{-2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{11})}+ \delta_{21} (N^{-2p}\nnorm{\partial_{x}^{p+1}v}^{2}_{L_{2}(\Omega_{21})} \\
 & \quad + k^{2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{21})})\\
 & \leq C (\delta_{11} + \delta_{21}\epsilon^{\frac 12} \ln N)N^{-2p}. 
   \end{align*}
 \end{beweis}
 
-Lemma \ref{lem:7-18} reicht nicht aus, um $\nnnorm{u - Iu}_{LPS}$ abzuschätzen. Aber $\norm{S(w - Iw, w- Iw)}$ lässt sich für $w = w_{1} + w_{2} + w_{12}$ NICHT LESBAR gleichmäßig abschätzen. 
+Lemma \ref{lem:7-18} reicht nicht aus, um $\nnnorm{u - Iu}_{LPS}$ abzuschätzen. $\norm{S(w - Iw, w- Iw)}$ lässt sich für $w = w_{1} + w_{2} + w_{12}$, also in den Grenzschichten, nicht gleichmäßig abschätzen. 
 
 %\datum{28. Januar 2016}
 Kombinieren wir die Idee von Satz \ref{thm:6-22}, das heißt mit
@@ -1090,7 +1087,7 @@ Inverse Ungleichung, usw.
 
 Für $w_{2}$ erhalten wir analog
 \begin{align*}
-\sum_{\tau \subset \Omega_{11}} \nnorm{ delta_{\tau}^{\frac 12} \kappa_{\tau} (b(w_{2} - Iw_{2})_{x})}_{L_{2}(\tau)}^{2} & \leq C \delta_{21} N^{-2\sigma}. 
+\sum_{\tau \subset \Omega_{11}} \nnorm{ \delta_{\tau}^{\frac 12} \kappa_{\tau} (b(w_{2} - Iw_{2})_{x})}_{L_{2}(\tau)}^{2} & \leq C \delta_{21} N^{-2\sigma}. 
 \end{align*}
 In $\Omega_{21}$ verfahren wir für $w = w_{1} + w_{12}$ ähnlich, da diese abgeklungen sind und erhalten
 \begin{align*}
@@ -1268,7 +1265,7 @@ Für höhere Polynomgrade entstehen innere Freiheitsgrade, deshalb geht dieses V
 \begin{align*}
   S_{p}(\tau) &= \Span\set{ \set{1, x} \times \set{1, y, y^{2}, \dots, y^{p}} \cup \set{1, x, x^{2}, \dots, x^{p}} \times \set{1, y} \cup x^{2}y^{2} \cdot\cP_{p-4}(\tau)}\\
 &= \Span\set{I \cup II \cup III}\\
-&= \cP_{p}(\tau) \oplus \Span \set{(1+y)(1-y^{2})y^{p-2}, (1+y)(1-x^{2})x^{p-2}} \\
+&= \cP_{p}(\tau) \oplus \Span \set{(1+x)(1-y^{2})y^{p-2}, (1+y)(1-x^{2})x^{p-2}} \\
 &= IV \oplus V.
 \end{align*}
 Es ist im Übrigen
