@@ -124,7 +124,7 @@ Vorzeichenwechsel von $b$ kann innere Grenzschichten hervorrufen (Wendepunktprob
   $C$ ist nicht gleichmäßig beschränkt. Das ist schlecht. 
   Also war die Näherung nur für $x > 0$ gut. Näherung von $u$ führt weg von der Grenzschicht.
 \end{beispiel}
-Die vorherigen Beispiele zeigen, dass die Standart-Ansätze modifiziert werden müssen. Für Randwertprobleme bedeutet dies, dass weitere 'Korrekturfunktionen' hinzugefügt werden müssen. Diese werden \markdef{Grenzschichtkorrekturen} genannt. 
+Die vorherigen Beispiele zeigen, dass die Standard-Ansätze modifiziert werden müssen. Für Randwertprobleme bedeutet dies, dass weitere 'Korrekturfunktionen' hinzugefügt werden müssen. Diese werden \markdef{Grenzschichtkorrekturen} genannt. 
 
 \begin{beispiel*} Fortsetzung von \ref{ex:4-3}
 
@@ -143,7 +143,7 @@ Die vorherigen Beispiele zeigen, dass die Standart-Ansätze modifiziert werden m
     u''(x) &= \tilde u'' \eps^{-2\alpha}\\
     \implies \quad (Lu)(x) &= - \eps u'' - u' = - \eps^{1-2\alpha} \tilde u'' - \eps^{-\alpha} \tilde u' = (\tilde L \tilde u)(\xi). 
   \end{align*}
-  Falls $1 - 2 \alpha = -\alpha$ ($\alpha = 1$), dann erhalten wir $\xi = \frac x \eps$ und 
+  Falls $1 - 2 \alpha = -\alpha$ gelten soll, so ist $\alpha = 1$. Dann erhalten wir $\xi = \frac x \eps$ und 
   \begin{align*}
     (\tilde L \tilde u)(\xi) = - \eps^{-1}[\tilde u'' + \tilde u']
   \end{align*}
@@ -155,7 +155,7 @@ Die vorherigen Beispiele zeigen, dass die Standart-Ansätze modifiziert werden m
   \begin{align*}
     (Lu)(x) &=   \underbrace{(Lu_{0})(x)}_{= f(x)} -   \underbrace{(\tilde L\tilde u)(\xi)}_{= 0} = f(x)\\
     u(0) &= \underbrace{u_{0}(0)}_{\neq 0} + \underbrace{\tilde v(0)}_{\text{Korrektur!}} = 0\\
-    u(1) &= \underbrace{u_{0}(1)}_{= 0} + \underbrace{\tilde v(\frac 1 \eps)}_{ = 0} = 0. 
+    u(1) &= \underbrace{u_{0}(1)}_{= 0} + \underbrace{\tilde v\(\frac 1 \eps\)}_{ = 0} = 0. 
   \end{align*}
   Setzen wir nun $\tilde v$ an durch
   \begin{align}
@@ -163,9 +163,9 @@ Die vorherigen Beispiele zeigen, dass die Standart-Ansätze modifiziert werden m
   \end{align}
   so erhalten wir 
   \begin{align*}
-    (\tilde L \tilde v)(\xi) &= \epsilon^{-1}[- \sum_{n = 0}^{\infty} \tilde b_{n}''(\xi) \eps^{n} - \sum_{n = 0}^{\infty} \tilde b_{n}'(\xi) \eps^{n}] = 0\\
-    \tilde v(0) = \sum_{n = 0}^{\infty} \tilde b_{n}(0) \eps^{n} \stackrel != - u_{0}(0) = -\sum_{n = 0}^{\infty} \tilde a_{n}(0) \eps^{n}\\
-    \tilde v\(\frac 1 \epsilon\) = 0 
+    (\tilde L \tilde v)(\xi) &= \epsilon^{-1}\left[- \sum_{n = 0}^{\infty} \tilde b_{n}''(\xi) \eps^{n} - \sum_{n = 0}^{\infty} \tilde b_{n}'(\xi) \eps^{n}\right] = 0\\
+    \tilde v(0) &= \sum_{n = 0}^{\infty} \tilde b_{n}(0) \eps^{n} \stackrel != - u_{0}(0) = -\sum_{n = 0}^{\infty} \tilde a_{n}(0) \eps^{n}\\
+    \tilde v\(\frac 1 \epsilon\) &= 0 
   \end{align*}
 
   $\tilde v$ soll exponentiell fallend sein in $\xi$, statt die Bedingung $\tilde v(\frac 1 \epsilon) = $ zu erfüllen. So erzeugen wir einen (beliebig) kleinen Fehler. Koeffizientenvergleich:
@@ -208,7 +208,8 @@ Behandlung des Residuums (beachte $a_{n}(x) = (-1)^{n}[F^{(n)}(1) - F^{(n)}(x)]$
 \begin{align*}
   (Lw)(x) &= f(x) - \sum_{n = 0}^{M} (La_{n})(x) \epsilon^{n} - \underbrace{(Le^{- \frac x \epsilon})}_{= 0} \sum_{n = 0}^{M} a_{n}(0) \epsilon^{n}\\
   &= f(x) - \sum_{n = 0}^{M} \( \epsilon F^{(n+2)}(x) + F^{(N+1)}(x) \) \epsilon^{n}\cdot (-1)^{n}\\
-  &= f(x) - \( (\epsilon f'(x) + f(x)) - \epsilon(\epsilon f''(x) + f'(x)) + \epsilon^{2}(\epsilon f'''(x) + f''(x)) - \dots + (-1)^{M+1} \epsilon^{M}(\epsilon f^{(M+1)}(x) + f^{(M)}(x)) \) \\
+  &= f(x) - \( (\epsilon f'(x) + f(x)) - \epsilon(\epsilon f''(x) + f'(x)) + \epsilon^{2}(\epsilon f'''(x) + f''(x)) \right.\\
+\quad&\left. - \dots + (-1)^{M+1} \epsilon^{M}(\epsilon f^{(M+1)}(x) + f^{(M)}(x)) \) \\
   &= (-1)^{M+1} \epsilon^{M+1}f^{(M+1)}(x)\\
 \implies \quad \norm{(Lw)(x)} &\leq C_{2} \epsilon^{M+1}. 
 \end{align*}

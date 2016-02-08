@@ -47,7 +47,7 @@ Wir werden im Folgenden die Landau Symbole $\cO(\cdot)$ und $o(\cdot)$ verwenden
 \end{definition}
 \begin{beispiel*}
   \begin{enumerate}
-  \item $1, \eps, , \eps^{2}, \eps^{3}, \dots$
+  \item $1, \eps, \eps^{2}, \eps^{3}, \dots$
   \item $\ln \eps, 1,\eps \ln \eps, \eps, \eps^{2}\ln \eps, \dots$
   \end{enumerate}
 \end{beispiel*}
@@ -72,13 +72,13 @@ Allerdings ist eine gute Wahl von $\set{\phi_{n}}$ nicht immer klar.
 \begin{beispiel}\label{ex:3-4}
   Betrachte das Anfangswertproblem
   \begin{align*}
-    \frac{dy}{dz} + y = \frac 1 \eps, \quad - \infty < z <0\\
+    \frac{dy}{dz} + y = \frac 1 z, \quad - \infty < z <0\\
     y(- \infty) = 0. 
   \end{align*}
-Gesucht ist die asymptotische Entwicklung für $\norm z \gg 1$, $z <0$, also $\eps = \frac 1 z$. Genutzt wir die asymptotische Sequenz $\set{\phi_{n}}$ mit $\phi_{1} = 1$, $\phi_{2} = \frac 1 z$, $\phi_{3}= \frac 1 {z^{2}}$. 
+Gesucht ist die asymptotische Entwicklung für $\norm z \gg 1$, $z <0$, also $\eps = \frac 1 z$.  
 %\datum{23. Oktober 2015}
 
-Nutzen wir die asymptotische Sequenz $\phi_{n}$ mit
+Wir nutzen die asymptotische Sequenz $\phi_{n}$ mit
 \begin{align*}
   \phi_{1} &= 1, \quad \phi_{2} = \frac 1z, \quad \phi_{3} = \frac 1{z^{2}}\ \dots\\
 \implies \quad y(z) &= \sum_{m = 0}^{\infty} u_{m} z^{-m}\\
@@ -128,7 +128,7 @@ Für $z <0$ folgt:
 \end{align}
 für $z \to -\infty$. Also gilt $y(z) \sim \sum_{m = 1}^{\infty} \frac{(m-1)!}{z^{m}}$ für $z \to -\infty$.
 \end{beispiel}
-Es bleibt zu beachten, dass die asymptotischen Entwicklungen und Taylor-Reihen nich viel gemeinsam haben. Es lässt sich leicht zeigen, dass die obige Reihe
+Es bleibt zu beachten, dass die asymptotischen Entwicklungen und Taylor-Reihen nicht viel gemeinsam haben. Es lässt sich leicht zeigen, dass die obige Reihe
 \begin{align*}
   \sum_{ m = 1}^{\infty} \frac{(m-1)!}{z^{m}}
 \end{align*}

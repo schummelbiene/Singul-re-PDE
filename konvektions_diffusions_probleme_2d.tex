@@ -464,61 +464,61 @@ also insgesamt
   \nnnorm{u-u^{I}}_{\epsilon} \leq C N^{-1} \max \norm{\psi'}. 
 \end{align*}
 \end{satz}
-\begin{beweis}
-  Der Beweis ist nicht schwierig, aber langwierig, da
-  \begin{enumerate}
-  \item drei Normen sind beteiligt ($\nnorm \cdot$, $\nnorm {(\cdot)_{x}}$,$\nnorm {(\cdot)_{y}}$)
-  \item vier Lösungsbestandteile
-  \item vier Teilgebiete von $\Omega$
-  \item zwei Abschätzungstechniken (lokale anisotrope Abschätzungen (wenn die Ableitungen nichts kosten oder von den Gitterweiten aufgefangen werden) und Stabilitätsaussagen nutzen (wenn Lösungsbestandteil abgeklungen ist, eventuell inverse Ungleichung nutzen))
-  \end{enumerate}
-Hier nur $\nnorm{(\cdot)_{x}}$, da $\nnorm{(\cdot)_{y}}$ aufgrund der Symmetrie des Problems analog folgt und $\nnorm \cdot$ ähnlich funktioniert. Starten wir mit $\Omega_{11}$:
-\begin{align*}
-  \epsilon\nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\Omega_{11})}& = \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} \nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\tau_{ij})} \\
-  & \leq C \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\tau_{ij})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
-  & = C \epsilon N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{11})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{11})}\)\\
-  &\leq C \epsilon N^{-2}
-\end{align*}
-die erste Ungleichung folgt mit lokaler anisotroper, die zweite mit Satz \ref{thm:7-1}.
-Betrachte
-\begin{align*}
-  \epsilon \nnorm{((w_{1} + w_{12}) - (w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
-&\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
-&\leq C\epsilon^{-1} \int_{\Omega_{11}} e^{-2 \beta_{1} \frac x \epsilon} (1 + \underbrace{e^{-2 \beta_{2} \frac y \epsilon}}_{\leq1}) dxy + C \epsilon N^{2} \nnorm{(w_{1} + w_{12})^{I}}^{2}_{L_{2}(\Omega_{11})}\\
-&\leq C N^{ - 2 \sigma} + C \epsilon N^{2} \( N^{-1} + \epsilon\) N^{-2\sigma}\\
-&\leq C ( 1 + \epsilon N)^{2}  N^{- 2\sigma}. \\
-%%%%%%%%%%%
-  \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})} &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})}\\
-&\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{11})}\\
-&\leq C \epsilon^{\frac 12} N^{-\sigma}
-\end{align*}
-mit Stabilität. 
+% \begin{beweis}
+%   Der Beweis ist nicht schwierig, aber langwierig, da
+%   \begin{enumerate}
+%   \item drei Normen sind beteiligt ($\nnorm \cdot$, $\nnorm {(\cdot)_{x}}$,$\nnorm {(\cdot)_{y}}$)
+%   \item vier Lösungsbestandteile
+%   \item vier Teilgebiete von $\Omega$
+%   \item zwei Abschätzungstechniken (lokale anisotrope Abschätzungen (wenn die Ableitungen nichts kosten oder von den Gitterweiten aufgefangen werden) und Stabilitätsaussagen nutzen (wenn Lösungsbestandteil abgeklungen ist, eventuell inverse Ungleichung nutzen))
+%   \end{enumerate}
+% Hier nur $\nnorm{(\cdot)_{x}}$, da $\nnorm{(\cdot)_{y}}$ aufgrund der Symmetrie des Problems analog folgt und $\nnorm \cdot$ ähnlich funktioniert. Starten wir mit $\Omega_{11}$:
+% \begin{align*}
+%   \epsilon\nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\Omega_{11})}& = \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} \nnorm{(v- v^{I})_{x}}^{2}_{L_{2}(\tau_{ij})} \\
+%   & \leq C \epsilon \sum_{\tau_{ij}\subseteq \Omega_{11}} N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\tau_{ij})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
+%   & = C \epsilon N^{-2} \(\nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{11})}  + \nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{11})}\)\\
+%   &\leq C \epsilon N^{-2}
+% \end{align*}
+% die erste Ungleichung folgt mit lokaler anisotroper, die zweite mit Satz \ref{thm:7-1}.
+% Betrachte
+% \begin{align*}
+%   \epsilon \nnorm{((w_{1} + w_{12}) - (w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
+% &\leq 2\epsilon \( \nnorm{(w_{1} + w_{12})_{x}}^{2}_{L_{2}(\Omega_{11})} + \nnorm{((w_{1} + w_{12})^{I})_{x}}^{2}_{L_{2}(\Omega_{11})} \)\\
+% &\leq C\epsilon^{-1} \int_{\Omega_{11}} e^{-2 \beta_{1} \frac x \epsilon} (1 + \underbrace{e^{-2 \beta_{2} \frac y \epsilon}}_{\leq1}) dxy + C \epsilon N^{2} \nnorm{(w_{1} + w_{12})^{I}}^{2}_{L_{2}(\Omega_{11})}\\
+% &\leq C N^{ - 2 \sigma} + C \epsilon N^{2} \( N^{-1} + \epsilon\) N^{-2\sigma}\\
+% &\leq C ( 1 + \epsilon N)^{2}  N^{- 2\sigma}. \\
+% %%%%%%%%%%%
+%   \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})} &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2}^{I})_{x}}_{L_{2}(\Omega_{11})}\\
+% &\leq \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{2}(\Omega_{11})} + \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{11})}\\
+% &\leq C \epsilon^{\frac 12} N^{-\sigma}
+% \end{align*}
+% mit Stabilität. 
 
-Grenzschichtbereich $\Omega_{12} = [0, \lambda_{x}] \times [\lambda_{y}, 1]$: 
-\begin{align*}
-    \epsilon \nnorm{((v + w_{1}) - (v + w_{1})^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} \( h_{i}^{2} \nnorm{(v + w_{1})_{xx}}^{2}_{L_{2}(\tau_{ij})}  + k_{j}^{2} \nnorm{(v + w_{1})_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
-&\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \\
-&\int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
-& \leq C\( \epsilon N^{-2}  + (N^{-1} \max\norm{\psi'})^{2} +  N^{-2}\)\\
-& \leq C\( N^{-1} \max\norm{\psi'}\)^{2}\\
-%%%%
-  \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{12})} &\leq C \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{12})} \\
-& \leq C \epsilon^{\frac 12} N^{- \sigma}. \\
-%%%%%
-  \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} h_{i}^{2}  \nnorm{(w_{12})_{xx}}^{2}_{L_{2}(\tau_{ij})} + k_{j}^{2}\nnorm{(w_{12})_{xy}}^{2}_{L_{2}(\tau_{ij})} \\
- &\leq C( \epsilon^{-1} (N^{-1} \max\norm{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \\
-&\epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy )\\
-& \leq C \( \epsilon (N^{-1} \max\norm{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
-\end{align*}
-Das $\epsilon^{-1}$ macht es uns kaputt.. Zweiter Weg:
-\begin{align*}
-  \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} \) \\
-&\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \meas (\Omega_{12}) \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{\infty}(\Omega_{12})} \) \\
-&\leq C \(\epsilon N^{-2\sigma} + \epsilon^{2} \ln N \epsilon^{-2} N^{-2\sigma}\) \\
-&\leq C  \ln N N^{-2 \sigma}
-\end{align*}
-Mit den gleichen Techniken kann auf $\Omega_{21}$ und $\Omega_{22}$ abgeschätzt werden. 
-\end{beweis}
+% Grenzschichtbereich $\Omega_{12} = [0, \lambda_{x}] \times [\lambda_{y}, 1]$: 
+% \begin{align*}
+%     \epsilon \nnorm{((v + w_{1}) - (v + w_{1})^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} \( h_{i}^{2} \nnorm{(v + w_{1})_{xx}}^{2}_{L_{2}(\tau_{ij})}  + k_{j}^{2} \nnorm{(v + w_{1})_{xy}}^{2}_{L_{2}(\tau_{ij})}\)\\
+% &\leq C \epsilon N^{-2} \( \nnorm{v_{xx}}^{2}_{L_{2}(\Omega_{12})}  +\nnorm{v_{xy}}^{2}_{L_{2}(\Omega_{12})}\) + C \epsilon^{-1} (N^{-1} \max \norm{\psi'})^{2} \\
+% &\int_{0}^{\tau_{x}} e^{\(\frac 2 \sigma - 2\) \beta_{1} \frac x \epsilon} dx + C \epsilon^{-1} N^{-2} \int_{0}^{ \tau_{x}} e^{- 2 \beta_{1} \frac x \epsilon} dx\\
+% & \leq C\( \epsilon N^{-2}  + (N^{-1} \max\norm{\psi'})^{2} +  N^{-2}\)\\
+% & \leq C\( N^{-1} \max\norm{\psi'}\)^{2}\\
+% %%%%
+%   \epsilon^{\frac 12} \nnorm{(w_{2} - w_{2}^{I})_{x}}_{L_{2}(\Omega_{12})} &\leq C \epsilon^{\frac 12} \nnorm{(w_{2})_{x}}_{L_{\infty}(\Omega_{12})} \\
+% & \leq C \epsilon^{\frac 12} N^{- \sigma}. \\
+% %%%%%
+%   \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq C \epsilon \sum_{\tau_{ij} \subseteq \Omega_{12}} h_{i}^{2}  \nnorm{(w_{12})_{xx}}^{2}_{L_{2}(\tau_{ij})} + k_{j}^{2}\nnorm{(w_{12})_{xy}}^{2}_{L_{2}(\tau_{ij})} \\
+%  &\leq C( \epsilon^{-1} (N^{-1} \max\norm{\psi'})^{2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}}  e^{(2/\sigma - 2) \beta_{1} \frac x \epsilon} dx e^{- 2 \beta_{2} \frac y \epsilon} dy + \\
+% &\epsilon^{-3} N^{-2} \int_{\lambda_{y}}^{1} \int_{0}^{\lambda_{x}} e^{ - 2 \beta_{1}\frac x \epsilon}  e^{- 2 \beta_{2} \frac y \epsilon} dxdy )\\
+% & \leq C \( \epsilon (N^{-1} \max\norm{\psi'})^{2} N^{- 2 \sigma} + \epsilon^{-1} N^{-2}N^{-2\sigma}\)
+% \end{align*}
+% Das $\epsilon^{-1}$ macht es uns kaputt.. Zweiter Weg:
+% \begin{align*}
+%   \epsilon \nnorm{(w_{12} - w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{2}(\Omega_{12})} \) \\
+% &\leq 2 \epsilon \( \nnorm{(w_{12})_{x}}^{2}_{L_{2}(\Omega_{12})} + \meas (\Omega_{12}) \nnorm{(w_{12}^{I})_{x}}^{2}_{L_{\infty}(\Omega_{12})} \) \\
+% &\leq C \(\epsilon N^{-2\sigma} + \epsilon^{2} \ln N \epsilon^{-2} N^{-2\sigma}\) \\
+% &\leq C  \ln N N^{-2 \sigma}
+% \end{align*}
+% Mit den gleichen Techniken kann auf $\Omega_{21}$ und $\Omega_{22}$ abgeschätzt werden. 
+% \end{beweis}
 % \datum{15. Januar 2016}
 \begin{lemma}\label{lem:7-10}
   Unter den Voraussetzungen von Satz \ref{thm:7-9} gilt zusätzlich
@@ -530,9 +530,9 @@ und
     \nnorm{u - u^{I}}_{L_{\infty}(\Omega\setminus\Omega_{11})} \leq C (N^{-1} \max\norm{\psi'})^{2}. 
 \end{align*}
 \end{lemma}
-\begin{beweis}
-  $L_{\infty}$ statt $L_{2}$, ansonsten die Techniken des Satzes \ref{thm:7-9}. 
-\end{beweis}
+% \begin{beweis}
+%   $L_{\infty}$ statt $L_{2}$, ansonsten die Techniken des Satzes \ref{thm:7-9}. 
+% \end{beweis}
 
 Schauen wir uns nun den Fall der charakteristischen Grenzschichten an, das heißt
 \begin{align*}
@@ -900,7 +900,6 @@ Da $p \in P_{2}$ noch frei ist, können wir es geeignet wählen und erhalten zum
   \nnorm{(w-p)_{xx}}_{L_{2})(\tau_{ij})} & \leq C \( h_{i} \nnorm{w_{xxx}}_{L_{2}(\tau_{ij})} + k_{j} \nnorm{w_{xxy}}_{L_{2}(\tau_{ij})}\)\\
   \nnorm{(w-p)_{xy}}_{L_{2})(\tau_{ij})} & \leq C \( h_{i} \nnorm{w_{xxy}}_{L_{2}(\tau_{ij})} + k_{j} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})}\)\\
 \implies \quad   \norm{(w-w^{I})_{x}, \chi_{x}}_{\tau_{ij}} & \leq C \( h^{2}_{i} \nnorm{w_{xxx}}_{L_{2}(\tau_{ij})} + h_{i}k_{j} \nnorm{w_{xxy}}_{L_{2}(\tau_{ij})} + k_{j}^{2} \nnorm{w_{xyy}}_{L_{2}(\tau_{ij})}\) \nnorm{\chi_{x}}_{L_{2}(\tau_{ij})}. 
-0
 \end{align*}
 \end{beweis}
 
@@ -1021,11 +1020,12 @@ Der erste Fall entspricht der exponentiellen Grenzschicht und den Eckbereichen, 
 falls $h \leq CN^{-1}$. 
 \end{lemma}
 \begin{beweis}
-  Mit der $L_{2}$-Stabilität von NICHT LESBAR und der Interoplationsfehlerabschätzung von $I$ gilt
+  Mit der $L_{2}$-Stabilität von NICHT LESBAR und der Interpolationsfehlerabschätzung von $I$ gilt
   \begin{align*}
 \norm{S(v - Iv, v-Iv)} & \leq \sum_{\tau \subset \Omega_{11} NICHT LESBAR} \delta_{\tau} \nnorm{\kappa_{\tau}(b(v-Iv)_{x})}_{L_{2}(\tau)}^{2}\\
 & \leq C \sum_{\tau \subset NICHT LESBAR} \delta_{\tau} \nnorm{(v-Iv)_{x}}_{L_{2}(\tau)}^{2}\\
-& \leq C (\delta_{11}(N^{-2p} \nnorm{\partial_{x}^{p+1}v}_{L_{2}(\Omega_{21})}^{2} + N^{-2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{11})}+ \delta_{21} (N^{-2p}\nnorm{\partial_{x}^{p+1}v}^{2}_{L_{2}(\Omega_{21})} + k^{2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{21})})\\
+& \leq C (\delta_{11}(N^{-2p} \nnorm{\partial_{x}^{p+1}v}_{L_{2}(\Omega_{21})}^{2} + N^{-2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{11})}+ \delta_{21} (N^{-2p}\nnorm{\partial_{x}^{p+1}v}^{2}_{L_{2}(\Omega_{21})} \\
+& \quad + k^{2p} \nnorm{\partial_{x}\partial_{y}^{p}v}^{2}_{L_{2}(\Omega_{21})})\\
 & \leq C (\delta_{11} + \delta_{21}\epsilon^{\frac 12} \ln N)N^{-2p}. 
   \end{align*}
 \end{beweis}

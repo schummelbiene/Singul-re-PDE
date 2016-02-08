@@ -219,9 +219,9 @@ Mit $u \in H^{2}(0, 1) = \set{u \in L_{2}: \,  u', u'' \in L_{2}}$ folgt
 \begin{align*}
   \nnnorm{u - Pu}_{\epsilon} &\leq \epsilon^{\frac 12} C H\norm u_{2} + CH^{2} \nnorm u_{2}\\
   &\leq C(\epsilon^{\frac 12} + H) H\norm u_{2} \\
-  \norm{u''(x)}\leq C(1 + \epsilon^{-2}e^{- \beta \frac x \epsilon}) \implies \norm u_{2} \leq C\cdot\epsilon^{- \frac 32}\\
-  \implies \nnnorm{u-u_{h}}_{\epsilon} \leq C \cdot \epsilon^{- \frac 12}(\epsilon^{\frac 12} + H)\cdot H\cdot \epsilon^{- \frac 32}\\
-  \leq C \cdot H\cdot \epsilon^{- \frac 32}(1 + \epsilon^{-\frac 12} + H)
+  \norm{u''(x)}&\leq C(1 + \epsilon^{-2}e^{- \beta \frac x \epsilon}) \implies \norm u_{2} \leq C\cdot\epsilon^{- \frac 32}\\
+  \implies \nnnorm{u-u_{h}}_{\epsilon} &\leq C \cdot \epsilon^{- \frac 12}(\epsilon^{\frac 12} + H)\cdot H\cdot \epsilon^{- \frac 32}\\
+  &\leq C \cdot H\cdot \epsilon^{- \frac 32}(1 + \epsilon^{-\frac 12} + H)
 \end{align*}
 ($\norm \cdot_{2}$ ist die Norm in $H^2$, $\norm v_{2} = \nnorm {v''}_{L_{2}}$). 
 Das ist keine gleichmäßige Konvergenz! Auswege:
@@ -255,13 +255,13 @@ Speziell folgt
   u(x_{i}) &= \int_{0}^{1}f(t) G(x_{i}, t)dt\\
   &= \int_{0}^{1}(Lu)(t) G(x_{i}, t) dt\\
   &= \int_{0}^{1}u(t) L^{*}G(x_{i}, t) dt\\
-  &= a (u, G(x_{i}))
+  &= a (u, G(x_{i}, \cdot))
 \end{align*}
 ($G(x_{i})$ sei Testfunktion). 
 Also sind gute Testfunktionen solche, die $G_{i} = G(x_{i}, \cdot)$ approximieren. Diese Idee stammt von Hemker (1977).  Dies motiviert die Definition der \markdef{$\bar L^{*}$-Splines} oder \markdef{Hemker-Funktionen} $\psi_{i} \in H_{0}^{1}$ (Kombination von $\exp$-Funktionen), $i= 1, \dots, N-1$, die per
 \begin{enumerate}
 \item $\bar L^{*} \psi_{i} = - \epsilon \psi_{i}'' + \bar b \psi_{i}' + \bar c \psi_{i} = 0$
-  auf jedem $x_{j-1}, x_{j}$, $j = 1, \dots, n$
+  auf $(x_{j-1}, x_{j})$ für alle $j = 1, \dots, n$
 \item $\psi_{i}(x_{j}) = \delta_{ij}$, $j = 0, \dots, n$
 \end{enumerate}
 definiert sind, wobei $\bar b$ und $\bar c$ stückweise konstante Approximiationen von $b$ und $c$ sind. 
@@ -272,15 +272,16 @@ definiert sind, wobei $\bar b$ und $\bar c$ stückweise konstante Approximiation
 
     \begin{axis}[ymin = -.1, ymax = 1.1, xmin= -2, xmax=8, axis y line = none, axis x line = none, height = 3cm, width = 5cm]
       \draw (axis cs:-2, 0) -- (axis cs:8, 0);
-      \draw (axis cs:0, 0.1) -- (axis cs:0, -0.1) node[below] at (axis cs:0, -0.1) {$x_{i-1}$};
-      \draw (axis cs:3, 0.1) -- (axis cs:3, -0.1) node[below] at (axis cs:3, -0.1) {$x_{i}$};
-      \draw (axis cs:6, 0.1) -- (axis cs:6, -0.1) node[below] at (axis cs:6, -0.1) {$x_{i+1}$};
 
       \addplot[orange, domain = 0:3] {1 - sqrt(9 - x^2)*1/3};
       \addplot[orange, domain = 3:6] {sqrt(9 - (x- 3)^2)*1/3} node[above right] {$\psi_{i}$};
       \addplot[orange, domain = -1:0] {0};
       \addplot[orange, domain = 6:7] {0};
       \draw[orange](axis cs: 3, 1)circle (1pt) node[left] {$1$};
+      \draw (axis cs:0, 0.1) -- (axis cs:0, -0.1) node[below] at (axis cs:0, -0.1) {$x_{i-1}$};
+      \draw (axis cs:3, 0.1) -- (axis cs:3, -0.1) node[below] at (axis cs:3, -0.1) {$x_{i}$};
+      \draw (axis cs:6, 0.1) -- (axis cs:6, -0.1) node[below] at (axis cs:6, -0.1) {$x_{i+1}$};
+
     \end{axis}    
   \end{tikzpicture}
   \caption{Haifischflosse, $\bar L^{*}$-Splines}
@@ -291,7 +292,7 @@ definiert sind, wobei $\bar b$ und $\bar c$ stückweise konstante Approximiation
 Sei außerdem die diskretisierte Green'sche Funktion $G_{i}(x)$ definiert als
 \begin{enumerate}
 \item $- \epsilon G_{i}'' + \bar b G_{i}' + \bar c G_{i} = 0$ auf jedem $(x_{j-1}, x_{j})$, $j = 1, \dots, n$, 
-\item $G_{i} \in C[0, 1]$ mit $G(0) = G(1) = 0$, 
+\item $G_{i} \in C[0, 1]$ mit $G_{i}(0) = G_{i}(1) = 0$, 
 \item \label{num:iii} $\lim_{x \to x_{j}^{-0}} (\epsilon G_{i}' - \bar b G_{i})(x) - \lim_{x \to x_{j}^{+0}} (\epsilon G_{i}' - \bar b G_{i})(x) = \delta_{ij}$
 %  skizze 2  
 
@@ -316,7 +317,7 @@ Sei
 \begin{beweis}
   Sei $i \in \set{1, \dots, n-1}$ fest. Für jedes $w \in H_{0}^{1}(0, 1)$ gilt
   \begin{align*}
-    \bar a(w, G_{i}) &= \epsilon (w', G_{i}') + (\bar c w + \bar b w', G_{i})\\
+    \bar a(w, G_{i}) &= \epsilon (w', G_{i}') + (\bar c w - \bar b w', G_{i})\\
     &= (w', \epsilon\cdot  G_{i}' - \bar b G_{i}) + (\bar c w, G_{i})\\
     &\stackrel{\ref{num:iii}} = \sum_{j = 1}^{N} \int_{x_{j-1}}^{x_{j}} w(x) (-\epsilon G_{i}'' + \bar b G_{i}')(x) dx + w(x_{i}) + (\bar c w, G_{i})\\
     & = \sum_{j = 1}^{N} \int_{x_{j-1}}^{x_{j}}  \underbrace{(-\epsilon G_{i}'' + \bar b G_{i}' + \bar c G_{i})}_{\stackrel{\ref{num:i}}= 0}(x)  w(x)dx + w(x_{i})  = w(x_{i}), 
@@ -350,7 +351,7 @@ Im Allgemeinen gilt trotzdem in der ersten Gitterzelle
 
 Trotz 'guter' Methode erhalten wir nur in den Gitterpunkten eine gute Lösung. Außerhalb dieser (speziell im Grenzschichtbereich) ist der Approximationsfehler mit stückweise linearen Funktionen zu schlecht. Wir sollten also einen Raum nutzen, der das Lösungsverhalten besser wiederspiegelt (andere Funktionen verwenden). 
 
-Die natürliche Wahl sind hier die $\bar L$-Splines $\Span \set{\phi_{i}}_{i = 1}^{N-1}$ mit
+Die natürliche Wahl sind hier die $\bar L$-Splines $ \set{\phi_{i}}_{i = 1}^{N-1}$ mit
 \begin{align*}
   \bar L \phi_{i} = - \epsilon \phi_{i}''  - \bar b \phi_{i}' + \bar c \phi_{i} = 0
 \end{align*}
@@ -373,7 +374,7 @@ auf jedem $(x_{j-1}, x_{j})$, $j = 1, \dots, n$, $\phi_{i}(x_{j}) = \delta_{ij}$
       \draw[orange](axis cs: -3, 1)circle (1pt) node[right] {$1$};
     \end{axis}    
   \end{tikzpicture}
-  \caption{Inverse Haifischflosse, $\tau$-Spline}
+  \caption{Inverse Haifischflosse, $\bar L$-Spline}
   \label{fig:hai2}
 \end{figure}
 % \datum{13. November 2015}
@@ -424,6 +425,12 @@ auf jedem $(x_{j-1}, x_{j})$, $j = 1, \dots, n$, $\phi_{i}(x_{j}) = \delta_{ij}$
       \nnorm{u^{I}}_{L_{\infty}}\leq \underbrace{\nnorm u_{L_{\infty}}}_{\leq C} + \underbrace{\nnorm{u-u^{I}}_{L_{\infty}}}_{C \cdot H}. 
     \end{align*}
   \end{enumerate}
+Nachtrag:
+\begin{align*}
+  \nnnorm{u^{I}}_{\epsilon}^{2} &\leq   \nnnorm{u-u^{I}}_{\epsilon}^{2} + \nnnorm{u^{I}}_{\epsilon}^{2}\\
+  &\leq C \cdot H (1 +  \nnnorm{u^{I}}_{\epsilon}) + K\\
+  \implies \quad   \(\nnnorm{u^{I}}_{\epsilon}^{2} - \frac{C\cdot H} 2\)^{2} &\leq   K + \frac {C^{2} H^{2}} 4 \leq C. 
+\end{align*}
 \end{beweis}
 Die Schranken in Lemma \ref{lem:6-4} sind scharf!
 \begin{satz}\label{thm:6-5}
@@ -455,7 +462,7 @@ Die Schranken in Lemma \ref{lem:6-4} sind scharf!
 \end{beweis}
 Satz \ref{thm:6-3} besagt, dass das Paar $\bar L ^{*}$-Splines/stückweise Linear in der diskreten Norm $\nnorm \cdot_{\infty, d} = \max_{i} \norm{\cdot (x_{i})}$ mit  der Ordnung $1$ konvergiert. 
 
-Satz \ref{thm:6-5} besagt, dass das Paar $\bar L$-Splines/$\bar L$-Splines in der Energienorm mit der Ordnung $\frac 12$ konvergiert. Beide Schranken sind scharf (nicht verbesserbar)!
+Satz \ref{thm:6-5} besagt, dass das Paar $\bar L$-Splines/$\bar L$-Splines in der Energienorm mit der Ordnung $\frac 12$ konvergiert. Beide Schranken sind scharf (nicht verbesserbar)! Kann man das kombinieren?
 
 \begin{bemerkung}\label{rem:6-6}
   Es seien $U_{h} = \set{\bar L\text{-Splines}}$ und $V_{h} = \set{z_{i}}_{i = 1}^{n-1}$ mit $z_i(x_{j}) = \delta_{ij}$ beliebig. Dann besitzt die $i$-te Zeile der Petrov-Galerkin-Schemata die Einträge
@@ -476,12 +483,12 @@ Satz \ref{thm:6-5} besagt, dass das Paar $\bar L$-Splines/$\bar L$-Splines in de
   \end{enumerate}
   Damit können die Sätze  \ref{thm:6-3} und  \ref{thm:6-5} auf den jeweiligen anderen Fall übertragen werden. 
 \end{bemerkung}
-Diese Dinge gelten nur in 1D! Der mehrdimensionale Fall ist wesentlich aufwändiger, das zum Beispiel die Basisfunktionen approximiert werden müssen. 
+Diese Dinge gelten nur in 1D! Der mehrdimensionale Fall ist wesentlich aufwändiger, da zum Beispiel die Basisfunktionen approximiert werden müssen. 
 
 \subsection{Stabilisierungsmethoden}
 \label{sec:stab}
 
-Es sei nun $U_{h} = V_{h}$ Standard-Räume, die lokal polynomial sind. Wir suchen nun nach Methoden, die stabiler sind als die Galerkin-Methode (in welchem Sinne $\to$ später). Ein Weg, um dies zu erreichen, ist das Addieren geeigneter Stabilisierungsterme zur schwachen Formulierung. Heraus kommt wieder eine schwache Formulierung. Eine solche Methode ist die Stromlinien-Diffusionsmethode (SDFEM) oder auch streamline-upwind-petrov-Galerkin-method (SUPG). 
+Es sei nun $U_{h} = V_{h}$ ein Standard-Raum, der lokal polynomial ist. Wir suchen nun nach Methoden, die stabiler sind als die Galerkin-Methode (in welchem Sinne $\to$ später). Ein Weg, um dies zu erreichen, ist das Addieren geeigneter Stabilisierungsterme zur schwachen Formulierung. Heraus kommt wieder eine schwache Formulierung. Eine solche Methode ist die Stromlinien-Diffusionsmethode (SDFEM) oder auch streamline-upwind-petrov-Galerkin-method (SUPG). 
 
 \paragraph{Idee:} Betrachte $Lu = f$:
 \begin{align*}
@@ -490,7 +497,7 @@ Es sei nun $U_{h} = V_{h}$ Standard-Räume, die lokal polynomial sind. Wir suche
   \sum_{i} \int_{x_{i-1}}^{x_{i}} (Lu - f)v dx &= 0,\\
   \sum_{i} \delta_{i} \int_{x_{i-1}}^{x_{i}} (Lu - f)v dx &= 0. 
 \end{align*}
-mit dem lokalen Stabilisierungsparameter $\delta_{i}$. 
+mit dem lokalen Stabilisierungsparameter $\delta_{i}$, üblicherweise konstant. 
 
 \paragraph{Methode:}
 Gesucht ist $u_{h} \in V_{h}$, sodass
@@ -505,7 +512,7 @@ und
 \begin{align*}
   f_{h}(v, w) = (f, w) + \sum_{i= 1}^{N} \int_{x_{i-1}}^{x_{i}} \delta_{i} f (- bw') dx. 
 \end{align*}
-Nach Konstruktion gilt für $u \in H^{2}$
+Nach Konstruktion gilt für $u \in H^{2}(0, 1)$
 \begin{align*}  
   a_{h}(u, v) = f_{h}( v)
 \end{align*}
@@ -513,15 +520,17 @@ Nach Konstruktion gilt für $u \in H^{2}$
 \begin{align*}
   a_{h}(u- u_{h}, v_{h}) = 0 \qquad \forall v_{h}\in \V_{h}. 
 \end{align*}
-Bei linearem $V_{h}$ gilt
-\begin{align*}
-  a_{h}(u, v) = a\(u, v + \sum_{i} \1_{(x_{i-1}, x_{i})} \delta_{i} b v\). 
-\end{align*}
+%Bei linearem $V_{h}$ gilt
+%\begin{align*}
+%  a_{h}(u, v) = a\(u, v + \sum_{i} \1_{(x_{i-1}, x_{i})} \delta_{i} b v\). 
+%\end{align*}
 Zu jeder sinnvollen Methode gibt es eine Norm (sinnvoll meint: Koerzitivität). Zur SDFEM gehört die SD-Norm
 \begin{align*}
   \nnnorm v_{SD}^{2} = \nnnorm v _{\epsilon}^{2} + \sum_{i} \nnorm{\sqrt{\delta_{i}} b v'}_{L_{2}(x_{i-1}, x_{i})}^{2}. 
 \end{align*}
-Nun gilt für $v_{h} \in V_{h}$
+
+\paragraph{Nachweis der Koerzitivität}
+Es gilt für $v_{h} \in V_{h}$
 \begin{align*}
   a_{h}(v_{h}, v_{h}) &= \underbrace{\epsilon \nnorm{v_{h}'}^{2} + ((c + \frac 12 b')v_{h}, v_{h})}_{\geq \epsilon \nnorm{v_{h}'} + \gamma\nnorm{v_{h}}_{L_{2}}^{2} \eqqcolon \nnnorm{v_{h}}_{\epsilon}^{2}} + \sum_{i}\nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})}^{2} + \sum_{i} \int_{x_{i-1}}^{ x_{i}}\delta_{i}(-\epsilon v_{h}'' + c v_{h})(- bv_{h}')dx\\
   &\geq \nnnorm{v_{h}}_{SD}^{2} + \sum_{i} \int_{x_{i-1}}^{ x_{i}}\delta_{i}(\epsilon v_{h}'' -  c v_{h})(bv_{h}')dx. 
@@ -534,8 +543,10 @@ Mit der inversen Ungleichung
 und $0< \delta_{i} \leq \bar \delta_{i}$ konstant folgt
 \begin{align*}
   \norm{ \int_{x_{i-1}}^{ x_{i}}\delta_{i}(\epsilon v_{h}'' -  c v_{h})(bv_{h}')dx} & \leq \nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \(\nnorm{\sqrt{\delta_{i}} \epsilon v_{h}''}_{L_{2}(x_{i-1}, x_{i})} + \nnorm{\sqrt{\delta_{i}} cv_{h}}_{L_{2}(x_{i-1}, x_{i})}\)\\
-  & \leq \nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \(\sqrt{\bar \delta_{i}} \epsilon C_{inv} h_{i}^{-1} \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})} +\sqrt{\bar \delta_{i}} \nnorm{c}_{L_{\infty}(x_{i-1}, x_{i})} \nnorm{v_{h}}_{L_{2}(x_{i-1}, x_{1})}\)\\
-  & \leq \nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \(\frac{\sqrt{\bar \delta_{i}} \epsilon^{\frac 12} C_{inv}}{ h_{i}} \epsilon^{\frac 12} \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})} +\frac {\sqrt{\bar \delta_{i}} \nnorm{c}_{L_{\infty}(x_{i-1}, x_{i})}}{\gamma^{\frac 12}} \gamma^{\frac 12} \nnorm{v_{h}}_{L_{2}(x_{i-1}, x_{1})}\).
+  & \leq \nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \(\sqrt{\bar \delta_{i}} \epsilon C_{inv} h_{i}^{-1} \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})}\right. \\
+& \quad \left. +\sqrt{\bar \delta_{i}} \nnorm{c}_{L_{\infty}(x_{i-1}, x_{i})} \nnorm{v_{h}}_{L_{2}(x_{i-1}, x_{1})}\)\\
+  & \leq \nnorm{\sqrt{\delta_{i}} bv_{h}'}_{L_{2}(x_{i-1}, x_{i})} \(\frac{\sqrt{\bar \delta_{i}} \epsilon^{\frac 12} C_{inv}}{ h_{i}} \epsilon^{\frac 12} \nnorm{ v_{h}'}_{L_{2}(x_{i-1}, x_{i})} \right.\\
+&\quad  \left.+\frac {\sqrt{\bar \delta_{i}} \nnorm{c}_{L_{\infty}(x_{i-1}, x_{i})}}{\gamma^{\frac 12}} \gamma^{\frac 12} \nnorm{v_{h}}_{L_{2}(x_{i-1}, x_{1})}\).
 \end{align*}
 Mit 
 \begin{align*}
@@ -552,15 +563,12 @@ Es folgt
   a_{h}(v_{h}, v_{h}) \geq \frac 12 \nnnorm{v_{j}}_{SD}^{2}. 
 \end{align*}
 Das ist die Koerzitivität bezüglich der stärkeren SD-Norm, und somit erhalten wir eine verbesserte Stabilität, da wir auch $ \nnorm{\sqrt{\delta_{i}} bv_{h}'}^{2}_{L_{2}}$ unter Kontrolle haben. 
-% Nachtrag 
-% \datum{19. November 2015}
-Nachtrag zu Lemma \ref{lem:6-4}:
+Für stückweise lineare Elemente reicht
 \begin{align*}
-  \nnnorm{u^{I}}_{\epsilon}^{2} &\leq   \nnnorm{u-u^{I}}_{\epsilon}^{2} + \nnnorm{u^{I}}_{\epsilon}^{2}\\
-  &\leq C \cdot H (1 +  \nnnorm{u^{I}}_{\epsilon}) + K\\
-  \implies \quad   \(\nnnorm{u^{I}}_{\epsilon}^{2} - \frac{C\cdot H} 2\)^{2} &\leq   K + \frac {C^{2} H^{2}} 4 \leq C. 
+  0 \leq \delta_{i}\leq \bar \delta_{i} = \frac 12 \frac {\gamma}{\nnorm C_{L_{\infty}}^{2}}
 \end{align*}
-Ende des Nachtrags. 
+aus. 
+% \datum{19. November 2015}
 Für $V_{h}$ stückweise linear auf äquidistantem Gitter, $b, c, f$ konstant und $\delta_{i} = \delta \, \forall i$ erhalten wir
 \begin{align*}
   - (\epsilon + b^{2} \delta) [D^{+}D^{-} u]_{i} + b[D^{0} u]_{i} + cu_{i} = f
@@ -569,7 +577,7 @@ mit den zentralen Differenzenoperatoren $D^{+}, D^{-}, D^{0}$ und der künstlich
 \begin{enumerate}
 \item Mit
   \begin{align*}
-    \delta(q) = \frac h{2b}(\coth q - \frac 1 q) 
+    \delta(q) = \frac h{2b}\(\coth q - \frac 1 q\) 
   \end{align*}
   für $q = \frac{bh}{2\epsilon}$ erhalten wir das Ilin-Allen-Southwell Schema
   \begin{align*}
@@ -690,7 +698,7 @@ Konvergenz dieser SDFEM hängt nur von den Approximationsmöglichkeiten des Raum
 \begin{enumerate}
 \item CIPFEM: continuous interior penalty FEM: bestraft Unstetigkeiten der ersten Ableitung
   \begin{align*}
-    a_{ZIP}(u_{h}, v_{h}) =  a(u_{h}, v_{h}) + \sum_{i}\delta_{i}[u_{h}']_{i}[v_{h}']_{i}
+    a_{CIP}(u_{h}, v_{h}) =  a(u_{h}, v_{h}) + \sum_{i}\delta_{i}[u_{h}']_{i}[v_{h}']_{i}
   \end{align*}
   mit dem Sprung
   \begin{align*}
@@ -700,7 +708,7 @@ Konvergenz dieser SDFEM hängt nur von den Approximationsmöglichkeiten des Raum
   \begin{align*}
     a(v, v) = \nnnorm v_{\epsilon}^{2} + \sum_{i} \delta_{i} [v']_{i}^{2} \eqqcolon \nnnorm v_{CIP}^{2}
   \end{align*}
-  Für $u \in H^{2}$ gilt $a_{ZIP}(u-u_{h}, v_{h}) = 0$. 
+  Für $u \in H^{2}$ gilt $a_{CIP}(u-u_{h}, v_{h}) = 0$. 
 \item LPSFEM: local projection stabilization
   \begin{align*}
     a_{LPS}(u_{h}, v_{h}) = a(u_{h}, v_{h}) + \sum_{i} \delta_{i}(b\cdot \kappa(u_{h}'), b\cdot \kappa(v_{h}'))_{I_{i}}
@@ -724,14 +732,14 @@ Idee: Grenzschichten auflösen mit angepassten Gittern. Betrachten wir dazu zuer
   \end{align*}
 \end{lemma}
 \begin{beweis}
-  Es sei $G(x) = \int_{a}^{x}g(\xi)(\xi - a)^{p-1}d\xi$ und $F(x) = \frac 1p \( \int_{a}^{b} g(\xi)^{\frac 1p} d\xi\)^{p}$. Es gilt $G(a) = 0 = F(a)$.
+  Es sei $G(x) = \int_{a}^{x}g(\xi)(\xi - a)^{p-1}d\xi$ und $F(x) = \frac 1p \( \int_{a}^{x} g(\xi)^{\frac 1p} d\xi\)^{p}$. Es gilt $G(a) = 0 = F(a)$ und mit der Monotonie
   \begin{align*}
     G'(x) &= g(x)(x - a)^{p-1}\\
-    F'(x) &= \(int_{a}^{x} \underbrace{g(\xi)^{\frac 1p}}_{\geq g(x)} d\xi\)^{p-1} g(x)^{\frac 1p}\\
-    \geq g(x)(x - a)^{p-1} = G'(x). 
+    F'(x) &= \( \int_{a}^{x} \underbrace{g(\xi)^{\frac 1p}}_{\geq g(x)^{\frac 1p}} d\xi\)^{p-1} g(x)^{\frac 1p}\\
+    &\geq g(x)(x - a)^{p-1} = G'(x). 
   \end{align*}
 \end{beweis}
-Es sei nun $\psi \sim u$:
+Es sei nun $\psi \sim u$, das heißt
 \begin{align*}
   \norm{\psi(x)^{(k)}} \leq C\cdot(1+ \epsilon^{-k} e^{- \beta \frac x \epsilon}). 
 \end{align*}
@@ -776,7 +784,7 @@ Es sei nun $\psi \sim u$:
   \end{align*}
   für $x \in[x_{i-1}, x_{i}]$. Die Konsequenz aus dem Satz \ref{thm:6-10}:
   \begin{align*}
-    \nnorm{u - u^{I}}_{L_{\infty}} \leq C \cdot\max_{i}\(\underbrace{\int_{x_{i-1}}^{x_{i}} (1+ \epsilon^{-1} e^{- \beta \frac x {2\epsilon}})dx }_{\eqqcolon \theta_{i}}\)^{2}. 
+    \nnorm{u - u^{I}}_{L_{\infty}} \leq C \cdot\max_{i}\(\int_{x_{i-1}}^{x_{i}} (1+ \epsilon^{-1} e^{- \beta \frac x {2\epsilon}})dx \)^{2} \eqqcolon C \max_{i} \theta_{i}^{2}. 
   \end{align*}
   Wird $\theta_{i}$ gleichmäßig beschränkt, oder sind noch besser gleichverteilt, so erhalten wir eine gleichmäßige Schranke des Interpolationsfehlers in $L_{\infty}$. 
   Eine Möglichkeit für ein optimales Gitter:
@@ -790,7 +798,7 @@ Es sei nun $\psi \sim u$:
 \label{sec:bakhvalov-gitter}
 Idee: Nutze ein äquidistantes $t$-Gitter nahe bei $x = 0$ und projiziere auf die $x$-Achse mittels einer skalierten Grenzschichtfunktion. Diese sei
 \begin{align*}
-  q(1 - e^{- \beta \frac x {\sigma\epsilon}})= t_{i} = \frac i n, \quad i = 0, 1, \dots, N
+  q(1 - e^{- \beta \frac {x_{i}} {\sigma\epsilon}})= t_{i} = \frac i N, \quad i = 0, 1, \dots, N
 \end{align*}
 mit $q \in (0, 1)$ und $\sigma > 0$. Weg von der Grenzschicht wird ein äquidistantes x-Gitter gewählt und der Übergangspunkt $\tau$ zwischen diesen beiden Bereichen so bestimmt, dass die gittererzeugende Funktion $\phi$ in $C^{1}$ ist. 
 \begin{figure}[ht!]
@@ -799,7 +807,7 @@ mit $q \in (0, 1)$ und $\sigma > 0$. Weg von der Grenzschicht wird ein äquidist
   
   \caption{Lage von $\tau$}
   \label{fig:position_tau}
-  \text{Pink: Tangente an $\chi(t)$ durch $(1, 1)$, rot: äquidistant, grün: graduiert, blau: $\tau$}
+  \text{Pink: Tangente $\Pi(t)$ an $\chi(t)$ durch $(1, 1)$, rot: äquidistant, grün: graduiert, blau: $\tau$, schwarz: $\chi(t)$}
 \end{figure}
 \begin{align*}
   \phi(x) =
@@ -808,10 +816,10 @@ mit $q \in (0, 1)$ und $\sigma > 0$. Weg von der Grenzschicht wird ein äquidist
     \Pi(t) \coloneqq \chi(\tau) + \chi'(\tau)(t - \tau),  & t \in [\tau, 1]
   \end{cases}
 \end{align*}
-mit $\chi'(\tau) = \frac{1- \chi(\tau)}{1 - \tau}$ (*). Diese Gleichung kann aber nicht explizit nach $\tau$ aufgelöst werden. Die Iteration
+mit $\chi'(\tau) = \frac{1- \chi(\tau)}{1 - \tau}$. Dies kann aber nicht explizit nach $\tau$ aufgelöst werden. Die Iteration
 \begin{align*}
   \tau_{0} &= 0\\
-  \chi'(\tau_{i+1}) = \frac{1- \chi(\tau_{i})}{1 - \tau_{i}}, \quad i = 0, 1, \dots
+  \chi'(\tau_{i+1}) &= \frac{1- \chi(\tau_{i})}{1 - \tau_{i}}, \quad i = 0, 1, \dots
 \end{align*}
 konvergiert sehr schnell. Es reicht sogar aus, $\tau$ durch
 \begin{align*}
@@ -836,17 +844,18 @@ zu ersetzen. Wir erhalten dann ein Gitter mit sehr ähnlichen Eigenschaften, abe
   für $i = 1, \dots, N$ gilt. Dafür teilen wir das Gitter in drei Bereiche auf; den äquidistanten Teil, den graduierten Bereich, und das Übergangsintervall.
   \begin{enumerate}
   \item $x_{i} \leq \chi(\tau)$: Grenzschichtbereich
+
     Substituiere 
     \begin{align*}
       x = -\frac{ \sigma\epsilon} \beta \ln \frac{q - t}q = \chi(t). 
     \end{align*}
     Dann
     \begin{align*}
-      \theta_{i} &= \int_{\frac{i-1}N}^{\frac iN} (1 + \epsilon^{-1} e^{\frac \sigma 2 \ln \frac{q - t}q} \frac {\sigma \epsilon}\beta \frac 1 { q- t} dt\\
-      &= \int_{\frac{i-1}N}^{\frac iN} \underbrace{\frac \sigma \beta \frac \epsilon {q-t}}_{\leq C}  + \frac \sigma \beta \underbrace{ \frac{(q - t)^{\frac \sigma 2} - 1} {q^{\frac \sigma 2}}}_{\leq C} dt
+      \theta_{i} &= \int_{\frac{i-1}N}^{\frac iN} \(1 + \epsilon^{-1} e^{\frac \sigma 2 \ln \frac{q - t}q}\) \frac {\sigma \epsilon}\beta \frac 1 { q- t} dt\\
+      &= \int_{\frac{i-1}N}^{\frac iN} \underbrace{\frac \sigma \beta \frac \epsilon {q-t}}_{\leq C}  + \frac \sigma \beta \underbrace{ \frac{(q - t)^{\frac \sigma 2-1}} {q^{\frac \sigma 2}}}_{\leq C} dt\\
       &\leq C \cdot N^{-1}
     \end{align*}
-    wenn $\frac \sigma 2 - 1 \geq 0$. 
+    weil $\frac \sigma 2 - 1 \geq 0$. 
   \item $x_{i} > \chi(\tau)$: äquidistanter Bereich
     \begin{align*}
       \theta_{i} &= (x_{i} - x_{i-1}) + \frac 2 \beta \(e^{- \frac{\beta x_{i-1}}{2 \epsilon}} - e^{- \frac{\beta x_{i}}{2 \epsilon}}\)\\
@@ -856,18 +865,20 @@ zu ersetzen. Wir erhalten dann ein Gitter mit sehr ähnlichen Eigenschaften, abe
       &\leq C (N^{-1} + \epsilon^{\frac \sigma 2})\\
       & \leq C \cdot N^{-1}
     \end{align*}
-  \end{enumerate}
+
   für $\tau = \tau_{1}$ und $\epsilon \leq C \cdot N^{-1}$. 
+
 \item $\chi(\tau) \in (x_{i-1}, x_{i})$: Grenzintervall
   \begin{align*}
     \theta_{i} = \int_{x_{i-1}}^{\chi(\tau)} \dots + \int_{\chi(\tau)}^{x_{i}} \dots \leq C \cdot N^{-1}
   \end{align*}
   durch Kombination der Aussagen. 
+\end{enumerate}
 \end{beweis}
 Die Analysis auf Bakhvalov-Gittern ist kompliziert, speziell, da $\tau$ nicht 'greifbar' ist, als Lösung einer nichtlinearen Gleichung. Daher betrachten wir eine Vereinfachung:
 \paragraph{Shishkin-Gitter} (1990)
 \label{sec:shishkin-gitter}
-Angenommen, wir wollen im Überganspunkt $\tau$, dass die Grenzschichtfunktion mit $N^{-\sigma}$ abschätzbar ist. Dann folgt, dass
+Angenommen, wir wollen im Überganspunkt $\tau$, dass der Grenzschichtanteil der Lösung mit $N^{-\sigma}$ abschätzbar ist. Dann folgt, dass
 \begin{align*}
   e^{- \frac{\beta\tau} \epsilon} \leq N^{-\sigma} \, \implies\,  \tau \geq \frac{\sigma\epsilon} \beta \ln N. 
 \end{align*}
@@ -877,7 +888,7 @@ Damit $\tau \in [0, 1]$, nehmen wir
 \end{align*}
 und wieder $q \in (0, 1)$ fest. Im Allgemeinen wird  $\tau = \frac{\sigma\epsilon} \beta \ln N$ sein. Nun zerlegen wir $[0, \tau]$ und $[\tau, 1]$ in $q \cdot N$ bzw. $(1 - q)\cdot N$ gleichabständige Teilintervalle. Sollte $q = \tau$ sein, so erhalten wir ein äquidistantes Gitter. ('Wenn wir schon fein genug aufgelöst haben. ') Ansonsten erhalten wir das stückweise äquidistante Shishkin-Gitter
 \begin{align*}
-  x_{i} &= \phi\(\frac l N\), \\
+  x_{i} &= \phi\(\frac i N\), \\
   \phi(t) &\coloneqq
   \begin{cases}
     \frac{\sigma\epsilon} \beta \tilde \phi (t), &t \in [0, q]\\
@@ -902,15 +913,15 @@ mit $\tilde \phi (t) = \frac t q \ln N$. Der Parameter $q$ beschreibt den Anteil
   \item $x_{i} \leq \tau$:
     \begin{align*}
       \theta_{i} &= \int_{x_{i-1}}^{x_{i}} \(1 + \epsilon^{-1} e^{ - \frac{\beta x}{2 \epsilon}}\) dx\\
-      &= h_{i} + \int_{\frac{i-1}/N}^{\frac 1 N}  \epsilon^{-1} e^{ - \frac{\beta}{2 \epsilon}\frac {\sigma \epsilon} \beta \frac t q \ln N} \frac{\sigma\epsilon}{\beta q} \ln N dt\\
-      &\leq h + \frac \sigma {\beta q} \ln N \int_{\frac{i-1}/N}^{\frac 1 N} \underbrace{e^{ - \frac{\sigma} {2 q} t \ln N} }_{\leq 1} dt\\
+      &= h_{i} + \int_{\frac{i-1}N}^{\frac 1 N}  \epsilon^{-1} e^{ - \frac{\beta}{2 \epsilon}\frac {\sigma \epsilon} \beta \frac t q \ln N} \frac{\sigma\epsilon}{\beta q} \ln N dt\\
+      &\leq h + \frac \sigma {\beta q} \ln N \int_{\frac{i-1}N}^{\frac 1 N} \underbrace{e^{ - \frac{\sigma} {2 q} t \ln N} }_{\leq 1} dt\\
       &\leq h + \frac \sigma {\beta q} \ln N \cdot N^{-1} \leq C N^{-1} \ln N, 
     \end{align*}
     da $C \cdot N^{-1}\ln N \geq h$. 
   \item  $x_{i-1} \geq \tau$:
     \begin{align*}
       \theta_{i} &= \int_{x_{i-1}}^{x_{i}} \(1 + \epsilon^{-1} e^{ - \frac{\beta x}{2 \epsilon}}\) dx\\
-      &= H - \frac 2 \beta e^{- \frac{\beta x}{2 \epsilon}}|_{x_{i-1}}^{x_{i}}\\
+      &= \left.H - \frac 2 \beta e^{- \frac{\beta x}{2 \epsilon}}\right|_{x_{i-1}}^{x_{i}}\\
       &\leq H + \frac 4 \beta e^{- \frac{\beta \tau}{2 \epsilon}} \leq H + \frac 4 \beta N^{- \frac \sigma 2} \leq CN^{-1}
     \end{align*}
     für $\sigma\geq 2$. 
@@ -918,9 +929,9 @@ mit $\tilde \phi (t) = \frac t q \ln N$. Der Parameter $q$ beschreibt den Anteil
 \end{beweis}
 Wir haben hier ein deutlich einfacheres Gitter mit einfacherer Analysis, das optimale Abschätzungen außerhalb der Grenzschicht liefert und quasi-optimal in der Grenzschicht ist, da
 \begin{align*}
-  N^{-1} \ln N \leq C N^{-t}
+  N^{-1} \ln N \leq C N^{-t} \quad \forall 0 < t < 1. 
 \end{align*}
-für alle $0 < t < 1$. 
+
 \begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
@@ -936,18 +947,18 @@ für alle $0 < t < 1$.
 
 
 
-Trotzdem verdirbt der $\log$-Faktor die Konvergenzordung, speziell bei Methoden höherer Ordnung. Daher modifizieren wir die Gitter. Dabei belassen wir den Übergangspunkt $\tau$ und das Verhalten außerhalb der Grenzschicht, verändern aber das Gitter auf $[0, \tau]$. Dies wird generiert mit der Funktion $\tilde\phi$. Für diese fordern wir nur
+Trotzdem verdirbt der Logarithmus-Faktor die Konvergenzordung, speziell bei Methoden höherer Ordnung. Daher modifizieren wir die Gitter. Dabei belassen wir den Übergangspunkt $\tau$ und das Verhalten außerhalb der Grenzschicht, verändern aber das Gitter auf $[0, \tau]$. Dies wird generiert mit der Funktion $\tilde\phi$. Für diese fordern wir nur
 \begin{enumerate}
 \item $\tilde \phi (0) = 0$, 
 \item $\tilde \phi (q) = \ln N$, 
 \item $\tilde \phi$ ist monoton wachsend;
 \end{enumerate}
 dann erhalten wir ein \markdef{Shishkin-Typ-Gitter} oder \markdef{S-Typ-Gitter}. 
-Zu dieser führen wir die charakterisierende Funktion
+Zu dieser führen wir die \markdef{charakterisierende} Funktion
 \begin{align*}
   \psi(t) = e^{- \tilde \phi (t)}, 
 \end{align*}
-die monoton fallend ist. 
+die monoton fallend ist, ein.
 \begin{folgerung}\label{6-13}
   Für $\tau = \sigma \frac \epsilon \beta \ln N$ mit $\sigma \geq 2$ gilt auf einem S-Typ-Gitter mit
   \begin{align*}
@@ -965,7 +976,7 @@ die monoton fallend ist.
   \begin{align*}
     \nnorm{u - u^{I}}_{L_{\infty}[\tau, 1]} \leq C \cdot N^{-2}
   \end{align*}
-  und $h = \max_{i = 1, \dots, q N} h_{i} \leq C_{\epsilon}$.  
+  und $h = \max_{i = 1, \dots, q N} h_{i} \leq C \epsilon$.  
 \end{folgerung}
 \begin{beweis}
   Auf $[\tau, 1]$ siehe Beweis der Folgerung \ref{6-12}. 
@@ -1007,10 +1018,10 @@ die monoton fallend ist.
   \end{align*}
   mit $s \in (0, 1)$, da $\sigma\geq 2$.
 \end{beweis}
-\paragraph{S-Typ Gitter aus der Literatur}
+\paragraph{S-Typ-Gitter aus der Literatur}
 \label{sec:s-typ-gitter}
 \begin{enumerate}
-\item Standart Shishkin-Gitter
+\item Standard Shishkin-Gitter
   \begin{align*}
     \tilde \phi (t) &= \frac t q \ln N \implies \psi(t) =  e^{- \frac t q \ln N}\\
     \max \norm{\psi'} &\leq \frac{\ln N} q, \\
@@ -1018,7 +1029,8 @@ die monoton fallend ist.
     \implies \quad h + \max \norm{\psi'} &\leq C \cdot N^{-1} \ln N. 
   \end{align*}
   (Folgerung \ref{6-12}). 
-\item Bakhvalov -S-Gitter
+\item Bakhvalov-S-Gitter
+
   Invertiere $e^{- \frac{\beta x}{\sigma\epsilon}}$ auf $[0, \tau]$ und Shishkin-Definitionen von $\tau$ und gleichmäßiges Gitter auf $[\tau, 1]$.
   \begin{align*}
     \tilde \phi (t) &= - \ln ( 1- (1 - N^{-1}) \frac t q)\\
@@ -1039,14 +1051,14 @@ Für die Fehleranalysis bei FEM benötigen wir Interpolationsfehlerschranken in 
 \begin{satz}\label{thm:6-14}
   Es gilt für die lineare Interpolierende $v^{I}$ mit
   \begin{align*}
-    \norm{v''} &\leq C (1 + \epsilon^{-2} e^{- \frac {\beta x}\epsilon}\\
+    \norm{v''} &\leq C (1 + \epsilon^{-2} e^{- \frac {\beta x}\epsilon}), \text{ dass}\\
     \nnnorm{v^{I} - v}_{\epsilon} &\leq C (\nnorm{v^{I} - v}_{L_{\infty}})^{\frac 12}. 
   \end{align*}
 \end{satz}
 \begin{beweis}
   \begin{align*}
     \nnorm{v^I - v}_{L_{2}} &\leq \nnorm{v^I - v}_{L_{\infty}}\\
-    \epsilon\nnorm{(v^I - v)'}_{L_{2}} ^{2} &= \epsilon \int_{0}^{1} ((v^{I} - v) (x))^{2} dx = - \epsilon \int_{0}^{1} v''(x)(v - v^{I}) (x) dx\\
+    \epsilon\nnorm{(v^I - v)'}_{L_{2}} ^{2} &= \epsilon \int_{0}^{1} \((v^{I} - v)' (x)\)^{2} dx = - \epsilon \int_{0}^{1} v''(x)(v - v^{I}) (x) dx\\
     &\leq \nnorm{v - v^{I}}_{L_{\infty}} \epsilon \int_{0}^{1} \norm{v''(x)} dx\\
     &\leq C\nnorm{v - v^{I}}_{L_{\infty}} 
   \end{align*}
@@ -1071,6 +1083,7 @@ Für die Fehleranalysis bei FEM benötigen wir Interpolationsfehlerschranken in 
     \frac {\nnorm {w'}_{L_{2}}^{2}}{\nnorm {w'}_{L_{2}}^{2}} &= \frac 3 {h^{2}} \frac{(w_{1} - w_{0})^{2}} {w_{1}^{2} + w_{1}w_{0} w_{0}^{2}} \\
     &= \frac 3 {h^{2}} \frac {(w_{1} - w_{0})^{2}}{\frac 34 (w_{1} + w_{0})^{2} + \frac 14 (w_{1} - w_{0})^{2}} \leq \frac {12}{h^{2}}. 
   \end{align*}
+\end{beweis}
   Die inverse Ungleichung
   \begin{align*}
     \nnorm{w'}_{L_{2}(x_{i-1}, x_{i})} &\leq  C h_{i}^{-1} \nnorm{w}_{L_{2}(x_{i-1}, x_{i})}\\
@@ -1082,7 +1095,7 @@ Für die Fehleranalysis bei FEM benötigen wir Interpolationsfehlerschranken in 
   \item Äquivalenz von Normen auf endlich-dimensionalen Räumen, 
   \item Rücktransformation auf $[x_{i-1}, x_{i}]$. 
   \end{itemize}
-\end{beweis}
+
 % \datum{03. Dezember und Do Woche davor fiel aus}
 % \datum{04. Dezember 2015}
 \begin{satz}\label{thm:6-15}
@@ -1123,7 +1136,7 @@ Die Galerkin FEM ist somit gleichmäßig konvergent mit Ordnung fast $1$ (wegen 
 \begin{align*}
   \nnnorm {u - u_{h}}_{\epsilon} \leq C \inf_{v_{h} \in V_{h}} \nnnorm{u - v_{h}}_{\epsilon} \leq C \nnnorm{u - u^{I}}_{\epsilon}. 
 \end{align*}
-mit Cea. Aber die numerische Lösung ist sogar bezüglich der Interpolierenden besser: 
+mit Cea. Aber die numerische Lösung ist bezüglich der Interpolierenden sogar besser: 
 \begin{satz}\label{thm:6-16}
   Auf einem S-Typ-Gitter mit $\sigma \geq \frac 52$ gilt für die Lösung $u_{h}$ der linearen Galerkin-FEM und für $u^{I}$, die lineare Interpolierende
   \begin{align*}
@@ -1234,7 +1247,7 @@ Erstaunlicherweise ist nicht der Grenzschichtanteil, sondern der glatte Anteil $
 \paragraph{Postprocessing (Nachbearbeitung)}
 \label{sec:postpr-nachb}
 
-Die Idee des Postprocessings ist es, mithilfe einer preiswerten Methode aus der bereits berechneten numerischen Lösung eine neue numerische Lösung zu gewinnen. Es gibt viele Möglichkeiten, hier besprechen wir einen Ansatz, der die vorhandene Lösung in einen Polynomraum höherer Ordnung auf einenm gröberen Gitter interpolieren (nach \cite{ST_SINUM}). Zu dem vorhandenen Gitter $T_{N}$ konstruieren wir uns ein Makrogitter $M_{N}$, indem je zwei Gitterzellen zu einer Makrozelle zusammengefasst werden. 
+Die Idee des Postprocessings ist es, mithilfe einer preiswerten Methode aus der bereits berechneten numerischen Lösung eine neue numerische Lösung zu gewinnen. Es gibt viele Möglichkeiten, hier besprechen wir einen Ansatz, der die vorhandene Lösung in einen Polynomraum höherer Ordnung auf einem gröberen Gitter interpoliert (nach \cite{ST_SINUM}). Zu dem vorhandenen Gitter $T_{N}$ konstruieren wir uns ein Makrogitter $M_{N}$, indem je zwei Gitterzellen zu einer Makrozelle zusammengefasst werden. 
 \begin{figure}[ht!]
   \centering
   \begin{tikzpicture}
@@ -1290,7 +1303,7 @@ Die Idee des Postprocessings ist es, mithilfe einer preiswerten Methode aus der 
 
 Da auf einem S-Typ-Gitter die Schrittweiten $h$ und $H$ unterschiedliche Größenordnungen bezüglich $\epsilon$ haben, sollte kein Makroelement aus einer kleinen und einer großen Zelle bestehen (also sollte die Grenze $\tau$ im Makrogitter auch Grenze sein). Sei daher $qN$ und $(1-q)N$ gerade, zum Beispiel $q = \frac 12$ und $N \mod 4 = 0$. Im Allgemeinen wird $M_{N} \neq T_{\frac N 2}$ sein, da $\tau$ und $\phi$ nicht dieselben sind! Wir definieren nun den Projektor
 \begin{align*}
-  P: \, C[0, 1] \to W_{h} \coloneqq \set{w \in C[0, 1]: \, w|_{(x_{i-1}, x_{i+1})} \in \Pi, \, i = 1, 3, 5, \dots, N-1}
+  P: \, C[0, 1] \to W_{h} \coloneqq \set{w \in C[0, 1]: \, w|_{(x_{i-1}, x_{i+1})} \in \P_{2}, \, i = 1, 3, 5, \dots, N-1}
 \end{align*}
 lokal als quadratische Interpolierende, das heißt
 \begin{align*}
@@ -1303,7 +1316,7 @@ Im Allgemeinen besteht ein Makroelement im Grenzschichtbereich nicht aus zwei gl
 \begin{align*}
   \frac{\max \set{h_{i}, h_{i+1}}}{\min \set{h_{i}, h_{i+1}}}\leq p
 \end{align*}
-für $i = 1, 3, \dots, \frac {qN} 2 - 1$. Erfüllen unsere Gitter das? Für die bislang betrachteten S-Typ-Gitter gilt Tablle \ref{tab:gitter_u_h}. 
+für $i = 1, 3, \dots, qN - 1$. Erfüllen unsere Gitter das? Für die bislang betrachteten S-Typ-Gitter gilt Tabelle \ref{tab:gitter_u_h}. 
 \begin{table}[h!]
   \centering
   \begin{tabular}[h!]{l l}
@@ -1323,7 +1336,7 @@ für $i = 1, 3, \dots, \frac {qN} 2 - 1$. Erfüllen unsere Gitter das? Für die 
   \begin{align*}
     \nnorm{(Pw)'}_{L_{\infty}(x_{i-1}, x_{i+1})} \leq C \cdot\nnorm{w'}_{L_{\infty}(x_{i-1}, x_{i+1})}. 
   \end{align*}
-  Das sind Stabilitätseigenschaften des Operators bezüglich $\nnorm \cdot_{L_{\infty}}$ und $\nnorm \cdot_{W^{1, \infty}}$.
+  Das sind Stabilitätseigenschaften des Operators bezüglich $\nnorm \cdot_{L_{\infty}}$. %und $\nnorm \cdot_{W^{1, \infty}}$.
 \end{lemma}
 \begin{beweis}
   Wir haben die Lagrange-Basisfunktionen $L_{i-1}, L_{i}, L_{i+1}$ zu $x_{i-1}, x_{i}, x_{i+1}$ und 
@@ -1518,12 +1531,12 @@ Die $\delta_{i}$ sind dabei Stabilisierungsparameter, eine sinnvolle Annahme ist
 \begin{align*}
   \nnorm {v}_{SD}^{2} = \epsilon   \nnorm {v'}_{L_{2}}^{2} + \gamma \nnorm {v}_{L_{2}}^{2}  + \nnorm { \delta^{\frac 12}bv'}_{L_{2}(\tau, 1)}^{2}, 
 \end{align*}
-wenn $\delta$ klein genut ist gilt Koerzivität
+wenn $\delta$ klein genug ist, gilt Koerzivität
 \begin{align*}
   a_{SD} (v, v) \geq \frac 12 \nnorm {v}_{SD}^{2}. 
 \end{align*}
 \begin{satz}\label{thm:6-21}
-  Auf einem S-Tpy-Gitter mit $\sigma \geq \frac 52$ gelten für die Lösung $u_{h}$ der SDFEM mit
+  Auf einem S-Typ-Gitter mit $\sigma \geq \frac 52$ gelten für die Lösung $u_{h}$ der SDFEM mit
   \begin{align*}
     \delta =
     \begin{cases}
@@ -1684,8 +1697,8 @@ Gegeben seien:
 \item $a(u, v) = \epsilon(u', v') + (bu', v) + (cu, v)$, 
 \item $\nnnorm v_{\epsilon}^{2} = \epsilon \nnorm {v'}_{\epsilon}^{2} + \gamma \nnorm v _{L_{2}}^{2}$, zur Erinnerung
   \begin{align}\label{eq:1}
-    a(v, v) = \epsilon \nnorm{v'}_{L_{2}}^{2} + \underbrace{(( c + \frac 12 b')v, v)}_{\geq \gamma \nnorm v_{L_{2}}^{2}} \geq \nnnorm v _{\epsilon}^{2}
-  \end{align}, 
+    a(v, v) = \epsilon \nnorm{v'}_{L_{2}}^{2} + \underbrace{(( c + \frac 12 b')v, v)}_{\geq \gamma \nnorm v_{L_{2}}^{2}} \geq \nnnorm v _{\epsilon}^{2},
+  \end{align}
 \item $\Pi_{k}: L_{2}(k) - B(k)$ mit $k = (x_{k-1}, x_{k})$,
   \begin{align*}
     B(k) \subset H_{0}^{1} \cap V_{h}(k)
@@ -1765,7 +1778,7 @@ Gegeben seien:
   \begin{align*}
     \nnnorm{u_{h}}^{2}_{\epsilon} \leq a(u_{h}, u_{h}) = (f, u_{h}) \psi \nnorm f _{L_{2}} \nnnorm {u_{h}}_{\epsilon}, 
   \end{align*}
-  alsi ist $ \nnnorm {u_{h}}_{\epsilon}$ beschränkt. Kann $v^{k}$ Bestandteil von $u_{h}$ sein? Mit einer direkten Rechnung kann man zeigen, dass
+  also ist $ \nnnorm {u_{h}}_{\epsilon}$ beschränkt. Kann $v^{k}$ Bestandteil von $u_{h}$ sein? Mit einer direkten Rechnung kann man zeigen, dass
   \begin{align*}
     \nnnorm{v_{k}}_{\epsilon}^{2} \leq C \( \frac \epsilon {h^{2}} + 1\), 
   \end{align*}

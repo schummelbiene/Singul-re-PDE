@@ -23,11 +23,12 @@ mit $b(x)\geq \beta > 0$, $c(x) \geq 0$, $0 < \epsilon \ll 1$ und $b, c, f$ glat
   
 Für $\epsilon$ klein genug und $i = 1, 2, \dots$ gilt 
 \begin{align*}
-  \norm{u^{(i)}(x)}\leq C(1 + \epsilon^{-i} e^{-\frac{\beta x}\epsilon})\quad 0\leq x\leq 1. 
+  \norm{u^{(i)}(x)}\leq C\(1 + \epsilon^{-i} e^{-\frac{\beta x}\epsilon}\)\quad 0\leq x\leq 1. 
 \end{align*}
 \end{satz}
-\begin{beweis}
-  Es sei $w(x) = f(x) - c(x)u(x)$ und damit
+\begin{beweis} Per Induktion über $i$: 
+
+Induktionsanfang:   Es sei $w(x) = f(x) - c(x)u(x)$ und damit
   \begin{align*}
     - \epsilon u'' - bu' = w. 
    \end{align*}
@@ -121,7 +122,7 @@ Zu den Zerlegungen:
 \begin{satz}\label{thm:5-2}
   Sei $u$ die Lösung von \eqref{eq:5-1} und $q > 0$ eine natürliche Zahl. Dann ist $u = S + E$, wobei für $0 \leq j\leq q$
   \begin{align*}
-    \nnorm{s^{(j)}}_{L_{\infty}} &\leq C\\
+    \nnorm{S^{(j)}}_{L_{\infty}} &\leq C\\
     \norm{E^{(j)}(x)}&\leq C \cdot\epsilon^{-j} e^{-\beta \frac x \epsilon} \quad 0\leq x\leq 1
   \end{align*}
 (Smooth, glatter Anteil und Grenzschichtanteil). 
@@ -165,7 +166,7 @@ Es sei $u$ die Lösung von \eqref{eq:5-1} und $q >0$ eine natürliche Zahl. Dann
 und mit $0 \leq j\leq q$ haben wir die Abschätzungen
 \begin{align*}
    \nnorm{S^{*(j)}}_{L_{\infty}} &\leq C\\
-\norm{E^{*(j)} (x)} &\leq C\cdot \epsilon^{-j}\cdot e^{- \beta \frac x \epsilon}\\
+\norm{E^{*(j)} (x)} &\leq C\cdot \epsilon^{-j}\cdot e^{- \beta \frac x \epsilon}, \quad 0 \leq x \leq 1\\
 LE^{*} &= 0\\
 LS^{*} &= f. 
 \end{align*}
